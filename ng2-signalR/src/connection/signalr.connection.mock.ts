@@ -1,10 +1,10 @@
-import { SignalRConnectionBase } from "./signalr.connection.base";
-import { Observable } from "rxjs/Observable";
-import { AsyncSubject } from "rxjs/AsyncSubject";
-import { ReplaySubject } from "rxjs/ReplaySubject";
-import { SignalRConfiguration } from "../signalr.configuration";
-import { BroadcastEventListener } from "../eventing/broadcast.event.listener";
-import { ConnectionStatus } from "./connection.status";
+import { SignalRConnectionBase } from './signalr.connection.base';
+import { Observable } from 'rxjs/Observable';
+import { AsyncSubject } from 'rxjs/AsyncSubject';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { SignalRConfiguration } from '../signalr.configuration';
+import { BroadcastEventListener } from '../eventing/broadcast.event.listener';
+import { ConnectionStatus } from './connection.status';
 
 export interface ListenerCollection {
     [name: string]: BroadcastEventListener<any>;

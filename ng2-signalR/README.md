@@ -4,70 +4,27 @@
 [![Build Status](https://travis-ci.org/HNeukermans/adal-ts.svg?branch=master)](https://travis-ci.org/HNeukermans/adal-ts)
 ![live demo](https://img.shields.io/badge/demo-live-orange.svg)
 
-# adal-ts
-A typescript library that allows you to authenticate against Azure Active Directory
+# ng2-signalr
+An angular typescript library that allows you to connect to Asp.Net SignalR
 
-aka adal.js typescript rewrite
-
-## technical features:
- 1. 100% typescript
- 2. 80% code coverage
- 3. easy to install, no dependencies.
-
+## Reactive apis. Observe:
+ 1. broadcast events from the server
+ 2  connection errors 
+ 3. status changes 
 
 ## Installation
 ```
-npm install adal-ts --save
+npm install ng2-signalr --save
 ```
 
-## adal-ts does 4 things:
- 1. login to Azure Active Directory
- 2. get the logged in user
- 3. logout to Azure Active Directory
- 4. allow to retrieve the token from storage (ex: apply it to header)
- 
-## Example Usage
 
-### login
-```
-let config = new AdalConfig('clientID', 'unittest.onmicrosoft.com', 'http://localhost');
-let context = Authentication.getContext(config);
-context.login();
-...
-//to process the redirect after login, place this inside your root component  (ex: NG2 AppComponent.ngOnInit)
-Authentication.getAadRedirectProcessor().process();
-```
+## Work in progress
 
-### get the currently logged in user
-```
-let config = new AdalConfig('clientID', 'unittest.onmicrosoft.com', 'http://localhost');
-let context = Authentication.getContext(config);
-let user = context.getUser();
 
-```
+## [ng2-signalr live demo](http://ng2-signalr-webui.azurewebsites.net)
 
-### logout
-```
-let config = new AdalConfig('clientID', 'unittest.onmicrosoft.com', 'http://localhost');
-let context = Authentication.getContext(config);
-context.logout();
 
-```
-
-### getToken
-```
-let config = new AdalConfig('clientID', 'unittest.onmicrosoft.com', 'http://localhost');
-let context = Authentication.getContext(config);
-let token = context.getToken();
-```
-
-## [Adal-ts live demo](http://adal-ts-demo.azurewebsites.net/#/)
-
-login with:  
-    user: guestone@hneu70532.onmicrosoft.com <br>
-    pwd: Test1234
-
-source: [adal-ts-consumer](https://github.com/HNeukermans/adal-ts-consumer)
+source: [ng2-signalr-consumer](https://github.com/HNeukermans/adal-ts-consumer)
 
 ## Issue Reporting
 
@@ -87,8 +44,7 @@ npm run webpack
 
 ## Code coverage
 
-Use `npm test` cmd to compile and run all tests. After the tests have run a /coverage folder is generated. Drill down to index.html to see the results.
-![code_coverage_report](https://cloud.githubusercontent.com/assets/2285199/20648817/5019e648-b4b1-11e6-8484-2887204ea783.png)
+Use `npm test` cmd to compile and run all tests. 
 
 ## Unit testing
 

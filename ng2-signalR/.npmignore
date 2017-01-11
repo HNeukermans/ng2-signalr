@@ -11,18 +11,16 @@ Thumbs.db
 
 coverage/
 
-!dist
+!lib
 
 scenario
 
 # TypeScript source files, apart generated type definitions
 **/*.ts
 !**/*.d.ts
+!**/*.js
 
-**/*.js
-
-dist/index.js
-
+src
 
 # Other generated files
 *.spec.*
