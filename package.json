@@ -22,9 +22,9 @@
   "author": "Hannes Neukermans",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/HNeukermans/ng2-signalR/issues"
+    "url": "https://github.com/HNeukermans/ng2-signalr/issues"
   },
-  "homepage": "https://github.com/HNeukermans/ng2-signalR#readme",
+  "homepage": "https://github.com/HNeukermans/ng2-signalr#readme",
   "devDependencies": {
     "@types/jasmine": "^2.2.33",
     "@types/js-base64": "^2.1.3",
