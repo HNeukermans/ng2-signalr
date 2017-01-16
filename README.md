@@ -35,16 +35,17 @@ npm install ng2-signalr --save
  this.connection.invoke('GetNgBeSpeakers').then((data: string[]) => {
       this.speakers = data;
  });
- ``` 
+``` 
  
- ## How to listen for connnection status
- ```
+## How to listen for connnection status
+```
  this.connection.status.subscribe((status: ConnectionStatus) => {
       this.statuses.push(status);
     });
 ```
+
 ## Also supported 
- ```
+```
  // start/stop the connection
  this.connection.start();
  this.connection.stop();
@@ -53,7 +54,7 @@ npm install ng2-signalr --save
  this.connection.errors.subscribe((error: any) => {
       this.errors.push(error);
  });
-  ```
+```
 
 
 
