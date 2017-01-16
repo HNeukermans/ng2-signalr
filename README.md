@@ -16,47 +16,47 @@ npm install ng2-signalr --save
 
 ## How to listen for server side events
 ```
- // 1.create a listener object
- let onMessageSent$ = new BroadcastEventListener<ChatMessage>('ON_MESSAGE_SENT');
+// 1.create a listener object
+let onMessageSent$ = new BroadcastEventListener<ChatMessage>('ON_MESSAGE_SENT');
  
- // 2.register the listener
- this.connection.listen(onMessageSent$);
+// 2.register the listener
+this.connection.listen(onMessageSent$);
  
- // 3.subscribe for incoming messages
- onMessageSent$.subscribe((chatMessage: ChatMessage) => {
-        this.chatMessages.push(chatMessage);
- });
+// 3.subscribe for incoming messages
+onMessageSent$.subscribe((chatMessage: ChatMessage) => {
+       this.chatMessages.push(chatMessage);
+});
 ``` 
 
 ## How to invoke a server method
 ```
- // invoke a server side method, with parameters
- this.connection.invoke('ServerMethodName', new Parameters()).then((data: string[]) => {
-      this.members = data;
- });
- // invoke a server side method
- this.connection.invoke('GetNgBeSpeakers').then((data: string[]) => {
-      this.speakers = data;
- });
+// invoke a server side method, with parameters
+this.connection.invoke('ServerMethodName', new Parameters()).then((data: string[]) => {
+     this.members = data;
+});
+// invoke a server side method
+this.connection.invoke('GetNgBeSpeakers').then((data: string[]) => {
+     this.speakers = data;
+});
 ``` 
  
 ## How to listen for connnection status
 ```
- this.connection.status.subscribe((status: ConnectionStatus) => {
-      this.statuses.push(status);
-    });
+this.connection.status.subscribe((status: ConnectionStatus) => {
+     this.statuses.push(status);
+});
 ```
 
 ## Also supported 
 ```
- // start/stop the connection
- this.connection.start();
- this.connection.stop();
+// start/stop the connection
+this.connection.start();
+this.connection.stop();
  
- // listen for connection errors
- this.connection.errors.subscribe((error: any) => {
-      this.errors.push(error);
- });
+// listen for connection errors
+this.connection.errors.subscribe((error: any) => {
+     this.errors.push(error);
+});
 ```
 
 
