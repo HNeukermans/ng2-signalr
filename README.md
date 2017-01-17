@@ -14,6 +14,19 @@ An angular typescript library that allows you to connect to Asp.Net SignalR
 npm install ng2-signalr --save
 ```
 
+##Setup
+inside app.module.ts
+```
+import { SignalRModule } from 'ng2-signalr';
+
+@NgModule({
+  imports: [ 
+    SignalRModule.configure(signalrConfiguration)
+  ]
+})
+```
+
+
 ## How to listen for server side events
 ```
 // 1.create a listener object
@@ -59,12 +72,24 @@ this.connection.errors.subscribe((error: any) => {
 });
 ```
 
-
-
 ## [ng2-signalr live demo](http://ng2-signalr-webui.azurewebsites.net)
 
 
 source: [ng2 signalr demo](https://github.com/HNeukermans/ng2-signalr.demo.webui/)
+
+### Detailed webpack install
+```
+npm install jquery signalr expose-loader --save
+
+//inside vendor.ts
+import 'expose-loader?jQuery!jquery';
+import '../node_modules/signalr/jquery.signalR.js';
+```
+
+### Detailed systemjs install
+```
+TODO
+```
 
 ## Issue Reporting
 
