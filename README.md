@@ -19,6 +19,14 @@ npm install ng2-signalr --save
 inside app.module.ts
 ```
 import { SignalRModule } from 'ng2-signalr';
+import { SignalRConfiguration } from 'ng2-signalr';
+
+const signalrConfig = new SignalRConfiguration();
+signalrConfig.hubName = 'Ng2SignalRHub';
+signalrConfig.qs = { user: 'Trump' };
+signalrConfig.url = 'http://ng2-signalr-backend.azurewebsites.net/';
+
+export const signalrConfiguration = signalrConfig;
 
 @NgModule({
   imports: [ 
