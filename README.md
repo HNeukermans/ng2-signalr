@@ -80,6 +80,37 @@ this.connection.errors.subscribe((error: any) => {
 });
 ```
 
+## Best practises 
+```
+// if you want your component code to be testable, it is best to use a route resolver and make the connection there
+import { Resolve } from '@angular/router';
+import { SignalR, SignalRConnection } from 'ng2-signalr';
+import { Injectable } from '@angular/core';
+
+@Injectable()
+export class ConnectionResolver implements Resolve<SignalRConnection> {
+
+    constructor(private _signalR: SignalR)  {
+
+    resolve() {
+        console.log('ConnectionResolver. Resolving...');
+        return this._signalR.connect();
+    }
+}
+
+// then inside your component
+ constructor(
+    private route: ActivatedRoute) {
+
+  }
+
+  ngOnInit() {
+    this.connection = this.route.snapshot.data['connection'];
+ }
+
+
+```
+
 ## [ng2-signalr live demo](http://ng2-signalr-webui.azurewebsites.net)
 
 source: [ng2 signalr demo](https://github.com/HNeukermans/ng2-signalr.demo.webui/)
