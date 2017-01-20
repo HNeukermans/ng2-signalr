@@ -26,8 +26,6 @@ signalrConfig.hubName = 'Ng2SignalRHub';
 signalrConfig.qs = { user: 'Trump' };
 signalrConfig.url = 'http://ng2-signalr-backend.azurewebsites.net/';
 
-export const signalrConfiguration = signalrConfig;
-
 @NgModule({
   imports: [ 
     SignalRModule.configure(signalrConfiguration)
