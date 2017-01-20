@@ -50,13 +50,14 @@ onMessageSent$.subscribe((chatMessage: ChatMessage) => {
 
 ## How to invoke a server method
 ```
-// invoke a server side method, with parameters
-this.connection.invoke('ServerMethodName', new Parameters()).then((data: string[]) => {
-     this.members = data;
-});
 // invoke a server side method
 this.connection.invoke('GetNgBeSpeakers').then((data: string[]) => {
      this.speakers = data;
+});
+
+// invoke a server side method, with parameters
+this.connection.invoke('ServerMethodName', new Parameters()).then((data: string[]) => {
+     this.members = data;
 });
 ``` 
  
