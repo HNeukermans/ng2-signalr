@@ -21,14 +21,14 @@ inside app.module.ts
 import { SignalRModule } from 'ng2-signalr';
 import { SignalRConfiguration } from 'ng2-signalr';
 
-const signalrConfig = new SignalRConfiguration();
-signalrConfig.hubName = 'Ng2SignalRHub';
-signalrConfig.qs = { user: 'Trump' };
-signalrConfig.url = 'http://ng2-signalr-backend.azurewebsites.net/';
+const config = new SignalRConfiguration();
+config.hubName = 'Ng2SignalRHub';
+config.qs = { user: 'donald' };
+config.url = 'http://ng2-signalr-backend.azurewebsites.net/';
 
 @NgModule({
   imports: [ 
-    SignalRModule.configure(signalrConfiguration)
+    SignalRModule.configure(config)
   ]
 })
 ```
