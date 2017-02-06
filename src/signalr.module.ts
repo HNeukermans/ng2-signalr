@@ -2,6 +2,11 @@ import { NgModule, ModuleWithProviders, NgZone } from '@angular/core';
 import { SignalR } from './signalr';
 import { SignalRConfiguration } from './signalr.configuration';
 
+
+export function createSignalr(configuration: SignalRConfiguration, zone: NgZone) {
+    return new SignalR(configuration, zone);
+}
+
 @NgModule({
     providers: [{
                     provide: SignalR,
@@ -15,7 +20,7 @@ export class SignalRModule {
             providers: [
                 {
                     provide: SignalR,
-                    useFactory: (zone: NgZone) => new SignalR(configuration, zone),
+                    useFactory: (createSignalr),
                     deps: [NgZone]
                 }
             ],
