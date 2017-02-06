@@ -61,7 +61,7 @@ this.connection.invoke('ServerMethodName', new Parameters()).then((data: string[
 });
 ``` 
  
-## How to listen for connnection status
+## How to listen for connection status
 ```
 this.connection.status.subscribe((status: ConnectionStatus) => {
      this.statuses.push(status);
