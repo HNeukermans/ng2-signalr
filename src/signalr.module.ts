@@ -1,7 +1,8 @@
-import { NgModule, ModuleWithProviders, NgZone } from '@angular/core';
+import { NgModule, ModuleWithProviders, NgZone, OpaqueToken } from '@angular/core';
 import { SignalR } from './signalr';
 import { SignalRConfiguration } from './signalr.configuration';
 
+const SIGNALR_CONFIGURATION = new OpaqueToken('SIGNALR_CONFIGURATION');
 
 export function createSignalr(configuration: SignalRConfiguration, zone: NgZone) {
     return new SignalR(configuration, zone);
@@ -19,9 +20,13 @@ export class SignalRModule {
             ngModule: SignalRModule,
             providers: [
                 {
+                    provide: SIGNALR_CONFIGURATION,
+                    useValue: configuration
+                },
+                {
                     provide: SignalR,
                     useFactory: (createSignalr),
-                    deps: [NgZone]
+                    deps: [SIGNALR_CONFIGURATION, NgZone]
                 }
             ],
         };
