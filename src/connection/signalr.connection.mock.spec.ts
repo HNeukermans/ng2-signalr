@@ -1,4 +1,4 @@
-import { SignalRConnectionMock, ArrangedQuery } from "./signalr.connection.mock";
+import { SignalRConnectionMock } from "./signalr.connection.mock";
 import { Observable } from "rxjs/Observable";
 import { ReplaySubject } from "rxjs/ReplaySubject";
 import { ConnectionStatuses } from "./connection.statuses";
