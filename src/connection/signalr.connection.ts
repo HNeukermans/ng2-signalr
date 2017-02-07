@@ -97,14 +97,15 @@ export class SignalRConnection extends SignalRConnectionBase {
         console.log(`SignalRConnection: Starting to listen to server event with name ${listener.event}`);
 
         this._jProxy.on(listener.event, (...args: any[]) => {
-            console.log('SignalRConnection.proxy.on invoked. Calling listener next() ...');
-            let casted: T = null;
-            if (args.length > 0) casted = <T>args[0];
             
             this._zone.run(() => {
+                let casted: T = null;
+                if (args.length === 0) return;
+                casted = <T>args[0];
+                console.log('SignalRConnection.proxy.on invoked. Calling listener next() ...');
                 listener.next(casted);
-            });
-            console.log('listener next() called.');
+                console.log('listener next() called.');
+            });            
         });
     }
 
