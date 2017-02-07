@@ -1,9 +1,9 @@
 import { SignalRConnectionBase } from './signalr.connection.base';
 import { Observable } from 'rxjs/Observable';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { BroadcastEventListener } from '../eventing/broadcast.event.listener';
 import { ConnectionStatus } from './connection.status';
 import { NgZone } from '@angular/core';
+import { Subject } from 'rxjs/Subject';
 
 export class SignalRConnection extends SignalRConnectionBase {
     private _status: Observable<ConnectionStatus>;
@@ -66,7 +66,7 @@ export class SignalRConnection extends SignalRConnectionBase {
     }
 
     private wireUpErrorsAsObservable(): Observable<any> {
-        let sError = new ReplaySubject<any>();
+        let sError = new Subject<any>();
 
         this._jConnection.error((error: any) => {
             this._zone.run(() => {
@@ -77,7 +77,7 @@ export class SignalRConnection extends SignalRConnectionBase {
     }
 
     private wireUpStatusEventsAsObservable(): Observable<ConnectionStatus> {
-        let sStatus = new ReplaySubject<ConnectionStatus>();
+        let sStatus = new Subject<ConnectionStatus>();
         let connStatusNames = ['starting', 'received', 'connectionSlow', 'reconnecting', 'reconnected', 'stateChanged', 'disconnected'];
         // aggregate all signalr connection status handlers into 1 observable. 
         connStatusNames.forEach((statusName) => {
