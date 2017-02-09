@@ -113,7 +113,7 @@ export class ConnectionResolver implements Resolve<SignalRConnection> {
 
 ## [ng2-signalr live demo](http://ng2-signalr-webui.azurewebsites.net)
 
-source: [ng2 signalr demo](https://github.com/HNeukermans/ng2-signalr.demo.webui/)
+source: [ng2 signalr demo](https://github.com/HNeukermans/ng2-signalr.demo.webui.systemjs)
 
 ### Detailed webpack install
 ```
