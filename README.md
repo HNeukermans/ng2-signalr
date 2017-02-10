@@ -10,6 +10,9 @@ An angular typescript library that allows you to connect to Asp.Net SignalR
  2. use rxjs to observe server events 
  3. write unit testable signalr code 
 
+![ng2-signalr](https://cloud.githubusercontent.com/assets/2285199/22845870/f8cdaff4-efe4-11e6-905d-a471a998125a.gif)
+
+
 ## Installation
 ```
 npm install ng2-signalr --save
