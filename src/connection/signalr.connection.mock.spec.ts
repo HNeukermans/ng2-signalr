@@ -54,41 +54,7 @@ describe("SignalRConnectionMock", () => {
         });
     });
 
-    describe("mocking query", () => {
-
-        let sut: SignalRConnectionMock;
-        let expectedResponse: any;
-        let actualResponse: any = null;
-        let querySpy: ArrangedQuery = null;
-        
-        // arrange
-        beforeEach(() => {
-            sut = new SignalRConnectionMock();
-            expectedResponse = ["hannes", "frederik"];
-            querySpy = sut.whenQuery("getUsers").respond(expectedResponse);
-        });
-
-        // act
-        beforeEach((done) => {
-            sut.query("getUsers").then((response) => {
-                actualResponse = response;
-                done();
-            });
-        });
-
-        it("query should respond", () => {
-            expect(actualResponse).toBe(expectedResponse);
-        });
-
-        it("query should have been called", () => {
-            expect(querySpy.hasBeenCalled).toBe(true);
-        });
-
-        it("query should have been called once", () => {
-            expect(querySpy.hasBeenCalledNumberOfTimes).toBe(1);
-        });
-    });
-
+    
     describe("mocking error query", () => {
 
         let sut: SignalRConnectionMock;
@@ -127,40 +93,6 @@ describe("SignalRConnectionMock", () => {
 
         it("query should have been called once", () => {
             expect(querySpy.hasBeenCalledNumberOfTimes).toBe(1);
-        });
-    });
-
-    describe("mocking ok command", () => {
-
-        let sut: SignalRConnectionMock;
-        let expectedResponse: any;
-        let actualResponse: any = null;
-        let commandSpy: ArrangedQuery = null;
-        let payload =  { name : "hannes", profession : "developer" };
-        
-        beforeEach(() => {
-            sut = new SignalRConnectionMock();
-            expectedResponse = { name : "hannes", profession : "developer", id : 1 };
-            commandSpy = sut.whenCommand("createUser").respond(expectedResponse);
-        });
-
-        beforeEach((done) => {
-            sut.command("createUser", payload).then((response) => {
-                actualResponse = response;
-                done();
-            });
-        });
-
-        it("command should respond", () => {
-            expect(actualResponse).toBe(expectedResponse);
-        });
-
-        it("command should have been called", () => {
-            expect(commandSpy.hasBeenCalled).toBe(true);
-        });
-
-        it("query should have been called once", () => {
-            expect(commandSpy.hasBeenCalledNumberOfTimes).toBe(1);
         });
     });
 
