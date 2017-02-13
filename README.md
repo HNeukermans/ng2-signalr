@@ -10,6 +10,10 @@ An angular typescript library that allows you to connect to Asp.Net SignalR
  2. use rxjs to observe server events 
  3. write unit testable signalr code 
 
+## [ng2-signalr live demo](http://ng2-signalr-webui.azurewebsites.net)
+![ng2-signalr](https://cloud.githubusercontent.com/assets/2285199/22845870/f8cdaff4-efe4-11e6-905d-a471a998125a.gif)
+source: [ng2 signalr demo](https://github.com/HNeukermans/ng2-signalr.demo.webui.systemjs)
+
 ## Installation
 ```
 npm install ng2-signalr --save
@@ -110,10 +114,6 @@ export class ConnectionResolver implements Resolve<SignalRConnection> {
 
 
 ```
-
-## [ng2-signalr live demo](http://ng2-signalr-webui.azurewebsites.net)
-
-source: [ng2 signalr demo](https://github.com/HNeukermans/ng2-signalr.demo.webui/)
 
 ### Detailed webpack install
 ```
