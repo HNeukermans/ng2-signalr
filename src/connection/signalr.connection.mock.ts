@@ -5,6 +5,7 @@ import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { SignalRConfiguration } from '../signalr.configuration';
 import { BroadcastEventListener } from '../eventing/broadcast.event.listener';
 import { ConnectionStatus } from './connection.status';
+import { Subject } from 'rxjs/Subject';
 
 export interface ListenerCollection {
     [name: string]: BroadcastEventListener<any>;
@@ -12,7 +13,7 @@ export interface ListenerCollection {
 
 export class SignalRConnectionMockObject extends SignalRConnectionBase {
     constructor(
-        private _mockErrors$: ReplaySubject<any>, 
+        private _mockErrors$: Subject<any>, 
         private _mockStatus$: ReplaySubject<ConnectionStatus>,
         private _listeners: ListenerCollection) {
          super();
@@ -44,26 +45,22 @@ export class SignalRConnectionMockObject extends SignalRConnectionBase {
 
 export class SignalRConnectionMock {
     private _status$: ReplaySubject<ConnectionStatus>;
-    private _errors$: ReplaySubject<any>;
+    private _errors$: Subject<any>;
     private _object: SignalRConnectionBase;
     public listeners: ListenerCollection;
 
     constructor() {
-        this._errors$ = new ReplaySubject<any>();
+        this._errors$ = new Subject<any>();
         this._status$ = new ReplaySubject<ConnectionStatus>();
         this.listeners = {};
         this._object = new SignalRConnectionMockObject(this._errors$, this._status$, this.listeners);
     }
 
-    get errors(): Observable<any> {
-        return this._errors$;
-    }
-
-    get object(): SignalRConnectionBase {
+    get fakeConnection(): SignalRConnectionBase {
         return this._object;
     }
 
-    get errors$(): ReplaySubject<any> {
+    get errors$(): Subject<any> {
         return this._errors$;
     }
 
@@ -71,9 +68,9 @@ export class SignalRConnectionMock {
     //     return this._status$;
     // }
 
-    // get status$(): ReplaySubject<ConnectionStatus> {
-    //     return this._status$;
-    // }
+    get status$(): ReplaySubject<ConnectionStatus> {
+        return this._status$;
+    }
 
     // public stop(): void {
     // }

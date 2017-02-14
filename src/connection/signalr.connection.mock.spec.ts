@@ -1,142 +1,96 @@
-import { SignalRConnectionMock } from "./signalr.connection.mock";
-import { Observable } from "rxjs/Observable";
-import { ReplaySubject } from "rxjs/ReplaySubject";
-import { ConnectionStatuses } from "./connection.statuses";
-import { ConnectionStatus } from "./connection.status";
+import { SignalRConnectionMock } from './signalr.connection.mock';
+import { Observable } from 'rxjs/Observable';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { ConnectionStatuses } from './connection.statuses';
+import { ConnectionStatus } from './connection.status';
+import { SignalRConnectionBase } from './signalr.connection.base';
+import { Subject } from 'rxjs/Subject';
 
-describe("SignalRConnectionMock", () => {
+describe('SignalRConnectionMock', () => {
 
-    it("constructor should initialize", () => {
+    it('constructor should initialize', () => {
         let sut = new SignalRConnectionMock();
-        expect(sut.errors$).not.toBeNull();
-        expect(sut.errors).not.toBeNull();
-        expect(sut.status$).not.toBeNull();
-        expect(sut.status).not.toBeNull();
+        expect(sut.errors$ instanceof Subject).toBeTruthy();
+        expect(sut.status$ instanceof Subject).toBeTruthy();
+        expect(sut.fakeConnection instanceof SignalRConnectionBase).toBeTruthy();
     });
 
-    describe("mocking status", () => {
-
-        class StatusListener {
-            public result: ConnectionStatus[];
-            constructor() {
-                this.result = [];
-            }
-            public listen() {
-                let _self = this; /*make use of closure, to keep 'this' refencered*/
-                return function (status: ConnectionStatus) {
-                    _self.result.push(status);
-                };
-            }
-        }
-
+    describe('Given fake-connection has an error subscriber', () => {
         let sut: SignalRConnectionMock;
-        let listener: StatusListener;
+        let actualErrors: any[];
 
         beforeEach(() => {
-            listener = new StatusListener();
             sut = new SignalRConnectionMock();
-            sut.status.subscribe(listener.listen());
-        });
-
-        it("mock x1 time should dispatch single event", () => {
-            sut.status$.next(ConnectionStatuses.Starting);
-
-            expect(listener.result.length).toBe(1);
-            expect(listener.result[0]).toBe(ConnectionStatuses.Starting);
-        });
-
-        it("mock x2 times should dispatch 2 events in order", () => {
-            sut.status$.next(ConnectionStatuses.Starting);
-            sut.status$.next(ConnectionStatuses.ConnectionSlow);
-            expect(listener.result.length).toBe(2);
-            expect(listener.result[0]).toBe(ConnectionStatuses.Starting);
-            expect(listener.result[1]).toBe(ConnectionStatuses.ConnectionSlow);
-        });
-    });
-
-    
-    describe("mocking error query", () => {
-
-        let sut: SignalRConnectionMock;
-        let expectedError: any;
-        let actualResponse: any = null, actualError: any = null;
-        let querySpy: ArrangedQuery = null;
-        
-        beforeEach(() => {
-            sut = new SignalRConnectionMock();
-            expectedError = "Oops. Error occcured.";
-            querySpy = sut.whenQuery("getUsers").respondWithError(expectedError);
-        });
-
-        beforeEach((done) => {
-            debugger;
-            sut.query("getUsers").then((response) => {
-                actualResponse = response;
-                done();
-            }, (error) => {
-                actualError = error;
-                done();
+            actualErrors = [];
+            sut.fakeConnection.errors.subscribe((error) => {
+                actualErrors.push(error);
             });
         });
 
-        it("query should not resolve", () => {
-            expect(actualResponse).toBe(null);
-        });
+        describe('when an error is faked once', () => {
 
-        it("query should reject with error", () => {
-            expect(actualError).toBe(expectedError);
-        });
+            beforeEach(() => {
+                sut.errors$.next('An error occured');
+            });
 
-        it("query should have been called", () => {
-            expect(querySpy.hasBeenCalled).toBe(true);
-        });
-
-        it("query should have been called once", () => {
-            expect(querySpy.hasBeenCalledNumberOfTimes).toBe(1);
-        });
-    });
-
-    describe("mocking error command", () => {
-
-        let sut: SignalRConnectionMock;
-        let expectedError: any;
-        let actualResponse: any = null, actualError: any = null;
-        let commandSpy: ArrangedQuery = null;
-        let payload =  { name : "hannes", profession : "developer" };
-        
-        beforeEach(() => {
-            sut = new SignalRConnectionMock();
-            expectedError = "Oops. Error occcured.";
-            commandSpy = sut.whenCommand("createUser").respondWithError(expectedError);
-        });
-
-        beforeEach((done) => {
-            debugger;
-            sut.command("createUser", payload).then((response) => {
-                actualResponse = response;
-                done();
-            }, (error) => {
-                actualError = error;
-                done();
+            it('the fake connection should have emitted once', () => {
+                expect(actualErrors.length).toBe(1);
+                expect(actualErrors[0]).toBe('An error occured');
             });
         });
 
-        it("command should not resolve", () => {
-            expect(actualResponse).toBe(null);
-        });
+        describe('when an error is faked twice', () => {
 
-        it("command should reject with error", () => {
-            expect(actualError).toBe(expectedError);
-        });
+            beforeEach(() => {
+                sut.errors$.next('An error occured');
+                sut.errors$.next('A second error occured');
+            });
 
-        it("command should have been called", () => {
-            expect(commandSpy.hasBeenCalled).toBe(true);
-        });
-
-        it("command should have been called once", () => {
-            expect(commandSpy.hasBeenCalledNumberOfTimes).toBe(1);
+            it('the fake connection should have emitted twice', () => {
+                expect(actualErrors.length).toBe(2);
+                expect(actualErrors[0]).toBe('An error occured');
+                expect(actualErrors[1]).toBe('A second error occured');
+            });
         });
     });
 
+    describe('Given fake-connection has a status subscriber', () => {
+        let sut: SignalRConnectionMock;
+        let actualStatusses: ConnectionStatus[];
+
+        beforeEach(() => {
+            sut = new SignalRConnectionMock();
+            actualStatusses = [];
+            sut.fakeConnection.status.subscribe((status: ConnectionStatus) => {
+                actualStatusses.push(status);
+            });
+        });
+
+        describe('when status is faked once', () => {
+
+            beforeEach(() => {
+                sut.status$.next(ConnectionStatuses.ConnectionSlow);
+            });
+
+            it('the fake connection should have emitted once', () => {
+                expect(actualStatusses.length).toBe(1);
+                expect(actualStatusses[0]).toEqual(ConnectionStatuses.ConnectionSlow);
+            });
+        });
+
+        describe('when status is faked twice', () => {
+
+            beforeEach(() => {
+                sut.status$.next(ConnectionStatuses.ConnectionSlow);
+                sut.status$.next(ConnectionStatuses.Disconnected);
+            });
+
+            it('the fake connection should have emitted twice', () => {
+                expect(actualStatusses.length).toBe(2);
+                expect(actualStatusses[0]).toEqual(ConnectionStatuses.ConnectionSlow);
+                expect(actualStatusses[1]).toEqual(ConnectionStatuses.Disconnected);
+            });
+        });
+    });
 });
 
