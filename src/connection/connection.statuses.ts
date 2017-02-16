@@ -2,15 +2,14 @@ import { ConnectionStatus } from './connection.status';
 
 export class ConnectionStatuses {
 
-    // TODO: prevent creating instances in every call to get() 
     private static statuses: ConnectionStatus[] = 
         [
             new ConnectionStatus("starting"),
             new ConnectionStatus("received"),
             new ConnectionStatus("connectionSlow"),
             new ConnectionStatus("reconnecting"),
+            new ConnectionStatus("reconnected"),
             new ConnectionStatus("stateChanged"),
-            new ConnectionStatus("starting"),
             new ConnectionStatus("disconnected"),
         ]; 
 
