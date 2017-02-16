@@ -1,6 +1,6 @@
-import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { Subject } from 'rxjs/Subject';
 
-export class BroadcastEventListener<T> extends ReplaySubject<T> {
+export class BroadcastEventListener<T> extends Subject<T> {
     
     constructor(public event: string) {
         super();
