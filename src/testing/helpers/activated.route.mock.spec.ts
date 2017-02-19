@@ -1,8 +1,8 @@
 import { ActivatedRouteMock } from './activated.route.mock';
 
-describe("ActivatedRouteMock", () => {
+describe('ActivatedRouteMock', () => {
 
-    it("constructor should set snaphot", () => {
+    it('constructor should set snaphot', () => {
         let mock = new ActivatedRouteMock();
         expect(mock.snapshot).not.toBeNull(); 
     });

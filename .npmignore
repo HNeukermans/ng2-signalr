@@ -34,3 +34,6 @@ tsconfig.*
 dist/scenario
 
 webpack.config.js
+
+/compiled
+

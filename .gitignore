@@ -20,3 +20,6 @@ Thumbs.db
 npm-debug*
 
 settings.json
+
+
+*.metadata.json

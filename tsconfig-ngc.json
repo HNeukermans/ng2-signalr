@@ -1,6 +1,5 @@
 {
-    "compilerOptions": {
-        "genDir": "compiled",
+    "compilerOptions": {        
         "noImplicitAny": true,
         "module": "commonjs",
         "target": "es5",
@@ -26,6 +25,7 @@
         "lib"
     ],
     "angularCompilerOptions": {
+        "genDir": "compiled",
         "skipTemplateCodegen": true
     }
 }
