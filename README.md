@@ -37,6 +37,74 @@ config.url = 'http://ng2-signalr-backend.azurewebsites.net/';
 })
 ```
 
+## Create connection 
+### 1. inject signalr
+Creating a client-server connection can be done by calling the connect method on the Signalr instance.
+```
+// inside your component.
+constructor(private _signalR: SignalR)  {
+}
+
+someFunction() {
+    this._signalR.connect().then((c) => {
+      //do stuff
+    });
+}
+```
+This approach has several drawbacks:
+WaitTime: 
+ - Take into account, it can take several second to establish connection with the server and thus for the promise to resolve. This is especially true when a websocket-transport connection is not possible and signalr tries to fallback to other transports like serverSentEevents and long polling. Is it adviceable to keep your end user aware by showing some form of progress.   
+More difficult to unit test:
+ - If you want to write unit tests against the connection, you need to mock Signalr instance first. 
+
+### 2. inject connection
+This approach is preferable. You can easily  rely on the default router navigation events (NavigationStart/End) to keep your user busy while the connection establishment is ongoing. Secondly you can inject the connection directly, facilitating easier unit testing. 
+Setup involves 3 steps. 
+```
+// 1. if you want your component code to be testable, it is best to use a route resolver and make the connection there
+import { Resolve } from '@angular/router';
+import { SignalR, SignalRConnection } from 'ng2-signalr';
+import { Injectable } from '@angular/core';
+
+@Injectable()
+export class ConnectionResolver implements Resolve<SignalRConnection> {
+
+    constructor(private _signalR: SignalR)  {
+
+    resolve() {
+        console.log('ConnectionResolver. Resolving...');
+        return this._signalR.connect();
+    }
+}
+
+// 2. use the resolver to resolve 'connection' when navigation to the your page/component
+import { Route } from '@angular/router';
+import { DocumentationComponent } from './index';
+import { ConnectionResolver } from './documentation.route.resolver';
+
+export const DocumentationRoutes: Route[] = [
+	{
+		path: 'documentation',
+    component: DocumentationComponent,
+     resolve: { connection: ConnectionResolver }
+	}
+];
+
+// 3. then inside your component
+ constructor(
+    private route: ActivatedRoute) {
+
+  }
+
+  ngOnInit() {
+    this.connection = this.route.snapshot.data['connection'];
+ }
+
+
+```
+
+
+
 
 ## How to listen for server side events
 ```
@@ -82,72 +150,6 @@ this.connection.stop();
 this.connection.errors.subscribe((error: any) => {
      this.errors.push(error);
 });
-```
-
-## Create connection 
-# 1. inject signalr
-Creating a client-server connection can be done by calling the connect method on the Signalr instance.
-```
-// inside your component.
-constructor(private _signalR: SignalR)  {
-}
-
-someFunction() {
-    this._signalR.connect().then((c) => {
-      //do stuff
-    });
-}
-```
-This approach has several drawbacks:
-WaitTime: 
- - Take into account, it can take several second to establish connection with the server and thus for the promise to resolve. This is especially true when a websocket-transport connection is not possible and signalr tries to fallback to other transports like serverSentEevents and long polling. Is it adviceable to keep your end user aware by showing some form of progress.   
-More difficult to unit test:
- - If you want to write unit tests against the connection, you need to mock Signalr instance first. 
-
-# 2. inject connection
-This approach is preferable. You can easily  rely on the default router navigation events (NavigationStart/End) to keep your user busy while the connection establishment is ongoing. Secondly you can inject the connection directly, facilitating easier unit testing. 
-Setup involves 3 steps. 
-```
-// 1. if you want your component code to be testable, it is best to use a route resolver and make the connection there
-import { Resolve } from '@angular/router';
-import { SignalR, SignalRConnection } from 'ng2-signalr';
-import { Injectable } from '@angular/core';
-
-@Injectable()
-export class ConnectionResolver implements Resolve<SignalRConnection> {
-
-    constructor(private _signalR: SignalR)  {
-
-    resolve() {
-        console.log('ConnectionResolver. Resolving...');
-        return this._signalR.connect();
-    }
-}
-
-// 2. use the resolver to resolve 'connection' when navigation to the your page/component
-import { Route } from '@angular/router';
-import { DocumentationComponent } from './index';
-import { ConnectionResolver } from './documentation.route.resolver';
-
-export const DocumentationRoutes: Route[] = [
-	{
-		path: 'documentation',
-    component: DocumentationComponent,
-     resolve: { connection: ConnectionResolver }
-	}
-];
-
-// 3. then inside your component
- constructor(
-    private route: ActivatedRoute) {
-
-  }
-
-  ngOnInit() {
-    this.connection = this.route.snapshot.data['connection'];
- }
-
-
 ```
 
 ### Detailed webpack install
