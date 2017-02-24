@@ -15,7 +15,7 @@ export class SignalR {
         this._zone = zone;
     }
 
-    public connect(): Promise<SignalRConnectionBase> {
+    public connect(configuration: SignalRConfiguration = this._configuration): Promise<SignalRConnectionBase> {
 
         let $promise = new Promise<SignalRConnection>((resolve, reject) => {
 
@@ -23,12 +23,12 @@ export class SignalR {
         let hubConnectionFn = this.getHubConnection();
         
         // create connection object
-        let jConnection = hubConnectionFn(this._configuration.url);
-        jConnection.logging = this._configuration.logging;
-        jConnection.qs = this._configuration.qs;
+        let jConnection = hubConnectionFn(configuration.url);
+        jConnection.logging = configuration.logging;
+        jConnection.qs = configuration.qs;
 
         // create a proxy
-        let jProxy = jConnection.createHubProxy(this._configuration.hubName);
+        let jProxy = jConnection.createHubProxy(configuration.hubName);
         // !!! important. We need to register at least one on function otherwise server callbacks will not work. 
         jProxy.on('noOp', function () { });
            
