@@ -8,7 +8,8 @@ module.exports = function (config) {
         frameworks: ["jasmine"],
         // list of files / patterns to load in the browser
         files: [
-            //{ pattern: 'dist/*.js', included: true },
+            { pattern: './node_modules/reflect-metadata/temp/Reflect.js', included: true },
+            { pattern: './node_modules/zone.js/dist/zone.js', included: true },
             { pattern: './karma.specs.js', watched: true },
         ],
 

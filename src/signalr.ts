@@ -2,6 +2,7 @@ import { SignalRConnectionBase } from './connection/signalr.connection.base';
 import { SignalRConfiguration } from './signalr.configuration';
 import { SignalRConnection } from './connection/signalr.connection';
 import { NgZone, Injectable } from '@angular/core';
+import { ConnectionOptions } from './connection/connection.options';
 
 declare var jQuery: any;
 
@@ -9,34 +10,44 @@ declare var jQuery: any;
 export class SignalR {
     private _configuration: SignalRConfiguration;
     private _zone: NgZone;
+    private _jHubConnectionFn: any;
 
-    public constructor(configuration: SignalRConfiguration, zone: NgZone) {
+    public constructor(configuration: SignalRConfiguration, zone: NgZone, jHubConnectionFn: (url: string) => any) {
         this._configuration = configuration;
         this._zone = zone;
+        this._jHubConnectionFn = jHubConnectionFn;
     }
 
-    public connect(): Promise<SignalRConnectionBase> {
+    public connect(options?: ConnectionOptions): Promise<SignalRConnectionBase> {
+
 
         let $promise = new Promise<SignalRConnection>((resolve, reject) => {
 
-        let jQuery = this.getJquery();
-        let hubConnectionFn = this.getHubConnection();
-        
-        // create connection object
-        let jConnection = hubConnectionFn(this._configuration.url);
-        jConnection.logging = this._configuration.logging;
-        jConnection.qs = this._configuration.qs;
 
-        // create a proxy
-        let jProxy = jConnection.createHubProxy(this._configuration.hubName);
-        // !!! important. We need to register at least one on function otherwise server callbacks will not work. 
-        jProxy.on('noOp', function () { });
+            let configuration = this.merge(options ? options : {});
+
+            console.log(`Connecting with...`);
+            console.log(`configuration:[url: '${configuration.url}'] ...`);
+            console.log(`configuration:[hubName: '${configuration.hubName}'] ...`);
+            try {
+                let serialized = JSON.stringify(configuration.qs);
+                console.log(`configuration:[qs: '${serialized}'] ...`);
+            } catch (err) {}
+                        
+            // create connection object
+            let jConnection = this._jHubConnectionFn(configuration.url);
+            jConnection.logging = configuration.logging;
+            jConnection.qs = configuration.qs;
+
+            // create a proxy
+            let jProxy = jConnection.createHubProxy(configuration.hubName);
+            // !!! important. We need to register at least one on function otherwise server callbacks will not work. 
+            jProxy.on('noOp', function () { });
            
+            let hubConnection = new SignalRConnection(jConnection, jProxy, this._zone);
             // start the connection
             console.log('Starting connection ...');
-            // create EstablishedConnection before done, to allow replaysubjects to emit all events that occurred priorly. 
-            let hubConnection = new SignalRConnection(jConnection, jProxy, this._zone);
-
+            
             jConnection.start({ withCredentials: false })
                 .done(function () {
                     console.log('Connection established, ID: ' + jConnection.id);
@@ -52,15 +63,12 @@ export class SignalR {
         return $promise;
     }
 
-    private getJquery(): any {
-        jQuery = (<any>window).jQuery;
-        if (jQuery == null) throw new Error('Signalr failed to connect. Script \'jquery.js\' is missing. Please make sure to include jquery script.');
-        return jQuery;
-    }
-
-    private getHubConnection(): any {
-        let hubConnectionFn = (<any>window).jQuery.hubConnection;
-        if (hubConnectionFn == null) throw new Error('Signalr failed to connect. Script \'jquery.signalR.js\' is missing. Please make sure to include \'jquery.signalR.js\' script.');
-        return hubConnectionFn;
+    private merge(overrides: ConnectionOptions): SignalRConfiguration {
+        let merged: SignalRConfiguration = new SignalRConfiguration(); 
+        merged.hubName = overrides.hubName ? overrides.hubName : this._configuration.hubName;  
+        merged.url = overrides.url ? overrides.url : this._configuration.url;  
+        merged.qs = overrides.qs ? overrides.qs : this._configuration.qs;  
+        merged.logging = this._configuration.logging;
+        return merged;
     }
 }

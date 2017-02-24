@@ -34,6 +34,8 @@ tsconfig.*
 dist/scenario
 
 webpack.config.js
+webpack.test.config.js
+tsconfig-ngc.*
 
 /compiled
 
