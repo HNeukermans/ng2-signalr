@@ -65,9 +65,9 @@ export class SignalR {
 
     private merge(overrides: ConnectionOptions): SignalRConfiguration {
         let merged: SignalRConfiguration = new SignalRConfiguration(); 
-        merged.hubName = overrides.hubName ? overrides.hubName : this._configuration.hubName;  
-        merged.url = overrides.url ? overrides.url : this._configuration.url;  
-        merged.qs = overrides.qs ? overrides.qs : this._configuration.qs;  
+        merged.hubName = overrides.hubName || this._configuration.hubName;
+        merged.url = overrides.url || this._configuration.url;
+        merged.qs = overrides.qs || this._configuration.qs;
         merged.logging = this._configuration.logging;
         return merged;
     }
