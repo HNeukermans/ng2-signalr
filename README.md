@@ -104,8 +104,8 @@ export const DocumentationRoutes: Route[] = [
 ```
 ## Configuration
 You can configure Singalr on 2 different levels: 
-#### Module level: 
-The module level, is where you typically provide the default configuration. This is were you provide the default hubname, serverurl, and qs (query string parameters). When Singalr.connect() method is invoked without parameters, somewhere in your application, it will use this default configuration. 
+#### 1. Module level: 
+The module level, is where you typically provide the default configuration. This is were you pass in the default hubname, serverurl, and qs (query string parameters). When, somewhere in your application, Singalr.connect() method is invoked without parameters, it will use this default configuration. 
 ```
 import { SignalRModule } from 'ng2-signalr';
 import { SignalRConfiguration } from 'ng2-signalr';
@@ -124,8 +124,8 @@ config.url = 'http://ng2-signalr-backend.azurewebsites.net/';
 
 Signalr.connect(); //HERE: module level configuration is used when trying to connect
 ```
-#### Connection level: 
-You can always configure signalr on a per connection level basis. For this, you need to invoke Singalr.connect(options) method, passing in an options parameter, of type ConnectionOptions. Behind the scenes, Signalr connect method will merge the provided options parameter, with the default (module) configuration, into a new configuration object, and pass that to signalr backend. 
+#### 2. Connection level: 
+You can always configure signalr on a per connection level. For this, you need to invoke Singalr.connect(options) method, passing in an options parameter, of type ConnectionOptions. Behind the scenes, Signalr connect method will merge the provided options parameter, with the default (module) configuration, into a new configuration object, and pass that to signalr backend. 
 ```
 import { SignalRModule } from 'ng2-signalr';
 import { ConnectionOptions, Signalr } from 'ng2-signalr';
