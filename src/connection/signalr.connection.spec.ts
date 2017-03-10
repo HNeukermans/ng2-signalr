@@ -1,9 +1,9 @@
-import { SignalRConnection } from "./signalr.connection";
+import { SignalRConnection } from './signalr.connection';
 import { NgZone } from '@angular/core';
 import { JConnectionStub, JHubProxyStub } from './jConnection.stub';
 import { BroadcastEventListener } from '../eventing/broadcast.event.listener';
 
-describe("Connection", () => {
+describe('Connection', () => {
 
     let zone: NgZone, jConnectionStub: JConnectionStub;   
     let connection: SignalRConnection;
@@ -15,12 +15,12 @@ describe("Connection", () => {
         hubProxy = new JHubProxyStub();
     });
 
-    it("id should get jConnection-id", () => {        
+    it('id should get jConnection-id', () => {        
         let connection = new SignalRConnection(jConnectionStub, hubProxy , zone);
         expect(connection.id).toBe(jConnectionStub.id);
     });
 
-    it("listen should proxy on listener event", () => {        
+    it('listen should proxy on listener event', () => {        
         // arrange
         spyOn(hubProxy, 'on');
         let connection = new SignalRConnection(jConnectionStub, hubProxy, zone);
@@ -31,7 +31,7 @@ describe("Connection", () => {
         expect(hubProxy.on).toHaveBeenCalledWith(listener.event, jasmine.any(Function));
     });
 
-    it("listenFor should proxy on event", () => {        
+    it('listenFor should proxy on event', () => {        
         // arrange
         spyOn(hubProxy, 'on');
         let connection = new SignalRConnection(jConnectionStub, hubProxy, zone);
@@ -42,7 +42,7 @@ describe("Connection", () => {
         expect(listener.event).toBe('OnMessageSent');
     });
 
-    it("listenFor should throw when event is empty", () => {        
+    it('listenFor should throw when event is empty', () => {        
         // arrange
         let connection = new SignalRConnection(jConnectionStub, hubProxy, zone);
         // act
@@ -51,6 +51,5 @@ describe("Connection", () => {
         // assert
         expect(action1).toThrow();
         expect(action2).toThrow();
-        
     });
 });

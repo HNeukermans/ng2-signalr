@@ -113,8 +113,8 @@ export class SignalRConnection extends SignalRConnectionBase {
         });
     }
 
-    public listenFor<T>(event : string): BroadcastEventListener<T> {
-        if (event == null || event == '') throw new Error('Failed to listen. Argument \'event\' can not be empty');
+    public listenFor<T>(event: string): BroadcastEventListener<T> {
+        if (event == null || event === '') throw new Error('Failed to listen. Argument \'event\' can not be empty');
 
         let listener = new BroadcastEventListener<T>(event);
 
