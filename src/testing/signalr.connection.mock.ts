@@ -45,6 +45,12 @@ export class SignalRConnectionMock extends SignalRConnectionBase {
     public listen<T>(listener: BroadcastEventListener<T>): void {
         this._listeners[listener.event] = listener;
     }
+
+    public listenFor<T>(event: string): BroadcastEventListener<T> {
+        let listener = new BroadcastEventListener<T>(event);
+        this.listen(listener);
+        return listener;
+    }
 }
 
 

@@ -8,6 +8,7 @@ export abstract class SignalRConnectionBase {
     public abstract get errors(): Observable<any>;
     public abstract invoke(method: string, ...parameters: any[]): Promise<any>
     public abstract listen<T>(listener: BroadcastEventListener<T>): void;
+    public abstract listenFor<T>(listener: string): BroadcastEventListener<T>;
     public abstract stop(): void;
     public abstract get id(): string;
     public abstract start(): Promise<any>;
