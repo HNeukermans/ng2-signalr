@@ -1,6 +1,7 @@
 export class JConnectionStub {
     public stub: any = {};
-
+    public url: string;
+    
     constructor() {
         this.stub.callLog = [];
         this.stub.onFunctionDict = {};
