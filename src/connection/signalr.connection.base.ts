@@ -9,5 +9,6 @@ export abstract class SignalRConnectionBase {
     public abstract invoke(method: string, ...parameters: any[]): Promise<any>
     public abstract listen<T>(listener: BroadcastEventListener<T>): void;
     public abstract stop(): void;
+    public abstract get id(): string;
     public abstract start(): Promise<any>;
 } 

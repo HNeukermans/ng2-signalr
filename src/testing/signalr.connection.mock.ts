@@ -27,6 +27,10 @@ export class SignalRConnectionMock extends SignalRConnectionBase {
         return this._mockStatus$;
     }
 
+    get id(): string {
+        return 'xxxxxxxx-xxxx-xxxx-xxxxxxxxx';
+    }
+
     public stop(): void {
     }
 

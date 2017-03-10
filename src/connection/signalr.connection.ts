@@ -45,6 +45,10 @@ export class SignalRConnection extends SignalRConnectionBase {
         this._jConnection.stop();
     }
 
+    public get id(): string {
+        return this._jConnection.id;
+    }
+
     public invoke(method: string, ...parameters: any[]): Promise<any> {
         if (method == null) throw new Error('SignalRConnection: Failed to invoke. Argument \'method\' can not be null');
 
