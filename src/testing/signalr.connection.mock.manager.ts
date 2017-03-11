@@ -7,13 +7,13 @@ export class SignalRConnectionMockManager {
     private _status$: Subject<ConnectionStatus>;
     private _errors$: Subject<any>;
     private _object: SignalRConnectionMock;
-    public _invokeListeners: ListenerCollection;
+    public _listeners: ListenerCollection;
 
     constructor() {
         this._errors$ = new Subject<any>();
         this._status$ = new Subject<ConnectionStatus>();
-        this._invokeListeners = {};
-        this._object = new SignalRConnectionMock(this._errors$, this._status$, this._invokeListeners);
+        this._listeners = {};
+        this._object = new SignalRConnectionMock(this._errors$, this._status$, this._listeners);
     }
 
     get mock(): SignalRConnectionMock {
@@ -28,7 +28,7 @@ export class SignalRConnectionMockManager {
         return this._status$;
     }
 
-    get invokeListeners():ListenerCollection {
-        return this._invokeListeners;
+    get listeners(): ListenerCollection {
+        return this._listeners;
     }
 }
