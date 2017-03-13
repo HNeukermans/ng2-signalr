@@ -11,9 +11,9 @@ An angular typescript library that allows you to connect to Asp.Net SignalR
  3. write unit tests easy using the provided SignalrConnectionMockManager & ActivatedRouteMock
 
 ## [ng2-signalr live demo](http://ng2-signalr-webui.azurewebsites.net)
-![ng2-signalr](https://cloud.githubusercontent.com/assets/2285199/22845870/f8cdaff4-efe4-11e6-905d-a471a998125a.gif)
+![ng2-signalr](https://cloud.githubusercontent.com/assets/2285199/22845870/f8cdaff4-efe4-11e6-905d-a471a998125a.gif) (can take longer to load. Sorry azure free tier :-))
 source: [ng2 signalr demo](https://github.com/HNeukermans/ng2-signalr.demo.webui.systemjs)
-
+demo : [demo](http://ng2-signalr-webui.azurewebsites.net)
 ## Installation
 ```
 npm install ng2-signalr --save
@@ -181,8 +181,41 @@ this.connection.errors.subscribe((error: any) => {
      this.errors.push(error);
 });
 ```
+## Unit testing
+ng2-signalr provides excellent support for unit testing all your client-server code. Ng2-signalr comes with a component, specifically built, for making your unit tests easy to write and with few lines of code: SignarlMockManager. The 'SignarlMockManager', can be asked a mocked implementation of your signalr client connection, simply be using its mock property. This mock connection interface is identical
+to a real signalr connection, to get get back from Signarl.connect(). You can use the mock to spy on certain method calls, and verify invocations in your tests. Also on the mockmanager itself, you will find methods to trigger 'server' like behavior. Both errors$ and status$ properties, cna be used to simulate server errors or connectionstatus changes. For, the signarl connection lifecycle, I refer to the [official documentation](https://docs.microsoft.com/en-us/aspnet/signalr/overview/guide-to-the-api/handling-connection-lifetime-events), section Transport disconnection scenarios. Also, the listeners property on the MockManager, holds a collection of all client-server method observers, returned as rxjs subjects. These subject can then be used to simulate a server message being sent over the wire.   
 
-### Detailed webpack install
+Typically there are 2 ways that you will want to test your signalr code: verify that the correct server side methods have indeed been observed by your client code. Secondly, you want to simulate server behavior, by mocking together a sequence of server events, and verify if your client code responds in a proper way.
+
+```
+ it('I want to simulate an error or status event, in my unit test',
+    inject([ChatComponent], (component: ChatComponent) => {
+
+      connectionMockManager.errors$.next('An error occured');  //triggers the connection.error.subscribe(() => {});
+      connectionMockManager.status$.next(ConnectionStatuses.slowConnection); //triggers the connection.status.subscribe(() => {});
+      ....
+
+}));
+
+it('I want to simulate several ChatMessages received, in my unit test',
+    inject([ChatComponent], (component: ChatComponent) => {
+
+      let publisher = connectionMockManager.listeners['OnMessageSent'];
+
+      publisher.next(new ChatMessage('Hannes', 'a message')); //triggers the BroadcastEventListener.subscribe(() => {});
+      publisher.next(new ChatMessage('Hannes', 'a second message')); // ''
+
+      expect(component.chatMessages).toEqual([
+            new ChatMessage('Hannes', 'a message'),
+            new ChatMessage('Hannes', 'a second message')
+          ]);
+}));
+
+```
+
+For more info, certainly check out the live demo its unit testing section.
+
+##Detailed webpack install
 ```
 npm install jquery signalr expose-loader --save
 
