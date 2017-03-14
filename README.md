@@ -148,8 +148,13 @@ this.connection.listen(onMessageSent$);
 onMessageSent$.subscribe((chatMessage: ChatMessage) => {
        this.chatMessages.push(chatMessage);
 });
-``` 
-
+```
+### listenFor shorthand:
+ When using listenFor method, you can skip the first step in the approach above. Here the listen method returns you the BroadvastEventListener, that you can then subscribe to.
+```
+let onMessageSent$  = this.connection.listenFor('ON_MESSAGE_SENT');
+onMessageSent$.subscribe( ...
+```
 ## How to invoke a server method
 ```
 // invoke a server side method
