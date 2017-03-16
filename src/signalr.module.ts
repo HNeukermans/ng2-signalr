@@ -31,13 +31,13 @@ function getJquery(): any {
                 }]
 })
 export class SignalRModule {
-    public static configure(configuration: SignalRConfiguration): ModuleWithProviders {
+    public static forRoot(getSignalRConfiguration: Function): ModuleWithProviders {
         return {
             ngModule: SignalRModule,
             providers: [
                 {
                     provide: SIGNALR_CONFIGURATION,
-                    useValue: configuration
+                    useFactory: getSignalRConfiguration
                 },
                 {
                     provide: SignalR,

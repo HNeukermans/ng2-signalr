@@ -12,7 +12,7 @@ export class SignalR {
     private _zone: NgZone;
     private _jHubConnectionFn: any;
 
-    public constructor(configuration: SignalRConfiguration, zone: NgZone, jHubConnectionFn: (url: string) => any) {
+    public constructor(configuration: SignalRConfiguration, zone: NgZone, jHubConnectionFn: Function) {
         this._configuration = configuration;
         this._zone = zone;
         this._jHubConnectionFn = jHubConnectionFn;
