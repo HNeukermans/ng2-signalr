@@ -38,25 +38,7 @@ config.url = 'http://ng2-signalr-backend.azurewebsites.net/';
 ```
 
 ## Create connection 
-### 1. inject signalr
-Creating a client-server connection can be done by calling the connect method on the Signalr instance.
-```
-// inside your component.
-constructor(private _signalR: SignalR)  {
-}
-
-someFunction() {
-    this._signalR.connect().then((c) => {
-      //do stuff
-    });
-}
-```
-This approach has several drawbacks:
-WaitTime: 
- - Take into account, it can take several second to establish connection with the server and thus for the promise to resolve. This is especially true when a websocket-transport connection is not possible and signalr tries to fallback to other transports like serverSentEevents and long polling. Is it adviceable to keep your end user aware by showing some form of progress.   
-More difficult to unit test:
- - If you want to write unit tests against the connection, you need to mock Signalr instance first. 
-
+There exist 2 ways to create a connection: 
 ### 2. inject connection
 This approach is preferable. You can easily  rely on the default router navigation events (NavigationStart/End) to keep your user busy while the connection establishment is ongoing. Secondly you can inject the connection directly, facilitating easier unit testing. 
 Setup involves 3 steps. 
@@ -102,6 +84,25 @@ export const DocumentationRoutes: Route[] = [
 
 
 ```
+### 1. inject signalr
+Creating a client-server connection can be done by calling the connect method on the Signalr instance.
+```
+// inside your component.
+constructor(private _signalR: SignalR)  {
+}
+
+someFunction() {
+    this._signalR.connect().then((c) => {
+      //do stuff
+    });
+}
+```
+This approach has several drawbacks:
+WaitTime: 
+ - Take into account, it can take several second to establish connection with the server and thus for the promise to resolve. This is especially true when a websocket-transport connection is not possible and signalr tries to fallback to other transports like serverSentEevents and long polling. Is it adviceable to keep your end user aware by showing some form of progress.   
+More difficult to unit test:
+ - If you want to write unit tests against the connection, you need to mock Signalr instance first. 
+
 ## Configuration
 You can configure Singalr on 2 different levels: 
 #### 1. Module level: 
