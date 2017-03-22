@@ -39,7 +39,7 @@ config.url = 'http://ng2-signalr-backend.azurewebsites.net/';
 
 ## Create connection 
 There exist 2 ways to create a connection: 
-### 2. inject connection
+### 1. inject connection
 This approach is preferable. You can easily  rely on the default router navigation events (NavigationStart/End) to keep your user busy while the connection establishment is ongoing. Secondly you can inject the connection directly, facilitating easier unit testing. 
 Setup involves 3 steps. 
 ```
@@ -84,7 +84,7 @@ export const DocumentationRoutes: Route[] = [
 
 
 ```
-### 1. inject signalr
+### 2. inject signalr
 Creating a client-server connection can be done by calling the connect method on the Signalr instance.
 ```
 // inside your component.
