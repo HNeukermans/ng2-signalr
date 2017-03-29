@@ -2,7 +2,7 @@ import { Type } from '@angular/core';
 import { ActivatedRoute, Route, ActivatedRouteSnapshot, UrlSegment, Params, Data } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
-export class ActivatedRouteMock implements ActivatedRoute{
+export class ActivatedRouteMock implements ActivatedRoute {
     snapshot: ActivatedRouteSnapshot;
     url: Observable<UrlSegment[]>;
     params: Observable<Params>;
@@ -17,7 +17,9 @@ export class ActivatedRouteMock implements ActivatedRoute{
     firstChild: ActivatedRoute;
     children: ActivatedRoute[];
     pathFromRoot: ActivatedRoute[];
-    toString(): string{
+    paramMap : Observable<any>;
+    queryParamMap : Observable<any>;
+    toString(): string {
         return '';
     };
     
