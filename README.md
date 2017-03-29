@@ -27,7 +27,7 @@ type renames:
   2. ListenerCollection to IListenerCollection 
   3. SignalRConnectionBase to ISignalRConnection
   
-configuration:
+configuration: <br>
   4. SignalRModule.configure(c: SingalRConfiguration) to SignalR.forRoot(() => SingalRConfiguration);
 
 ##Setup
