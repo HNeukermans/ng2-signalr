@@ -19,6 +19,18 @@ demo : [demo](http://ng2-signalr-webui.azurewebsites.net) (can take longer to lo
 npm install ng2-signalr --save
 ```
 
+## v2.0.0 Breaking changes
+going from 1.0.X to 2.0.0 there will be some breaking changes. 
+
+type renames:
+  ConnectionOptions to IConnectionOptions
+  ListenerCollection to IListenerCollection 
+  SignalRConnectionBase to ISignalRConnection
+  
+configuration:
+  SignalRModule.configure(c: SingalRConfiguration) to SignalR.forRoot(() => SingalRConfiguration);
+
+
 ##Setup
 inside app.module.ts
 ```
@@ -111,6 +123,24 @@ The module level, is where you typically provide the default configuration. This
 import { SignalRModule } from 'ng2-signalr';
 import { SignalRConfiguration } from 'ng2-signalr';
 
+// v2.0.0
+export function createConfig(): SignalRConfiguration {
+  const c = new SignalRConfiguration();
+  c.hubName = 'Ng2SignalRHub';
+  c.qs = { user: 'donald' };
+  c.url = 'http://ng2-signalr-backend.azurewebsites.net/';
+  c.logging = true;
+  return c;
+}
+
+
+@NgModule({
+  imports: [ 
+    SignalRModule.forRoot(createConfig)
+  ]
+})
+
+// <= v1.0.9
 const config = new SignalRConfiguration();
 config.hubName = 'Ng2SignalRHub';  //default
 config.qs = { user: 'donald' };
@@ -129,9 +159,9 @@ Signalr.connect(); //HERE: module level configuration is used when trying to con
 You can always configure signalr on a per connection level. For this, you need to invoke Singalr.connect(options) method, passing in an options parameter, of type ConnectionOptions. Behind the scenes, Signalr connect method will merge the provided options parameter, with the default (module) configuration, into a new configuration object, and pass that to signalr backend. 
 ```
 import { SignalRModule } from 'ng2-signalr';
-import { ConnectionOptions, Signalr } from 'ng2-signalr';
+import { IConnectionOptions, SignalR } from 'ng2-signalr';
 
-let options: ConnectionOptions = { hubName: 'MyHub' };
+let options: IConnectionOptions = { hubName: 'MyHub' };
 Signalr.connect(options);
 ```
 
@@ -217,12 +247,6 @@ it('I want to simulate several ChatMessages received, in my unit test',
 ```
 For more info, certainly check out the live demo, unit testing section.
 
-## v2.0.0 Breaking changes
-going from 1.0.X to 2.0.0 there will be some breaking changes. 
-type renames:
-  ConnectionOptions to IConnectionOptions
-configuration:
-  SignalRModule.configure(c: SingalRConfiguration) to SignalR.forRoot(() => SingalRConfiguration);
 
 
 ## Detailed webpack install
