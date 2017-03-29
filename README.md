@@ -215,10 +215,17 @@ it('I want to simulate several ChatMessages received, in my unit test',
 }));
 
 ```
-
 For more info, certainly check out the live demo, unit testing section.
 
-##Detailed webpack install
+## v2.0.0 Breaking changes
+going from 1.0.X to 2.0.0 there will be some breaking changes. 
+type renames:
+  ConnectionOptions to IConnectionOptions
+configuration:
+  SignalRModule.configure(c: SingalRConfiguration) to SignalR.forRoot(() => SingalRConfiguration);
+
+
+## Detailed webpack install
 ```
 npm install jquery signalr expose-loader --save
 
@@ -227,10 +234,13 @@ import 'expose-loader?jQuery!jquery';
 import '../node_modules/signalr/jquery.signalR.js';
 ```
 
-### Detailed systemjs install
+### Detailed systemjs install (starting from v2.0.0)
 ```
-TODO
+ {
+   'ng2-signalr' : 'node_modules/ng2-signalr/bundles/ng2-singalr.umd.(?min).js'
+ }
 ```
+
 >>>>>>> af93c8777fb64c74f74a875e5da60a168f410e06
 
 ## Issue Reporting
