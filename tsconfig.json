@@ -1,27 +1,21 @@
 {
     "compilerOptions": {
-        "noImplicitAny": true,
-        "module": "commonjs",
         "target": "es5",
-        "outDir": "lib/",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "inlineSources": true,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
-        "moduleResolution": "node",
-        "removeComments": true,
-        "sourceMap": true,
-        "declaration": true,
+        "noImplicitAny": true,
+        "skipLibCheck": true,
         "lib": [
-            "dom",
-            "es2015.collection",
-            "es2015.promise",
-            "es5"
+            "es2015",
+            "dom"
+        ],
+        "types": [
+            "jasmine",
+            "node"
         ]
-    },
-    "files": [
-        "src/index.ts"
-    ],
-    "exclude": [
-        "node_modules",
-        "lib"
-    ]
+    }
 }

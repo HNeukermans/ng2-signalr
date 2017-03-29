@@ -1,25 +1,7 @@
-node_modules
+$ cat .gitignore
+/node_modules
+/dist
+/documentation
 
-typings
-
-coverage/
-
-Thumbs.db
-.DS_Store
-
-*.js
-!webpack.config.js
-!webpack.test.config.js
-!karma.conf.js
-!karma.specs.js
-*.map
-*.d.ts
-.idea/
-*.iml
-
-npm-debug*
-
-settings.json
-
-
-*.metadata.json
+*.log
+*.tgz
