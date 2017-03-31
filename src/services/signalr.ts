@@ -26,12 +26,17 @@ export class SignalR {
 
             let configuration = this.merge(options ? options : {});
 
-            console.log(`Connecting with...`);
-            console.log(`configuration:[url: '${configuration.url}'] ...`);
-            console.log(`configuration:[hubName: '${configuration.hubName}'] ...`);
+            if (configuration.logging) {
+                console.log(`Connecting with...`);
+                console.log(`configuration:[url: '${configuration.url}'] ...`);
+                console.log(`configuration:[hubName: '${configuration.hubName}'] ...`);
+            }
+
             try {
                 let serialized = JSON.stringify(configuration.qs);
-                console.log(`configuration:[qs: '${serialized}'] ...`);
+                if (configuration.logging) {
+                    console.log(`configuration:[qs: '${serialized}'] ...`);
+                }
             } catch (err) { }
 
             // create connection object
@@ -46,7 +51,7 @@ export class SignalR {
 
             let hubConnection = new SignalRConnection(jConnection, jProxy, this._zone);
             // start the connection
-            console.log('Starting connection ...');
+            console.log('Starting SignalR connection ...');
 
             jConnection.start({ withCredentials: false })
                 .done(function () {

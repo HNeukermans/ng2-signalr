@@ -52,16 +52,22 @@ export class SignalRConnection implements ISignalRConnection {
         if (method == null) {
             throw new Error('SignalRConnection: Failed to invoke. Argument \'method\' can not be null');
         }
-
-        console.log(`SignalRConnection. Start invoking \'${method}\'...`);
+        if (this._jConnection.logging) {
+            console.log(`SignalRConnection. Start invoking \'${method}\'...`);
+        }
+        
         let $promise = new Promise<any>((resolve, reject) => {
             this._jProxy.invoke(method, ...parameters)
-                .done(function (result: any) {
-                    console.log(`\'${method}\' invoked succesfully. Resolving promise...`);
+                .done((result: any) => {
+                    if (this._jConnection.logging) {
+                        console.log(`\'${method}\' invoked succesfully. Resolving promise...`);
+                    }
                     resolve(result);
-                    console.log(`Promise resolved.`);
+                    if (this._jConnection.logging) {
+                        console.log(`Promise resolved.`);
+                    }
                 })
-                .fail(function (err: any) {
+                .fail((err: any) => {
                     console.log(`Invoking \'${method}\' failed. Rejecting promise...`);
                     reject(err);
                     console.log(`Promise rejected.`);
@@ -99,7 +105,9 @@ export class SignalRConnection implements ISignalRConnection {
     public listen<T>(listener: BroadcastEventListener<T>): void {
         if (listener == null) throw new Error('Failed to listen. Argument \'listener\' can not be null');
 
-        console.log(`SignalRConnection: Starting to listen to server event with name ${listener.event}`);
+        if (this._jConnection.logging) {
+            console.log(`SignalRConnection: Starting to listen to server event with name ${listener.event}`);
+        }
 
         this._jProxy.on(listener.event, (...args: any[]) => {
 
@@ -107,9 +115,13 @@ export class SignalRConnection implements ISignalRConnection {
                 let casted: T = null;
                 if (args.length === 0) return;
                 casted = <T>args[0];
-                console.log('SignalRConnection.proxy.on invoked. Calling listener next() ...');
+                if (this._jConnection.logging) {
+                    console.log('SignalRConnection.proxy.on invoked. Calling listener next() ...');
+                }
                 listener.next(casted);
-                console.log('listener next() called.');
+                if (this._jConnection.logging) {
+                    console.log('listener next() called.');
+                }
             });
         });
     }
@@ -125,7 +137,9 @@ export class SignalRConnection implements ISignalRConnection {
     }
 
     private onBroadcastEventReceived<T>(listener: BroadcastEventListener<T>, ...args: any[]) {
-        console.log('SignalRConnection.proxy.on invoked. Calling listener next() ...');
+        if (this._jConnection.logging) {
+            console.log('SignalRConnection.proxy.on invoked. Calling listener next() ...');
+        }
 
         let casted: T = null;
         if (args.length > 0) casted = <T>args[0];
@@ -134,7 +148,9 @@ export class SignalRConnection implements ISignalRConnection {
             listener.next(casted);
         });
 
-        console.log('listener next() called.');
+        if (this._jConnection.logging) {
+            console.log('listener next() called.');
+        }
     }
 
 }
