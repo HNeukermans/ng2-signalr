@@ -2,7 +2,7 @@ import { ConnectionStatus } from './connection.status';
 
 export class ConnectionStatuses {
 
-    private static statuses: ConnectionStatus[] = 
+    private static statuses: ConnectionStatus[] =
         [
             new ConnectionStatus("starting"),
             new ConnectionStatus("received"),
@@ -11,7 +11,7 @@ export class ConnectionStatuses {
             new ConnectionStatus("reconnected"),
             new ConnectionStatus("stateChanged"),
             new ConnectionStatus("disconnected"),
-        ]; 
+        ];
 
     public static get starting(): ConnectionStatus {
         return ConnectionStatuses.statuses[0];

@@ -30,12 +30,12 @@ export class SignalRConnection implements ISignalRConnection {
 
     public start(): Promise<any> {
         let $promise = new Promise<any>((resolve, reject) => {
-            this._jConnection.start().done(function (...results: any[]) {
+            this._jConnection.start().done((...results: any[]) => {
                 resolve(results);
             })
-                .fail(function (err: any) {
-                    reject(err);
-                });
+            .fail((err: any) => {
+                reject(err);
+            });
         });
         return $promise;
     }
@@ -52,20 +52,14 @@ export class SignalRConnection implements ISignalRConnection {
         if (method == null) {
             throw new Error('SignalRConnection: Failed to invoke. Argument \'method\' can not be null');
         }
-        if (this._jConnection.logging) {
-            console.log(`SignalRConnection. Start invoking \'${method}\'...`);
-        }
-        
+        this.log(`SignalRConnection. Start invoking \'${method}\'...`);
+
         let $promise = new Promise<any>((resolve, reject) => {
             this._jProxy.invoke(method, ...parameters)
                 .done((result: any) => {
-                    if (this._jConnection.logging) {
-                        console.log(`\'${method}\' invoked succesfully. Resolving promise...`);
-                    }
+                    this.log(`\'${method}\' invoked succesfully. Resolving promise...`);
                     resolve(result);
-                    if (this._jConnection.logging) {
-                        console.log(`Promise resolved.`);
-                    }
+                    this.log(`Promise resolved.`);
                 })
                 .fail((err: any) => {
                     console.log(`Invoking \'${method}\' failed. Rejecting promise...`);
@@ -74,6 +68,39 @@ export class SignalRConnection implements ISignalRConnection {
                 });
         });
         return $promise;
+    }
+
+    public listen<T>(listener: BroadcastEventListener<T>): void {
+        if (listener == null) {
+            throw new Error('Failed to listen. Argument \'listener\' can not be null');
+        }
+
+        this.log(`SignalRConnection: Starting to listen to server event with name ${listener.event}`);
+        this._jProxy.on(listener.event, (...args: any[]) => {
+
+            this._zone.run(() => {
+                let casted: T = null;
+                if (args.length === 0) {
+                    return;
+                }
+                casted = <T> args[0];
+                this.log('SignalRConnection.proxy.on invoked. Calling listener next() ...');
+                listener.next(casted);
+                this.log('listener next() called.');
+            });
+        });
+    }
+
+    public listenFor<T>(event: string): BroadcastEventListener<T> {
+        if (event == null || event === '') {
+            throw new Error('Failed to listen. Argument \'event\' can not be empty');
+        }
+
+        let listener = new BroadcastEventListener<T>(event);
+
+        this.listen(listener);
+
+        return listener;
     }
 
     private wireUpErrorsAsObservable(): Observable<any> {
@@ -90,7 +117,7 @@ export class SignalRConnection implements ISignalRConnection {
     private wireUpStatusEventsAsObservable(): Observable<ConnectionStatus> {
         let sStatus = new Subject<ConnectionStatus>();
         let connStatusNames = ['starting', 'received', 'connectionSlow', 'reconnecting', 'reconnected', 'stateChanged', 'disconnected'];
-        // aggregate all signalr connection status handlers into 1 observable. 
+        // aggregate all signalr connection status handlers into 1 observable.
         connStatusNames.forEach((statusName) => {
             // handler wire up, for signalr connection status callback.
             this._jConnection[statusName]((...args: any[]) => {
@@ -102,55 +129,25 @@ export class SignalRConnection implements ISignalRConnection {
         return sStatus;
     }
 
-    public listen<T>(listener: BroadcastEventListener<T>): void {
-        if (listener == null) throw new Error('Failed to listen. Argument \'listener\' can not be null');
-
-        if (this._jConnection.logging) {
-            console.log(`SignalRConnection: Starting to listen to server event with name ${listener.event}`);
-        }
-
-        this._jProxy.on(listener.event, (...args: any[]) => {
-
-            this._zone.run(() => {
-                let casted: T = null;
-                if (args.length === 0) return;
-                casted = <T>args[0];
-                if (this._jConnection.logging) {
-                    console.log('SignalRConnection.proxy.on invoked. Calling listener next() ...');
-                }
-                listener.next(casted);
-                if (this._jConnection.logging) {
-                    console.log('listener next() called.');
-                }
-            });
-        });
-    }
-
-    public listenFor<T>(event: string): BroadcastEventListener<T> {
-        if (event == null || event === '') throw new Error('Failed to listen. Argument \'event\' can not be empty');
-
-        let listener = new BroadcastEventListener<T>(event);
-
-        this.listen(listener);
-
-        return listener;
-    }
-
     private onBroadcastEventReceived<T>(listener: BroadcastEventListener<T>, ...args: any[]) {
-        if (this._jConnection.logging) {
-            console.log('SignalRConnection.proxy.on invoked. Calling listener next() ...');
-        }
+        this.log('SignalRConnection.proxy.on invoked. Calling listener next() ...');
 
         let casted: T = null;
-        if (args.length > 0) casted = <T>args[0];
+        if (args.length > 0) {
+            casted = <T> args[0];
+        }
 
         this._zone.run(() => {
             listener.next(casted);
         });
 
-        if (this._jConnection.logging) {
-            console.log('listener next() called.');
-        }
+        this.log('listener next() called.');
     }
 
+    private log(...args: any[]) {
+        if (this._jConnection.logging === false) {
+            return;
+        }
+        console.log(args.join(', '));
+    }
 }

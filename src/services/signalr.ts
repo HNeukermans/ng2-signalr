@@ -20,24 +20,23 @@ export class SignalR {
 
     public connect(options?: IConnectionOptions): Promise<ISignalRConnection> {
 
-
         let $promise = new Promise<SignalRConnection>((resolve, reject) => {
-
 
             let configuration = this.merge(options ? options : {});
 
-            if (configuration.logging) {
-                console.log(`Connecting with...`);
-                console.log(`configuration:[url: '${configuration.url}'] ...`);
-                console.log(`configuration:[hubName: '${configuration.hubName}'] ...`);
-            }
-
             try {
                 let serialized = JSON.stringify(configuration.qs);
+
                 if (configuration.logging) {
+                    console.log(`Connecting with...`);
+                    console.log(`configuration:[url: '${configuration.url}'] ...`);
+                    console.log(`configuration:[hubName: '${configuration.hubName}'] ...`);
                     console.log(`configuration:[qs: '${serialized}'] ...`);
                 }
-            } catch (err) { }
+
+            } catch (err) {
+                console.log(err);
+            }
 
             // create connection object
             let jConnection = this._jHubConnectionFn(configuration.url);
@@ -54,12 +53,12 @@ export class SignalR {
             console.log('Starting SignalR connection ...');
 
             jConnection.start({ withCredentials: false })
-                .done(function () {
+                .done(() => {
                     console.log('Connection established, ID: ' + jConnection.id);
                     console.log('Connection established, Transport: ' + jConnection.transport.name);
                     resolve(hubConnection);
                 })
-                .fail(function (error: any) {
+                .fail((error: any) => {
                     console.log('Could not connect');
                     reject('Failed to connect. Error: ' + error.message); // ex: Error during negotiation request.
                 });
@@ -76,4 +75,5 @@ export class SignalR {
         merged.logging = this._configuration.logging;
         return merged;
     }
+
 }
