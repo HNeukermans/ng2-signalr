@@ -33,10 +33,7 @@ export class SignalR {
                     console.log(`configuration:[hubName: '${configuration.hubName}'] ...`);
                     console.log(`configuration:[qs: '${serialized}'] ...`);
                 }
-
-            } catch (err) {
-                console.log(err);
-            }
+            } catch (err) { }
 
             // create connection object
             let jConnection = this._jHubConnectionFn(configuration.url);
