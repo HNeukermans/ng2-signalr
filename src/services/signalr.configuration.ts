@@ -13,11 +13,15 @@ export class SignalRConfiguration {
     /** disable/enables client side logging. Defaults to false */
     public logging: boolean;
 
+    /**Allow CORS */
+    public jsonp: boolean;
+
     constructor() {
        this.hubName = null;
        this.logging = false;
        this.qs  = null;
        this.url = null;
+       this.jsonp = false; 
     }
 }
 
