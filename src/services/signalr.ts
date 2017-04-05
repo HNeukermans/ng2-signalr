@@ -49,7 +49,7 @@ export class SignalR {
             // start the connection
             console.log('Starting SignalR connection ...');
 
-            jConnection.start({ withCredentials: false })
+            jConnection.start({ withCredentials: false, jsonp: configuration.jsonp })
                 .done(() => {
                     console.log('Connection established, ID: ' + jConnection.id);
                     console.log('Connection established, Transport: ' + jConnection.transport.name);
@@ -70,6 +70,7 @@ export class SignalR {
         merged.url = overrides.url || this._configuration.url;
         merged.qs = overrides.qs || this._configuration.qs;
         merged.logging = this._configuration.logging;
+        merged.jsonp = overrides.jsonp || this._configuration.jsonp;
         return merged;
     }
 
