@@ -70,7 +70,7 @@ export class SignalR {
         merged.url = overrides.url || this._configuration.url;
         merged.qs = overrides.qs || this._configuration.qs;
         merged.logging = this._configuration.logging;
-        merged.jsonp = this._configuration.jsonp;
+        merged.jsonp = overrides.jsonp || this._configuration.jsonp;
         return merged;
     }
 
