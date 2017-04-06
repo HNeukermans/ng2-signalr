@@ -21,3 +21,5 @@ before_script:
   - sleep 3
 notifications:
   email: false
+after_success:
+  - npm run report-coverage
