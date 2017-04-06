@@ -33,7 +33,7 @@ export class SignalR {
                     console.log(`configuration:[hubName: '${configuration.hubName}'] ...`);
                     console.log(`configuration:[qs: '${serialized}'] ...`);
                 }
-            } catch (err) { }
+            } catch (err) {}
 
             // create connection object
             let jConnection = this._jHubConnectionFn(configuration.url);
@@ -42,14 +42,14 @@ export class SignalR {
 
             // create a proxy
             let jProxy = jConnection.createHubProxy(configuration.hubName);
-            // !!! important. We need to register at least one on function otherwise server callbacks will not work. 
+            // !!! important. We need to register at least one on function otherwise server callbacks will not work.
             jProxy.on('noOp', function () { });
 
             let hubConnection = new SignalRConnection(jConnection, jProxy, this._zone);
             // start the connection
             console.log('Starting SignalR connection ...');
 
-            jConnection.start({ withCredentials: false, jsonp: configuration.jsonp })
+            jConnection.start({ withCredentials: configuration.withCredentials, jsonp: configuration.jsonp })
                 .done(() => {
                     console.log('Connection established, ID: ' + jConnection.id);
                     console.log('Connection established, Transport: ' + jConnection.transport.name);
@@ -71,6 +71,7 @@ export class SignalR {
         merged.qs = overrides.qs || this._configuration.qs;
         merged.logging = this._configuration.logging;
         merged.jsonp = overrides.jsonp || this._configuration.jsonp;
+        merged.withCredentials = overrides.withCredentials || this._configuration.withCredentials;
         return merged;
     }
 

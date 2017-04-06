@@ -9,6 +9,9 @@ export interface IConnectionOptions {
     /** name of the SignalR service hub to connect to. */
     hubName?: string;
 
-    /**Allow CORS */
-    jsonp: boolean;
+    /** Allows jsonp */
+    jsonp?: boolean;
+
+    /** Allows withCredentials */
+    withCredentials?: boolean;
 }

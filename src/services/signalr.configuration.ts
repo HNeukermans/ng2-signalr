@@ -13,15 +13,19 @@ export class SignalRConfiguration {
     /** disable/enables client side logging. Defaults to false */
     public logging: boolean;
 
-    /**Allow CORS */
+    /** Allows jsonp. This flag can be used to suppport CORS on older browsers */
     public jsonp: boolean;
+
+     /** Allows withCredentials. This flag can be used to suppport CORS */
+    public withCredentials: boolean;
 
     constructor() {
        this.hubName = null;
        this.logging = false;
        this.qs  = null;
        this.url = null;
-       this.jsonp = false; 
+       this.jsonp = false;
+       this.withCredentials = false;
     }
 }
 
