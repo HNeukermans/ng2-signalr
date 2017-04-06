@@ -11,7 +11,8 @@
     "publish-lib": "npm publish ./dist",
     "compodoc": "compodoc -p tsconfig.json",
     "compodoc-serve": "compodoc -s",
-    "report-coverage": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+    "report-coverage": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "cover": "istanbul cover node_modules/jasmine/bin/jasmine.js"
   },
   "typings": "index.d.ts",
   "author": "Hannes Neukermans",
@@ -52,9 +53,12 @@
     "compodoc": "0.0.41",
     "core-js": "2.4.1",
     "coveralls": "^2.13.0",
+    "istanbul": "^0.4.5",
+    "jasmine": "^2.5.3",
     "jasmine-core": "2.5.2",
-    "karma": "1.4.1",
+    "karma": "^1.4.1",
     "karma-chrome-launcher": "2.0.0",
+    "karma-coverage": "^1.1.1",
     "karma-jasmine": "1.1.0",
     "karma-sourcemap-loader": "0.3.7",
     "karma-spec-reporter": "0.0.26",

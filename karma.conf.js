@@ -16,7 +16,8 @@ module.exports = function (config) {
             require('karma-chrome-launcher'),
             require('karma-webpack'),
             require('karma-sourcemap-loader'),
-            require('karma-spec-reporter')
+            require('karma-spec-reporter'),
+            require('karma-coverage')
         ],
 
         // list of files / patterns to load in the browser
@@ -32,6 +33,7 @@ module.exports = function (config) {
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
             'spec.bundle.js': ['webpack']
+            //,'src/**/*.js': ['coverage']
         },
 
         // webpack
@@ -61,7 +63,13 @@ module.exports = function (config) {
         // possible values: 'dots', 'progress'
         // available reporters: https://npmjs.org/browse/keyword/karma-reporter
         reporters: ['spec'],
+        //reporters: ['spec', 'coverage'],
 
+        // optionally, configure the reporter
+        coverageReporter: {
+            type: 'lcovonly',
+            dir: 'coverage/'
+        },
 
         // web server port
         port: 9876,

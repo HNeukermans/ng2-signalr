@@ -6,6 +6,8 @@ addons:
       - google-chrome
     packages:
       - google-chrome-stable
+  code_climate:
+    repo_token: 'a859074f235c0f058415d9e0a6b8595523b5eebbd211e5a8866620007b9cef0b'
 language: node_js
 node_js:
   - stable
@@ -22,4 +24,5 @@ before_script:
 notifications:
   email: false
 after_success:
-  - npm run report-coverage
+  - npm install -g codeclimate-test-reporter
+  - codeclimate-test-reporter < lcov.info
