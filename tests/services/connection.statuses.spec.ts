@@ -1,6 +1,4 @@
-
-import { ConnectionStatuses } from "../../src/services/index";
-
+import { ConnectionStatuses } from '../../src/services/connection/connection.statuses';
 describe("ConnectionStatuses", () => {
 
     it("starting should have name", () => {

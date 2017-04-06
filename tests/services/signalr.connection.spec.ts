@@ -1,6 +1,7 @@
 import { NgZone } from '@angular/core';
 import { JConnectionStub, JHubProxyStub } from './jConnection.stub';
-import { SignalRConnection, BroadcastEventListener } from "../../src/services/index";
+import { BroadcastEventListener } from '../../src/services/eventing/broadcast.event.listener';
+import { SignalRConnection } from '../../src/services/connection/signalr.connection';
 
 describe('Connection', () => {
 

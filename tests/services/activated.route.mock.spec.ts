@@ -1,5 +1,5 @@
+import { ActivatedRouteMock } from '../../src/services/testing/activated.route.mock';
 
-import { ActivatedRouteMock } from "../../src/services/index";
 
 describe('ActivatedRouteMock', () => {
 

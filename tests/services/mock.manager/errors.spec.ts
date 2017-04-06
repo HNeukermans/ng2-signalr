@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs/Observable';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { Subject } from 'rxjs/Subject';
-import { SignalRConnectionMockManager, SignalRConnectionBase } from "../../../src/services/index";
+import { SignalRConnectionMockManager } from '../../../src/services/testing/signalr.connection.mock.manager';
 
 describe('SignalRConnectionMockManager', () => {
 

@@ -1,7 +1,8 @@
 import { Observable } from 'rxjs/Observable';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { Subject } from 'rxjs/Subject';
-import { SignalRConnectionMockManager, SignalRConnectionBase, BroadcastEventListener } from "../../../src/services/index";
+import { SignalRConnectionMockManager } from '../../../src/services/testing/signalr.connection.mock.manager';
+import { BroadcastEventListener } from '../../../src/services/eventing/broadcast.event.listener';
 
 class AServerEvent {
     constructor(public counter: number) {

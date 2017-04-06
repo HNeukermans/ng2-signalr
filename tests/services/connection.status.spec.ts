@@ -1,6 +1,4 @@
-
-import { ConnectionStatus } from "../../src/services/index";
-
+import { ConnectionStatus } from '../../src/services/connection/connection.status';
 describe("ConnectionStatus", () => {
 
     it("constructor should set name", () => {

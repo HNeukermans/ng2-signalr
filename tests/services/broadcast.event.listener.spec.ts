@@ -1,6 +1,4 @@
-
-import { BroadcastEventListener } from "../../src/services/index";
-
+import { BroadcastEventListener } from '../../src/services/eventing/broadcast.event.listener';
 describe('BroadcastEventListener', () => {
 
     interface Type {
