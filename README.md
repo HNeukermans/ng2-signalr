@@ -1,7 +1,7 @@
 
 [![npm version](https://badge.fury.io/js/ng2-signalr.svg)](https://badge.fury.io/js/ng2-signalr)
 ![live demo](https://img.shields.io/badge/demo-live-orange.svg)
-
+[![Coverage Status](https://coveralls.io/repos/github/HNeukermans/ng2-signalr/badge.svg?branch=master)](https://coveralls.io/github/HNeukermans/ng2-signalr?branch=master)
 # ng2-signalr
 An angular typescript library that allows you to connect to Asp.Net SignalR
 
