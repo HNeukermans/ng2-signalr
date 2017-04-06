@@ -20,18 +20,19 @@ export class SignalR {
 
     public connect(options?: IConnectionOptions): Promise<ISignalRConnection> {
 
-
         let $promise = new Promise<SignalRConnection>((resolve, reject) => {
-
 
             let configuration = this.merge(options ? options : {});
 
-            console.log(`Connecting with...`);
-            console.log(`configuration:[url: '${configuration.url}'] ...`);
-            console.log(`configuration:[hubName: '${configuration.hubName}'] ...`);
             try {
                 let serialized = JSON.stringify(configuration.qs);
-                console.log(`configuration:[qs: '${serialized}'] ...`);
+
+                if (configuration.logging) {
+                    console.log(`Connecting with...`);
+                    console.log(`configuration:[url: '${configuration.url}'] ...`);
+                    console.log(`configuration:[hubName: '${configuration.hubName}'] ...`);
+                    console.log(`configuration:[qs: '${serialized}'] ...`);
+                }
             } catch (err) { }
 
             // create connection object
@@ -46,15 +47,15 @@ export class SignalR {
 
             let hubConnection = new SignalRConnection(jConnection, jProxy, this._zone);
             // start the connection
-            console.log('Starting connection ...');
+            console.log('Starting SignalR connection ...');
 
-            jConnection.start({ withCredentials: false })
-                .done(function () {
+            jConnection.start({ withCredentials: false, jsonp: configuration.jsonp })
+                .done(() => {
                     console.log('Connection established, ID: ' + jConnection.id);
                     console.log('Connection established, Transport: ' + jConnection.transport.name);
                     resolve(hubConnection);
                 })
-                .fail(function (error: any) {
+                .fail((error: any) => {
                     console.log('Could not connect');
                     reject('Failed to connect. Error: ' + error.message); // ex: Error during negotiation request.
                 });
@@ -69,6 +70,8 @@ export class SignalR {
         merged.url = overrides.url || this._configuration.url;
         merged.qs = overrides.qs || this._configuration.qs;
         merged.logging = this._configuration.logging;
+        merged.jsonp = overrides.jsonp || this._configuration.jsonp;
         return merged;
     }
+
 }

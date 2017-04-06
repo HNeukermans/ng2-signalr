@@ -34,7 +34,7 @@
     "@angular/core": ">= 2.0.0 || >= 4.0.0",
     "@angular/router": ">=3.0.0 || >= 4.0.0",
     "jquery": ">=2.0.0",
-    "signalr": "^>=2.2.1"
+    "signalr": ">=2.2.1"
   },
   "devDependencies": {
     "@angular/common": "2.4.6",

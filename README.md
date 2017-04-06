@@ -1,7 +1,7 @@
 
 [![npm version](https://badge.fury.io/js/ng2-signalr.svg)](https://badge.fury.io/js/ng2-signalr)
 ![live demo](https://img.shields.io/badge/demo-live-orange.svg)
-
+[![Coverage Status](https://coveralls.io/repos/github/HNeukermans/ng2-signalr/badge.svg?branch=master)](https://coveralls.io/github/HNeukermans/ng2-signalr?branch=master)
 # ng2-signalr
 An angular typescript library that allows you to connect to Asp.Net SignalR
 
@@ -23,13 +23,12 @@ npm install ng2-signalr --save
 going from 1.0.X to 2.0.0 there will be some breaking changes. 
 
 type renames:
-  ConnectionOptions to IConnectionOptions
-  ListenerCollection to IListenerCollection 
-  SignalRConnectionBase to ISignalRConnection
+  1. ConnectionOptions to IConnectionOptions
+  2. ListenerCollection to IListenerCollection 
+  3. SignalRConnectionBase to ISignalRConnection
   
-configuration:
-  SignalRModule.configure(c: SingalRConfiguration) to SignalR.forRoot(() => SingalRConfiguration);
-
+configuration: <br>
+  4. SignalRModule.configure(c: SingalRConfiguration) to SignalR.forRoot(() => SingalRConfiguration);
 
 ##Setup
 inside app.module.ts
@@ -37,6 +36,24 @@ inside app.module.ts
 import { SignalRModule } from 'ng2-signalr';
 import { SignalRConfiguration } from 'ng2-signalr';
 
+// v2.0.0
+export function createConfig(): SignalRConfiguration {
+  const c = new SignalRConfiguration();
+  c.hubName = 'Ng2SignalRHub';
+  c.qs = { user: 'donald' };
+  c.url = 'http://ng2-signalr-backend.azurewebsites.net/';
+  c.logging = true;
+  return c;
+}
+
+
+@NgModule({
+  imports: [ 
+    SignalRModule.forRoot(createConfig)
+  ]
+})
+
+// v1.0.9
 const config = new SignalRConfiguration();
 config.hubName = 'Ng2SignalRHub';
 config.qs = { user: 'donald' };
@@ -122,23 +139,6 @@ The module level, is where you typically provide the default configuration. This
 ```
 import { SignalRModule } from 'ng2-signalr';
 import { SignalRConfiguration } from 'ng2-signalr';
-
-// v2.0.0
-export function createConfig(): SignalRConfiguration {
-  const c = new SignalRConfiguration();
-  c.hubName = 'Ng2SignalRHub';
-  c.qs = { user: 'donald' };
-  c.url = 'http://ng2-signalr-backend.azurewebsites.net/';
-  c.logging = true;
-  return c;
-}
-
-
-@NgModule({
-  imports: [ 
-    SignalRModule.forRoot(createConfig)
-  ]
-})
 
 // <= v1.0.9
 const config = new SignalRConfiguration();
