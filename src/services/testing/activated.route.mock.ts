@@ -3,27 +3,29 @@ import { ActivatedRoute, Route, ActivatedRouteSnapshot, UrlSegment, Params, Data
 import { Observable } from 'rxjs/Observable';
 
 export class ActivatedRouteMock implements ActivatedRoute {
-    snapshot: ActivatedRouteSnapshot;
-    url: Observable<UrlSegment[]>;
-    params: Observable<Params>;
-    queryParams: Observable<Params>;
-    fragment: Observable<string>;
-    data: Observable<Data>;
-    outlet: string;
-    component: Type<any>|string;
-    routeConfig: Route;
-    root: ActivatedRoute;
-    parent: ActivatedRoute;
-    firstChild: ActivatedRoute;
-    children: ActivatedRoute[];
-    pathFromRoot: ActivatedRoute[];
-    paramMap : Observable<any>;
-    queryParamMap : Observable<any>;
-    toString(): string {
-        return '';
-    };
-    
+    public snapshot: ActivatedRouteSnapshot;
+    public url: Observable<UrlSegment[]>;
+    public params: Observable<Params>;
+    public queryParams: Observable<Params>;
+    public fragment: Observable<string>;
+    public data: Observable<Data>;
+    public outlet: string;
+    public component: Type<any>|string;
+    public routeConfig: Route;
+    public root: ActivatedRoute;
+    public parent: ActivatedRoute;
+    public firstChild: ActivatedRoute;
+    public children: ActivatedRoute[];
+    public pathFromRoot: ActivatedRoute[];
+    public paramMap: Observable<any>;
+    public queryParamMap: Observable<any>;
+
+
     constructor() {
       this.snapshot = new ActivatedRouteSnapshot();
     }
-}     
+
+    public toString(): string {
+        return '';
+    };
+}
