@@ -81,7 +81,7 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class ConnectionResolver implements Resolve<SignalRConnection> {
 
-    constructor(private _signalR: SignalR)  {
+    constructor(private _signalR: SignalR)  { }
 
     resolve() {
         console.log('ConnectionResolver. Resolving...');
