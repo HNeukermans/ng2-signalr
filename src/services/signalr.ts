@@ -51,7 +51,7 @@ export class SignalR {
             // start the connection
             console.log('Starting SignalR connection ...');
 
-            jConnection.start({ withCredentials: configuration.withCredentials, jsonp: configuration.jsonp, transport: configuration.transport })
+            jConnection.start(this.getConnectionStartParams(configuration.withCredentials, configuration.jsonp, configuration.transport))
                 .done(() => {
                     console.log('Connection established, ID: ' + jConnection.id);
                     console.log('Connection established, Transport: ' + jConnection.transport.name);
@@ -65,6 +65,17 @@ export class SignalR {
 
         return $promise;
     }
+	
+	private getConnectionStartParams(withCredentials: boolean, jsonp: boolean, transport: any) : any {
+        var params: any = { 
+            withCredentials: withCredentials, 
+            jsonp: jsonp 
+        };
+        if(transport)
+		    params.transport = transport;
+
+        return params;
+	}
 
     private merge(overrides: IConnectionOptions): SignalRConfiguration {
         let merged: SignalRConfiguration = new SignalRConfiguration();

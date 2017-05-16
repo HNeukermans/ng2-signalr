@@ -136,16 +136,18 @@ More difficult to unit test:
 ## Configuration
 You can configure Singalr on 2 different levels: 
 #### 1. Module level: 
-The module level, is where you typically provide the default configuration. This is were you pass in the default hubname, serverurl, and qs (query string parameters). When, somewhere in your application, Singalr.connect() method is invoked without parameters, it will use this default configuration. 
+The module level, is where you typically provide the default configuration. This is were you pass in the default hubname, serverurl, qs (query string parameters), and transport. When, somewhere in your application, Singalr.connect() method is invoked without parameters, it will use this default configuration. 
 ```
 import { SignalRModule } from 'ng2-signalr';
-import { SignalRConfiguration } from 'ng2-signalr';
+import { SignalRConfiguration, ConnectionTransport } from 'ng2-signalr';
 
 // <= v1.0.9
 const config = new SignalRConfiguration();
 config.hubName = 'Ng2SignalRHub';  //default
 config.qs = { user: 'donald' };
 config.url = 'http://ng2-signalr-backend.azurewebsites.net/';
+// Specify one Transport: config.transport = ConnectionTransport.LONG_POLLING; or fallback options with order like below.
+config.transport = [ConnectionTransport.WEB_SOCKETS, ConnectionTransport.LONG_POLLING];
 
 @NgModule({
   imports: [ 
