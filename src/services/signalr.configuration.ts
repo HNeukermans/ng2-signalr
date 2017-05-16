@@ -19,6 +19,9 @@ export class SignalRConfiguration {
      /** Allows withCredentials. This flag can be used to suppport CORS */
     public withCredentials: boolean;
 
+    /**Allows you to specify transport. You can specify a fallback order if you wan't to try specific transports in order. */
+    public transport?: any;
+
     constructor() {
        this.hubName = null;
        this.logging = false;
@@ -26,6 +29,7 @@ export class SignalRConfiguration {
        this.url = null;
        this.jsonp = false;
        this.withCredentials = false;
+       this.transport = null;
     }
 }
 

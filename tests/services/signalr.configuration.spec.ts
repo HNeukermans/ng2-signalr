@@ -8,6 +8,7 @@ describe('SignalRConfiguration', () => {
         expect(configuration.hubName).toBe(null);
         expect(configuration.qs).toBe(null);
         expect(configuration.url).toBe(null);
+        expect(configuration.transport).toBe(null, 'transport should be null');
     });
 });
 

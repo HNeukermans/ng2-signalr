@@ -25,13 +25,15 @@ export class SignalR {
             let configuration = this.merge(options ? options : {});
 
             try {
-                let serialized = JSON.stringify(configuration.qs);
+                let serializedQs = JSON.stringify(configuration.qs);
+                let serializedTransport = JSON.stringify(configuration.transport);
 
                 if (configuration.logging) {
                     console.log(`Connecting with...`);
                     console.log(`configuration:[url: '${configuration.url}'] ...`);
                     console.log(`configuration:[hubName: '${configuration.hubName}'] ...`);
-                    console.log(`configuration:[qs: '${serialized}'] ...`);
+                    console.log(`configuration:[qs: '${serializedQs}'] ...`);
+                    console.log(`configuration:[transport: '${serializedTransport}'] ...`);
                 }
             } catch (err) {}
 
@@ -49,7 +51,7 @@ export class SignalR {
             // start the connection
             console.log('Starting SignalR connection ...');
 
-            jConnection.start({ withCredentials: configuration.withCredentials, jsonp: configuration.jsonp })
+            jConnection.start({ withCredentials: configuration.withCredentials, jsonp: configuration.jsonp, transport: configuration.transport })
                 .done(() => {
                     console.log('Connection established, ID: ' + jConnection.id);
                     console.log('Connection established, Transport: ' + jConnection.transport.name);
@@ -72,6 +74,7 @@ export class SignalR {
         merged.logging = this._configuration.logging;
         merged.jsonp = overrides.jsonp || this._configuration.jsonp;
         merged.withCredentials = overrides.withCredentials || this._configuration.withCredentials;
+        merged.transport = overrides.transport || this._configuration.transport;
         return merged;
     }
 

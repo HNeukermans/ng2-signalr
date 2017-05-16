@@ -11,6 +11,7 @@ describe('SignalR', () => {
     configuration.hubName = 'chathub';
     configuration.qs = { user: 'donald' };
     configuration.logging = true;
+    configuration.transport = 'longPolling';
     let zone = new NgZone(true);
 
     let connection = new JConnectionStub();
@@ -28,6 +29,7 @@ describe('SignalR', () => {
         //     expect(connection.hubName).toEqual(configuration.hubName);
         //     expect(connection.qs).toEqual(configuration.qs);
         //     expect(connection.url).toEqual(configuration.url);
+        //     expect(connection.transport).toEqual(configuration.transport);
         // });
         // tick();
     });
