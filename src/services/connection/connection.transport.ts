@@ -1,6 +1,27 @@
 export class ConnectionTransport {
-    public static get FOREVER_FRAME(): string { return 'foreverFrame'; }
-    public static get LONG_POLLING(): string { return 'longPolling'; }
-    public static get SERVER_SENT_EVENTS(): string { return 'serverSentEvents'; }
-    public static get WEB_SOCKETS(): string { return 'webSockets'; }
+
+    private _name: string;
+
+    get name(): string {
+        return this._name;
+    }
+
+    constructor(name: string) {
+        if (name == null || name === "") {
+            throw new Error("Failed to create ConnectionTransport. Argument 'name' can not be null or empty.");
+        }
+        this._name = name;
+    }
+
+    public toString(): string {
+        return this._name;
+    }
+
+    public equals(other: ConnectionTransport): boolean {
+        if (other == null) {
+            return false;
+        }
+
+        return this._name === other.name;
+    }
 }

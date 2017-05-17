@@ -146,8 +146,8 @@ const config = new SignalRConfiguration();
 config.hubName = 'Ng2SignalRHub';  //default
 config.qs = { user: 'donald' };
 config.url = 'http://ng2-signalr-backend.azurewebsites.net/';
-// Specify one Transport: config.transport = ConnectionTransport.LONG_POLLING; or fallback options with order like below.
-config.transport = [ConnectionTransport.WEB_SOCKETS, ConnectionTransport.LONG_POLLING];
+// Specify one Transport: config.transport = ConnectionTransports.longPolling; or fallback options with order like below. Defaults to best avaliable connection.
+config.transport = [ConnectionTransports.webSockets, ConnectionTransports.longPolling];
 
 @NgModule({
   imports: [ 

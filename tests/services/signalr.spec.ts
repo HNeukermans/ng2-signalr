@@ -1,6 +1,6 @@
 
 import { NgZone } from '@angular/core';
-import { SignalRConfiguration, SignalR } from "../../index";
+import { SignalRConfiguration, ConnectionTransports, ConnectionTransport, SignalR } from "../../index";
 import { JConnectionStub } from "./jConnection.stub";
 //import {  fakeAsync, tick } from '@angular/core/testing';
 
@@ -11,7 +11,7 @@ describe('SignalR', () => {
     configuration.hubName = 'chathub';
     configuration.qs = { user: 'donald' };
     configuration.logging = true;
-    configuration.transport = 'longPolling';
+    configuration.transport = ConnectionTransports.auto;
     let zone = new NgZone(true);
 
     let connection = new JConnectionStub();
@@ -34,9 +34,21 @@ describe('SignalR', () => {
         // tick();
     });
 
-    it('connect should should set defaults', () => {
+    it('connect should set defaults', () => {
         // let signlar = new SignalR(configuration, zone, hubConnectionfn);
         // signlar.connect();
+    });
+
+    it('convertTransports should get valid transports from configuration', () => {
+        let signlar = new SignalR(configuration, zone, hubConnectionfn);
+        let transport1 = ConnectionTransports.longPolling;
+        let transport2 = [ConnectionTransports.longPolling, ConnectionTransports.auto];
+
+        let converted1 = signlar.convertTransports(transport1);
+        let converted2 = signlar.convertTransports(transport2);
+
+        expect(converted1).toEqual(transport1.name);
+        expect(converted2).toEqual(transport2.map(t => t.name));
     });
 });
 
