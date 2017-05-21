@@ -80,10 +80,9 @@ export class SignalRConnection implements ISignalRConnection {
 
             this._zone.run(() => {
                 let casted: T = null;
-                if (args.length === 0) {
-                    return;
-                }
-                casted = <T> args[0];
+                if (args.length > 0) {
+                    casted = <T> args[0];
+                };
                 this.log('SignalRConnection.proxy.on invoked. Calling listener next() ...');
                 listener.next(casted);
                 this.log('listener next() called.');
