@@ -3,6 +3,7 @@ import { SignalRConfiguration } from './signalr.configuration';
 import { SignalRConnection } from './connection/signalr.connection';
 import { NgZone, Injectable } from '@angular/core';
 import { IConnectionOptions } from './connection/connection.options';
+import { ConnectionTransport } from './connection/connection.transport';
 
 declare var jQuery: any;
 
@@ -23,15 +24,19 @@ export class SignalR {
         let $promise = new Promise<SignalRConnection>((resolve, reject) => {
 
             let configuration = this.merge(options ? options : {});
+            let jTransports = this.convertTransports(configuration.transport);
 
             try {
-                let serialized = JSON.stringify(configuration.qs);
+
+                let serializedQs = JSON.stringify(configuration.qs);
+                let serializedTransport = JSON.stringify(jTransports);
 
                 if (configuration.logging) {
                     console.log(`Connecting with...`);
                     console.log(`configuration:[url: '${configuration.url}'] ...`);
                     console.log(`configuration:[hubName: '${configuration.hubName}'] ...`);
-                    console.log(`configuration:[qs: '${serialized}'] ...`);
+                    console.log(`configuration:[qs: '${serializedQs}'] ...`);
+                    console.log(`configuration:[transport: '${serializedTransport}'] ...`);
                 }
             } catch (err) {}
 
@@ -49,7 +54,7 @@ export class SignalR {
             // start the connection
             console.log('Starting SignalR connection ...');
 
-            jConnection.start({ withCredentials: configuration.withCredentials, jsonp: configuration.jsonp })
+            jConnection.start({ withCredentials: configuration.withCredentials, jsonp: configuration.jsonp, transport: jTransports })
                 .done(() => {
                     console.log('Connection established, ID: ' + jConnection.id);
                     console.log('Connection established, Transport: ' + jConnection.transport.name);
@@ -64,6 +69,13 @@ export class SignalR {
         return $promise;
     }
 
+    convertTransports(transports: ConnectionTransport | ConnectionTransport[]) : any {
+        if(transports instanceof Array)
+            return transports.map((t: ConnectionTransport) => t.name);
+        
+        return transports.name;
+    }
+
     private merge(overrides: IConnectionOptions): SignalRConfiguration {
         let merged: SignalRConfiguration = new SignalRConfiguration();
         merged.hubName = overrides.hubName || this._configuration.hubName;
@@ -72,6 +84,7 @@ export class SignalR {
         merged.logging = this._configuration.logging;
         merged.jsonp = overrides.jsonp || this._configuration.jsonp;
         merged.withCredentials = overrides.withCredentials || this._configuration.withCredentials;
+        merged.transport = overrides.transport || this._configuration.transport;
         return merged;
     }
 

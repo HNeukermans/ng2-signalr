@@ -1,3 +1,5 @@
+import { ConnectionTransport } from './connection.transport';
+
 export interface IConnectionOptions {
 
     /** connection url to the SignalR service. */
@@ -14,4 +16,7 @@ export interface IConnectionOptions {
 
     /** Allows withCredentials */
     withCredentials?: boolean;
+
+    /** Allows you to specify transport. You can specify a fallback order if you wan't to try specific transports in order. By default selects best avaliable transport. */
+    transport?: ConnectionTransport | ConnectionTransport[];
 }

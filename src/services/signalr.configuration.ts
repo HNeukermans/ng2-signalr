@@ -1,4 +1,7 @@
 
+import { ConnectionTransports } from './connection/connection.transports';
+import { ConnectionTransport } from './connection/connection.transport';
+
 export class SignalRConfiguration {
 
     /** connection url to the SignalR service */
@@ -19,6 +22,9 @@ export class SignalRConfiguration {
      /** Allows withCredentials. This flag can be used to suppport CORS */
     public withCredentials: boolean;
 
+    /** Allows you to specify transport. You can specify a fallback order if you wan't to try specific transports in order. By default selects best avaliable transport. */
+    public transport: ConnectionTransport | ConnectionTransport[];
+
     constructor() {
        this.hubName = null;
        this.logging = false;
@@ -26,6 +32,7 @@ export class SignalRConfiguration {
        this.url = null;
        this.jsonp = false;
        this.withCredentials = false;
+       this.transport = ConnectionTransports.auto;
     }
 }
 

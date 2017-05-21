@@ -1,4 +1,5 @@
 import { SignalRConfiguration } from "../../index";
+import { ConnectionTransports } from '../../src/services/connection/connection.transports';
 
 describe('SignalRConfiguration', () => {
 
@@ -8,6 +9,7 @@ describe('SignalRConfiguration', () => {
         expect(configuration.hubName).toBe(null);
         expect(configuration.qs).toBe(null);
         expect(configuration.url).toBe(null);
+        expect(configuration.transport).toBe(ConnectionTransports.auto, 'transport should be set to auto');
     });
 });
 
