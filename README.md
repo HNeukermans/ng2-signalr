@@ -58,7 +58,7 @@ export function createConfig(): SignalRConfiguration {
 const config = new SignalRConfiguration();
 config.hubName = 'Ng2SignalRHub';
 config.qs = { user: 'donald' };
-config.url = 'http://ng2-signalr-backend.azurewebsites.net/';
+config.url = 'http://ng2-signalr-webui.azurewebsites.net/';
 
 @NgModule({
   imports: [ 
