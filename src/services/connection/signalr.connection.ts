@@ -4,6 +4,8 @@ import { BroadcastEventListener } from '../eventing/broadcast.event.listener';
 import { ConnectionStatus } from './connection.status';
 import { NgZone } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
+import { SignalRConfiguration } from '../signalr.configuration';
+import { ConnectionTransport } from './connection.transport';
 
 export class SignalRConnection implements ISignalRConnection {
     private _status: Observable<ConnectionStatus>;
@@ -11,13 +13,15 @@ export class SignalRConnection implements ISignalRConnection {
     private _jConnection: any;
     private _jProxy: any;
     private _zone: NgZone;
+    private _configuration: SignalRConfiguration;
 
-    constructor(jConnection: any, jProxy: any, zone: NgZone) {
+    constructor(jConnection: any, jProxy: any, zone: NgZone, configuration: SignalRConfiguration) {
         this._jProxy = jProxy;
         this._jConnection = jConnection;
         this._zone = zone;
         this._errors = this.wireUpErrorsAsObservable();
         this._status = this.wireUpStatusEventsAsObservable();
+        this._configuration = configuration;
     }
 
     public get errors(): Observable<any> {
@@ -28,15 +32,27 @@ export class SignalRConnection implements ISignalRConnection {
         return this._status;
     }
 
-    public start(): Promise<any> {
-        let $promise = new Promise<any>((resolve, reject) => {
-            this._jConnection.start().done((...results: any[]) => {
-                resolve(results);
-            })
-            .fail((err: any) => {
-                reject(err);
+    public start(): Promise<ISignalRConnection> {
+
+        let jTransports = this.convertTransports(this._configuration.transport);
+
+        let $promise = new Promise<ISignalRConnection>((resolve, reject) => {
+                this._jConnection
+                .start({
+                        jsonp: this._configuration.jsonp,
+                        transport: jTransports,
+                        withCredentials: this._configuration.withCredentials,
+                    })
+                .done(() => {
+                        console.log('Connection established, ID: ' + this._jConnection.id);
+                        console.log('Connection established, Transport: ' + this._jConnection.transport.name);
+                        resolve(this);
+                    })
+                .fail((error: any) => {
+                        console.log('Could not connect');
+                        reject('Failed to connect. Error: ' + error.message); // ex: Error during negotiation request.
+                    });
             });
-        });
         return $promise;
     }
 
@@ -81,7 +97,7 @@ export class SignalRConnection implements ISignalRConnection {
             this._zone.run(() => {
                 let casted: T = null;
                 if (args.length > 0) {
-                    casted = <T> args[0];
+                    casted = <T>args[0];
                 };
                 this.log('SignalRConnection.proxy.on invoked. Calling listener next() ...');
                 listener.next(casted);
@@ -102,27 +118,32 @@ export class SignalRConnection implements ISignalRConnection {
         return listener;
     }
 
+    private convertTransports(transports: ConnectionTransport | ConnectionTransport[]): any {
+        if (transports instanceof Array) {
+            return transports.map((t: ConnectionTransport) => t.name);
+        }
+        return transports.name;
+    }
+
+
     private wireUpErrorsAsObservable(): Observable<any> {
         let sError = new Subject<any>();
 
         this._jConnection.error((error: any) => {
-            this._zone.run(() => {
-                sError.next(error);
-            });
+            //this._zone.run(() => {  /*errors don't need to run in a  zone*/
+            sError.next(error);
+            //});
         });
         return sError;
     }
 
     private wireUpStatusEventsAsObservable(): Observable<ConnectionStatus> {
         let sStatus = new Subject<ConnectionStatus>();
-        let connStatusNames = ['starting', 'received', 'connectionSlow', 'reconnecting', 'reconnected', 'stateChanged', 'disconnected'];
         // aggregate all signalr connection status handlers into 1 observable.
-        connStatusNames.forEach((statusName) => {
-            // handler wire up, for signalr connection status callback.
-            this._jConnection[statusName]((...args: any[]) => {
-                this._zone.run(() => {
-                    sStatus.next(new ConnectionStatus(statusName));
-                });
+        // handler wire up, for signalr connection status callback.
+        this._jConnection.stateChanged((change: any) => {
+            this._zone.run(() => {
+                sStatus.next(new ConnectionStatus(change.newState));
             });
         });
         return sStatus;
@@ -133,7 +154,7 @@ export class SignalRConnection implements ISignalRConnection {
 
         let casted: T = null;
         if (args.length > 0) {
-            casted = <T> args[0];
+            casted = <T>args[0];
         }
 
         this._zone.run(() => {
