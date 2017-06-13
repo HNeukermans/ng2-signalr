@@ -2,19 +2,36 @@ import { ConnectionStatus } from '../../src/services/connection/connection.statu
 describe("ConnectionStatus", () => {
 
     it("constructor should set name", () => {
-        let status = new ConnectionStatus("connected");
-        expect(status.name).toBe("connected");
+        let status = new ConnectionStatus(0);
+        expect(status.name).toBe("connecting");
     });
 
+    it("constructor should set name", () => {
+            let status = new ConnectionStatus(1);
+            expect(status.name).toBe("connected");
+    });
+
+     it("constructor should set name", () => {
+            let status = new ConnectionStatus(2);
+            expect(status.name).toBe("reconnecting");
+    });
+
+
+    it("constructor should set name", () => {
+            let status = new ConnectionStatus(4);
+            expect(status.name).toBe("disconnected");
+    });
+
+
     it("toString() should be name", () => {
-        let event = new ConnectionStatus("connected");
+        let event = new ConnectionStatus(0);
         expect(event.toString()).toBe(event.name);
     });
 
     it("equal should compare names", () => {
-        let status1 = new ConnectionStatus("connected");
-        let status2 = new ConnectionStatus("connected");
-        let status3 = new ConnectionStatus("starting");
+        let status1 = new ConnectionStatus(0);
+        let status2 = new ConnectionStatus(0);
+        let status3 = new ConnectionStatus(2);
         expect(status1.equals(status2)).toBe(true);
         expect(status1.equals(status3)).toBe(false);
     });
@@ -24,9 +41,5 @@ describe("ConnectionStatus", () => {
         expect(action).toThrow();
     });
 
-    it("constructor should throw when name is empty", () => {
-        let action = () => new ConnectionStatus("");
-        expect(action).toThrow();
-    });
 
 });
