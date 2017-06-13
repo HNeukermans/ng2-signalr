@@ -4,6 +4,8 @@ import { SignalRConnection } from './connection/signalr.connection';
 import { NgZone, Injectable } from '@angular/core';
 import { IConnectionOptions } from './connection/connection.options';
 import { ConnectionTransport } from './connection/connection.transport';
+import { Observable } from 'rxjs/Observable';
+import { ConnectionStatus } from './connection/connection.status';
 
 declare var jQuery: any;
 
@@ -19,61 +21,43 @@ export class SignalR {
         this._jHubConnectionFn = jHubConnectionFn;
     }
 
-    public connect(options?: IConnectionOptions): Promise<ISignalRConnection> {
+    public createConnection(options?: IConnectionOptions): SignalRConnection {
+        let status: Observable<ConnectionStatus>;
+        let configuration = this.merge(options ? options : {});
+       
+        try {
 
-        let $promise = new Promise<SignalRConnection>((resolve, reject) => {
+            let serializedQs = JSON.stringify(configuration.qs);
+            let serializedTransport = JSON.stringify(configuration.transport);
 
-            let configuration = this.merge(options ? options : {});
-            let jTransports = this.convertTransports(configuration.transport);
+            if (configuration.logging) {
+                console.log(`Creating connecting with...`);
+                console.log(`configuration:[url: '${configuration.url}'] ...`);
+                console.log(`configuration:[hubName: '${configuration.hubName}'] ...`);
+                console.log(`configuration:[qs: '${serializedQs}'] ...`);
+                console.log(`configuration:[transport: '${serializedTransport}'] ...`);
+            }
+        } catch (err) {}
 
-            try {
+        // create connection object
+        let jConnection = this._jHubConnectionFn(configuration.url);
+        jConnection.logging = configuration.logging;
+        jConnection.qs = configuration.qs;
 
-                let serializedQs = JSON.stringify(configuration.qs);
-                let serializedTransport = JSON.stringify(jTransports);
+        // create a proxy
+        let jProxy = jConnection.createHubProxy(configuration.hubName);
+        // !!! important. We need to register at least one function otherwise server callbacks will not work.
+        jProxy.on('noOp', function () { });
 
-                if (configuration.logging) {
-                    console.log(`Connecting with...`);
-                    console.log(`configuration:[url: '${configuration.url}'] ...`);
-                    console.log(`configuration:[hubName: '${configuration.hubName}'] ...`);
-                    console.log(`configuration:[qs: '${serializedQs}'] ...`);
-                    console.log(`configuration:[transport: '${serializedTransport}'] ...`);
-                }
-            } catch (err) {}
+        let hubConnection = new SignalRConnection(jConnection, jProxy, this._zone, configuration);
 
-            // create connection object
-            let jConnection = this._jHubConnectionFn(configuration.url);
-            jConnection.logging = configuration.logging;
-            jConnection.qs = configuration.qs;
-
-            // create a proxy
-            let jProxy = jConnection.createHubProxy(configuration.hubName);
-            // !!! important. We need to register at least one on function otherwise server callbacks will not work.
-            jProxy.on('noOp', function () { });
-
-            let hubConnection = new SignalRConnection(jConnection, jProxy, this._zone);
-            // start the connection
-            console.log('Starting SignalR connection ...');
-
-            jConnection.start({ withCredentials: configuration.withCredentials, jsonp: configuration.jsonp, transport: jTransports })
-                .done(() => {
-                    console.log('Connection established, ID: ' + jConnection.id);
-                    console.log('Connection established, Transport: ' + jConnection.transport.name);
-                    resolve(hubConnection);
-                })
-                .fail((error: any) => {
-                    console.log('Could not connect');
-                    reject('Failed to connect. Error: ' + error.message); // ex: Error during negotiation request.
-                });
-        });
-
-        return $promise;
+        return hubConnection;
     }
 
-    convertTransports(transports: ConnectionTransport | ConnectionTransport[]) : any {
-        if(transports instanceof Array)
-            return transports.map((t: ConnectionTransport) => t.name);
-        
-        return transports.name;
+
+    public connect(options?: IConnectionOptions): Promise<ISignalRConnection> {
+
+        return this.createConnection(options).start();
     }
 
     private merge(overrides: IConnectionOptions): SignalRConfiguration {
