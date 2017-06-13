@@ -1,27 +1,33 @@
 export class ConnectionStatus {
 
-    private _name: string;
+    private static names: string[] = ['connecting', 'connected', 'reconnecting', '', 'disconnected'];
 
-    get name(): string {
-        return this._name;
+    private _value: Number;
+
+    get value(): Number {
+        return this._value;
     }
 
-    constructor(name: string) {
-        if (name == null || name === "") {
+     get name(): string {
+        return ConnectionStatus.names[Number.parseInt(this._value.toString())];
+    }
+
+
+    constructor(value: number) {
+        if (value == null || value < 0) {
             throw new Error("Failed to create ConnectionStatus. Argument 'name' can not be null or empty.");
         }
-        this._name = name;
+        this._value = value;
     }
 
     public toString(): string {
-        return this._name;
+        return this.name;
     }
 
     public equals(other: ConnectionStatus): boolean {
         if (other == null) {
             return false;
         }
-
-        return this._name === other.name;
+        return this._value === other.value;
     }
 }
