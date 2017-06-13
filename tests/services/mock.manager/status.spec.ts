@@ -31,8 +31,8 @@ describe('SignalRConnectionMockManager', () => {
         describe('when manager fakes events', () => {
 
             beforeEach(() => {
-                fakeEvent(ConnectionStatuses.reconnected);
-                fakeEvent(ConnectionStatuses.connectionSlow);
+                fakeEvent(ConnectionStatuses.connecting);
+                fakeEvent(ConnectionStatuses.connected);
                 subscribe();
                 fakeEvent(ConnectionStatuses.disconnected);
             });
@@ -47,12 +47,12 @@ describe('SignalRConnectionMockManager', () => {
 
             beforeEach(() => {
                 subscribe();
-                fakeEvent(ConnectionStatuses.connectionSlow);
+                fakeEvent(ConnectionStatuses.reconnecting);
             });
 
             it('the mock should have emitted once', () => {
                 expect(actualStatusses.length).toBe(1);
-                expect(actualStatusses[0]).toEqual(ConnectionStatuses.connectionSlow);
+                expect(actualStatusses[0]).toEqual(ConnectionStatuses.reconnecting);
             });
         });
 
@@ -60,13 +60,13 @@ describe('SignalRConnectionMockManager', () => {
 
             beforeEach(() => {
                 subscribe();
-                fakeEvent(ConnectionStatuses.connectionSlow);
+                fakeEvent(ConnectionStatuses.reconnecting);
                 fakeEvent(ConnectionStatuses.disconnected);
             });
 
             it('the mock should have emitted twice', () => {
                 expect(actualStatusses.length).toBe(2);
-                expect(actualStatusses[0]).toEqual(ConnectionStatuses.connectionSlow);
+                expect(actualStatusses[0]).toEqual(ConnectionStatuses.reconnecting);
                 expect(actualStatusses[1]).toEqual(ConnectionStatuses.disconnected);
             });
         });

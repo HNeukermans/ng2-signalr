@@ -1,6 +1,6 @@
 {
   "name": "ng2-signalr",
-  "version": "2.0.3",
+  "version": "2.0.6",
   "description": "angular2 signalr library",
   "main": "bundles/ng2-signalr.umd.js",
   "module": "index.js",

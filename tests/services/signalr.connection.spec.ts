@@ -2,6 +2,7 @@ import { NgZone } from '@angular/core';
 import { JConnectionStub, JHubProxyStub } from './jConnection.stub';
 import { BroadcastEventListener } from '../../src/services/eventing/broadcast.event.listener';
 import { SignalRConnection } from '../../src/services/connection/signalr.connection';
+import { SignalRConfiguration } from '../../src/services/signalr.configuration';
 
 describe('Connection', () => {
 
@@ -16,14 +17,14 @@ describe('Connection', () => {
     });
 
     it('id should get jConnection-id', () => {
-        let connection = new SignalRConnection(jConnectionStub, hubProxy, zone);
+        let connection = new SignalRConnection(jConnectionStub, hubProxy, zone, new SignalRConfiguration());
         expect(connection.id).toBe(jConnectionStub.id);
     });
 
     it('listen should proxy on listener event', () => {
         // arrange
         spyOn(hubProxy, 'on');
-        let connection = new SignalRConnection(jConnectionStub, hubProxy, zone);
+        let connection = new SignalRConnection(jConnectionStub, hubProxy, zone, new SignalRConfiguration());
         let listener = new BroadcastEventListener<any>('OnMessageSent');
         // act
         connection.listen(listener);
@@ -34,7 +35,7 @@ describe('Connection', () => {
     it('listenFor should proxy on event', () => {
         // arrange
         spyOn(hubProxy, 'on');
-        let connection = new SignalRConnection(jConnectionStub, hubProxy, zone);
+        let connection = new SignalRConnection(jConnectionStub, hubProxy, zone, new SignalRConfiguration());
         // act
         let listener = connection.listenFor<any>('OnMessageSent');
         // assert
@@ -44,7 +45,7 @@ describe('Connection', () => {
 
     it('listenFor should throw when event is empty', () => {
         // arrange
-        let connection = new SignalRConnection(jConnectionStub, hubProxy, zone);
+        let connection = new SignalRConnection(jConnectionStub, hubProxy, zone, new SignalRConfiguration());
         // act
         let action1 = () => connection.listenFor<any>('');
         let action2 = () => connection.listenFor<any>(null);

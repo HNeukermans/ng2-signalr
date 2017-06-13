@@ -15,7 +15,7 @@ describe('SignalR', () => {
     let zone = new NgZone(true);
 
     let connection = new JConnectionStub();
-    let hubConnectionfn = function (url: string) {
+    let hubConnectionfn = (url: string) => {
         connection.url = url;
         return connection;
     };
@@ -32,23 +32,6 @@ describe('SignalR', () => {
         //     expect(connection.transport).toEqual(configuration.transport);
         // });
         // tick();
-    });
-
-    it('connect should set defaults', () => {
-        // let signlar = new SignalR(configuration, zone, hubConnectionfn);
-        // signlar.connect();
-    });
-
-    it('convertTransports should get valid transports from configuration', () => {
-        let signlar = new SignalR(configuration, zone, hubConnectionfn);
-        let transport1 = ConnectionTransports.longPolling;
-        let transport2 = [ConnectionTransports.longPolling, ConnectionTransports.auto];
-
-        let converted1 = signlar.convertTransports(transport1);
-        let converted2 = signlar.convertTransports(transport2);
-
-        expect(converted1).toEqual(transport1.name);
-        expect(converted2).toEqual(transport2.map(t => t.name));
     });
 });
 
