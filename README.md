@@ -145,6 +145,9 @@ someFunction() {
     this._signalR.connect().then((c) => {
       //do stuff
     });
+    
+    
+    
 }
 ```
 This approach has several drawbacks:
@@ -152,6 +155,21 @@ WaitTime:
  - Take into account, it can take several second to establish connection with the server and thus for the promise to resolve. This is especially true when a websocket-transport connection is not possible and signalr tries to fallback to other transports like serverSentEevents and long polling. Is it adviceable to keep your end user aware by showing some form of progress.   
 More difficult to unit test:
  - If you want to write unit tests against the connection, you need to mock Signalr instance first. 
+
+## 2. listen to connectionstatus changes during connect (>= v2.0.6)
+From version 2.0.6 onwards you can subscribe to connectionstatus changes upon connecting to the server.
+Forst you ask signalr to create a connection. Then on the connection object you can subscribe to the status observable before calling 
+the start method.
+
+FYI: connect() is now shorthand for createConnection().start(), meaning without subscribing to status changes 
+```
+let conx = this._signalR.createConnection();
+conx.status.subscribe((s) => console.warn(s.name));
+conx.start().then((c) => {
+...
+});
+```
+
 
 ## Configuration
 You can configure Singalr on 2 different levels: 
