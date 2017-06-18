@@ -156,7 +156,7 @@ WaitTime:
 More difficult to unit test:
  - If you want to write unit tests against the connection, you need to mock Signalr instance first. 
 
-## 2. listen to connectionstatus changes during connect (>= v2.0.6)
+### listen to connectionstatus changes during connect (>= v2.0.6)
 From version 2.0.6 onwards you can subscribe to connectionstatus changes upon connecting to the server.
 Forst you ask signalr to create a connection. Then on the connection object you can subscribe to the status observable before calling 
 the start method.
