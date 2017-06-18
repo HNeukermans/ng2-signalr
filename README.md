@@ -17,10 +17,21 @@ source: [ng2 signalr demo](https://github.com/HNeukermans/ng2-signalr.demo.webui
 demo : [demo](http://ng2-signalr-webui.azurewebsites.net) (can take longer to load. Sorry, azure free tier :-))
 ## Installation
 ```
-npm install ng2-signalr --save
+npm install ng2-signalr jquery signalr --save
 ```
 
-## v2.0.0 Breaking changes
+## Breaking changes
+v2.0.6
+going from <2.0.6 to 2.0.6
+ConnectionStatus refactoring
+  1. removed ConnectionStatus.starting
+  2. removed ConnectionStatus.received
+  3. removed ConnectionStatus.connectionSlow
+  4. removed ConnectionStatus.reconnected
+  5. removed ConnectionStatus.stateChanged
+
+
+v2.0.0
 going from 1.0.X to 2.0.0 there will be some breaking changes. 
 
 type renames:
@@ -31,7 +42,7 @@ type renames:
 configuration: <br>
   4. SignalRModule.configure(c: SingalRConfiguration) to SignalR.forRoot(() => SingalRConfiguration);
 
-##Setup
+## Setup
 inside app.module.ts
 ```
 import { SignalRModule } from 'ng2-signalr';
@@ -65,6 +76,15 @@ config.url = 'http://ng2-signalr-backend.azurewebsites.net/';
     SignalRModule.configure(config)
   ]
 })
+```
+
+## setup ngcli
+inside angular-cli.json
+```
+"scripts": [
+          "../node_modules/jquery/dist/jquery.min.js",
+          "../node_modules/signalr/jquery.signalR.js"
+],
 ```
 
 ## Create connection 
