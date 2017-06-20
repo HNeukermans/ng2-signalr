@@ -15,6 +15,7 @@ An angular typescript library that allows you to connect to Asp.Net SignalR
 ![ng2-signalr](https://cloud.githubusercontent.com/assets/2285199/22845870/f8cdaff4-efe4-11e6-905d-a471a998125a.gif)
 source: [ng2 signalr demo](https://github.com/HNeukermans/ng2-signalr.demo.webui.systemjs) <br>
 demo : [demo](http://ng2-signalr-webui.azurewebsites.net) (can take longer to load. Sorry, azure free tier :-))
+ng cli example: [ng cli example](https://github.com/HNeukermans/ng2-signalr.demo.webui.ngcli) <br>
 ## Installation
 ```
 npm install ng2-signalr jquery signalr --save
