@@ -123,16 +123,17 @@ export const DocumentationRoutes: Route[] = [
 ];
 
 // 3. then inside your component
- constructor(
-    private route: ActivatedRoute) {
+ export class ChatComponent {
+  private _connection: SignalRConnection;
 
+  constructor(route: ActivatedRoute) {    
   }
-
+  
   ngOnInit() {
-    this.connection = this.route.snapshot.data['connection'];
- }
-
-
+      this.connection = this.route.snapshot.data['connection'];
+  }
+  
+}    
 ```
 ### 2. inject signalr
 Creating a client-server connection can be done by calling the connect method on the Signalr instance.
