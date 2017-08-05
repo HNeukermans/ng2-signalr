@@ -6,7 +6,7 @@ import { IConnectionOptions } from './connection/connection.options';
 import { ConnectionTransport } from './connection/connection.transport';
 import { Observable } from 'rxjs/Observable';
 import { ConnectionStatus } from './connection/connection.status';
-import { SIGNALR_CONFIGURATION_TOKEN } from "../modules/signalr-module";
+import { SIGNALR_JCONNECTION_TOKEN } from "./signalr.module";
 
 declare var jQuery: any;
 
@@ -19,7 +19,7 @@ export class SignalR {
     public constructor(
         configuration: SignalRConfiguration,
         zone: NgZone,
-        @Inject(SIGNALR_CONFIGURATION_TOKEN) jHubConnectionFn: Function
+        @Inject(SIGNALR_JCONNECTION_TOKEN) jHubConnectionFn: Function
     ) {
         this._configuration = configuration;
         this._zone = zone;

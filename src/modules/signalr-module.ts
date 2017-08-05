@@ -2,7 +2,7 @@ import { NgModule, ModuleWithProviders, NgZone, OpaqueToken } from '@angular/cor
 import { SignalR } from '../services/signalr';
 import { SignalRConfiguration } from '../services/signalr.configuration';
 
-export const SIGNALR_CONFIGURATION_TOKEN = new OpaqueToken('SIGNALR_CONFIGURATION');
+const SIGNALR_CONFIGURATION = new OpaqueToken('SIGNALR_CONFIGURATION');
 
 export function createSignalr(configuration: SignalRConfiguration, zone: NgZone) {
 
@@ -13,7 +13,7 @@ export function createSignalr(configuration: SignalRConfiguration, zone: NgZone)
 
 function getJConnectionFn(): any {
     let jQuery = getJquery();
-    let hubConnectionFn = (<any> window).jQuery.hubConnection;
+    let hubConnectionFn = (<any>window).jQuery.hubConnection;
     if (hubConnectionFn == null) {
         throw new Error('Signalr failed to initialize. Script \'jquery.signalR.js\' is missing. Please make sure to include \'jquery.signalR.js\' script.');
     }
@@ -21,18 +21,18 @@ function getJConnectionFn(): any {
 }
 
 function getJquery(): any {
-        let jQuery = (<any> window).jQuery;
-        if (jQuery == null) {
-            throw new Error('Signalr failed to initialize. Script \'jquery.js\' is missing. Please make sure to include jquery script.');
-        }
-        return jQuery;
+    let jQuery = (<any>window).jQuery;
+    if (jQuery == null) {
+        throw new Error('Signalr failed to initialize. Script \'jquery.js\' is missing. Please make sure to include jquery script.');
+    }
+    return jQuery;
 }
 
 @NgModule({
     providers: [{
-                    provide: SignalR,
-                    useValue: SignalR
-                }]
+        provide: SignalR,
+        useValue: SignalR
+    }]
 })
 export class SignalRModule {
     public static forRoot(getSignalRConfiguration: Function): ModuleWithProviders {
@@ -40,11 +40,11 @@ export class SignalRModule {
             ngModule: SignalRModule,
             providers: [
                 {
-                    provide: SIGNALR_CONFIGURATION_TOKEN,
+                    provide: SIGNALR_CONFIGURATION,
                     useFactory: getSignalRConfiguration
                 },
                 {
-                    deps: [SIGNALR_CONFIGURATION_TOKEN, NgZone],
+                    deps: [SIGNALR_CONFIGURATION, NgZone],
                     provide: SignalR,
                     useFactory: (createSignalr)
                 }
