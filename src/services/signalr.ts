@@ -1,11 +1,12 @@
 import { ISignalRConnection } from './connection/i.signalr.connection';
 import { SignalRConfiguration } from './signalr.configuration';
 import { SignalRConnection } from './connection/signalr.connection';
-import { NgZone, Injectable } from '@angular/core';
+import { NgZone, Injectable, Inject } from '@angular/core';
 import { IConnectionOptions } from './connection/connection.options';
 import { ConnectionTransport } from './connection/connection.transport';
 import { Observable } from 'rxjs/Observable';
 import { ConnectionStatus } from './connection/connection.status';
+import { SIGNALR_JCONNECTION_TOKEN } from "./signalr.module";
 
 declare var jQuery: any;
 
@@ -15,7 +16,11 @@ export class SignalR {
     private _zone: NgZone;
     private _jHubConnectionFn: any;
 
-    public constructor(configuration: SignalRConfiguration, zone: NgZone, jHubConnectionFn: Function) {
+    public constructor(
+        configuration: SignalRConfiguration,
+        zone: NgZone,
+        @Inject(SIGNALR_JCONNECTION_TOKEN) jHubConnectionFn: Function
+    ) {
         this._configuration = configuration;
         this._zone = zone;
         this._jHubConnectionFn = jHubConnectionFn;
@@ -24,7 +29,7 @@ export class SignalR {
     public createConnection(options?: IConnectionOptions): SignalRConnection {
         let status: Observable<ConnectionStatus>;
         let configuration = this.merge(options ? options : {});
-       
+
         try {
 
             let serializedQs = JSON.stringify(configuration.qs);
@@ -37,7 +42,7 @@ export class SignalR {
                 console.log(`configuration:[qs: '${serializedQs}'] ...`);
                 console.log(`configuration:[transport: '${serializedTransport}'] ...`);
             }
-        } catch (err) {}
+        } catch (err) { }
 
         // create connection object
         let jConnection = this._jHubConnectionFn(configuration.url);

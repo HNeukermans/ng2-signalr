@@ -13,7 +13,7 @@ export function createSignalr(configuration: SignalRConfiguration, zone: NgZone)
 
 function getJConnectionFn(): any {
     let jQuery = getJquery();
-    let hubConnectionFn = (<any> window).jQuery.hubConnection;
+    let hubConnectionFn = (<any>window).jQuery.hubConnection;
     if (hubConnectionFn == null) {
         throw new Error('Signalr failed to initialize. Script \'jquery.signalR.js\' is missing. Please make sure to include \'jquery.signalR.js\' script.');
     }
@@ -21,18 +21,18 @@ function getJConnectionFn(): any {
 }
 
 function getJquery(): any {
-        let jQuery = (<any> window).jQuery;
-        if (jQuery == null) {
-            throw new Error('Signalr failed to initialize. Script \'jquery.js\' is missing. Please make sure to include jquery script.');
-        }
-        return jQuery;
+    let jQuery = (<any>window).jQuery;
+    if (jQuery == null) {
+        throw new Error('Signalr failed to initialize. Script \'jquery.js\' is missing. Please make sure to include jquery script.');
+    }
+    return jQuery;
 }
 
 @NgModule({
     providers: [{
-                    provide: SignalR,
-                    useValue: SignalR
-                }]
+        provide: SignalR,
+        useValue: SignalR
+    }]
 })
 export class SignalRModule {
     public static forRoot(getSignalRConfiguration: Function): ModuleWithProviders {
