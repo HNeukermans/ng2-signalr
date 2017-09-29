@@ -14,13 +14,25 @@ An angular typescript library that allows you to connect to Asp.Net SignalR
 ## [ng2-signalr live demo](http://ng2-signalr-webui.azurewebsites.net)
 ![ng2-signalr](https://cloud.githubusercontent.com/assets/2285199/22845870/f8cdaff4-efe4-11e6-905d-a471a998125a.gif)
 source: [ng2 signalr demo](https://github.com/HNeukermans/ng2-signalr.demo.webui.systemjs) <br>
-demo : [demo](http://ng2-signalr-webui.azurewebsites.net) (can take longer to load. Sorry, azure free tier :-))
+demo : [demo](http://ng2-signalr-webui.azurewebsites.net) (can take longer to load. Sorry, azure free tier :-))<br>
+ng cli example: [ng cli example](https://github.com/HNeukermans/ng2-signalr.demo.webui.ngcli) <br>
 ## Installation
 ```
-npm install ng2-signalr --save
+npm install ng2-signalr jquery signalr --save
 ```
 
-## v2.0.0 Breaking changes
+## Breaking changes
+v2.0.6
+going from <2.0.6 to 2.0.6
+ConnectionStatus refactoring
+  1. removed ConnectionStatus.starting
+  2. removed ConnectionStatus.received
+  3. removed ConnectionStatus.connectionSlow
+  4. removed ConnectionStatus.reconnected
+  5. removed ConnectionStatus.stateChanged
+
+
+v2.0.0
 going from 1.0.X to 2.0.0 there will be some breaking changes. 
 
 type renames:
@@ -31,7 +43,7 @@ type renames:
 configuration: <br>
   4. SignalRModule.configure(c: SingalRConfiguration) to SignalR.forRoot(() => SingalRConfiguration);
 
-##Setup
+## Setup
 inside app.module.ts
 ```
 import { SignalRModule } from 'ng2-signalr';
@@ -65,6 +77,15 @@ config.url = 'http://ng2-signalr-backend.azurewebsites.net/';
     SignalRModule.configure(config)
   ]
 })
+```
+
+## setup ngcli
+inside angular-cli.json
+```
+"scripts": [
+          "../node_modules/jquery/dist/jquery.min.js",
+          "../node_modules/signalr/jquery.signalR.js"
+],
 ```
 
 ## Create connection 
@@ -103,16 +124,17 @@ export const DocumentationRoutes: Route[] = [
 ];
 
 // 3. then inside your component
- constructor(
-    private route: ActivatedRoute) {
+ export class ChatComponent {
+  private _connection: SignalRConnection;
 
+  constructor(route: ActivatedRoute) {    
   }
-
+  
   ngOnInit() {
-    this.connection = this.route.snapshot.data['connection'];
- }
-
-
+      this.connection = this.route.snapshot.data['connection'];
+  }
+  
+}    
 ```
 ### 2. inject signalr
 Creating a client-server connection can be done by calling the connect method on the Signalr instance.
@@ -125,6 +147,9 @@ someFunction() {
     this._signalR.connect().then((c) => {
       //do stuff
     });
+    
+    
+    
 }
 ```
 This approach has several drawbacks:
@@ -132,6 +157,21 @@ WaitTime:
  - Take into account, it can take several second to establish connection with the server and thus for the promise to resolve. This is especially true when a websocket-transport connection is not possible and signalr tries to fallback to other transports like serverSentEevents and long polling. Is it adviceable to keep your end user aware by showing some form of progress.   
 More difficult to unit test:
  - If you want to write unit tests against the connection, you need to mock Signalr instance first. 
+
+### listen to connectionstatus changes during connect (>= v2.0.6)
+From version 2.0.6 onwards you can subscribe to connectionstatus changes upon connecting to the server.
+Forst you ask signalr to create a connection. Then on the connection object you can subscribe to the status observable before calling 
+the start method.
+
+FYI: connect() is now shorthand for createConnection().start(), meaning without subscribing to status changes 
+```
+let conx = this._signalR.createConnection();
+conx.status.subscribe((s) => console.warn(s.name));
+conx.start().then((c) => {
+...
+});
+```
+
 
 ## Configuration
 You can configure Singalr on 2 different levels: 
