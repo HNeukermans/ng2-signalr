@@ -1,9 +1,9 @@
-import { NgModule, ModuleWithProviders, NgZone, OpaqueToken } from '@angular/core';
+import { NgModule, ModuleWithProviders, NgZone, InjectionToken } from '@angular/core';
 import { SignalR } from './signalr';
 import { SignalRConfiguration } from './signalr.configuration';
 
-const SIGNALR_CONFIGURATION = new OpaqueToken('SIGNALR_CONFIGURATION');
-export const SIGNALR_JCONNECTION_TOKEN = new OpaqueToken('SIGNALR_JCONNECTION_TOKEN');
+const SIGNALR_CONFIGURATION = new InjectionToken('SIGNALR_CONFIGURATION');
+export const SIGNALR_JCONNECTION_TOKEN = new InjectionToken('SIGNALR_JCONNECTION_TOKEN');
 
 export function createSignalr(configuration: SignalRConfiguration, zone: NgZone) {
 
