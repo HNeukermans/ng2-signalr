@@ -23,7 +23,7 @@ export class SignalRConnectionMock implements ISignalRConnection {
     }
 
     get status(): Observable<ConnectionStatus> {
-        return this._mockStatus$;
+        return this._mockStatus$.asObservable();
     }
 
     get id(): string {
