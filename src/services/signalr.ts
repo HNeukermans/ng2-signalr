@@ -74,6 +74,10 @@ export class SignalR {
         merged.jsonp = overrides.jsonp || this._configuration.jsonp;
         merged.withCredentials = overrides.withCredentials || this._configuration.withCredentials;
         merged.transport = overrides.transport || this._configuration.transport;
+        merged.executeEventsInZone = overrides.executeEventsInZone || this._configuration.executeEventsInZone;
+        merged.executeErrorsInZone = overrides.executeErrorsInZone || this._configuration.executeErrorsInZone;
+        merged.executeStatusChangeInZone = overrides.executeStatusChangeInZone
+                                            || this._configuration.executeStatusChangeInZone;
         return merged;
     }
 

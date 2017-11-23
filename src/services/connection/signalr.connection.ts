@@ -94,7 +94,7 @@ export class SignalRConnection implements ISignalRConnection {
         this.log(`SignalRConnection: Starting to listen to server event with name ${listener.event}`);
         this._jProxy.on(listener.event, (...args: any[]) => {
 
-            this._zone.run(() => {
+            this.run(() => {
                 let casted: T = null;
                 if (args.length > 0) {
                     casted = <T>args[0];
@@ -102,7 +102,7 @@ export class SignalRConnection implements ISignalRConnection {
                 this.log('SignalRConnection.proxy.on invoked. Calling listener next() ...');
                 listener.next(casted);
                 this.log('listener next() called.');
-            });
+            }, this._configuration.executeEventsInZone);
         });
     }
 
@@ -130,9 +130,7 @@ export class SignalRConnection implements ISignalRConnection {
         let sError = new Subject<any>();
 
         this._jConnection.error((error: any) => {
-            //this._zone.run(() => {  /*errors don't need to run in a  zone*/
-            sError.next(error);
-            //});
+            this.run(() => sError.next(error), this._configuration.executeErrorsInZone);
         });
         return sError;
     }
@@ -142,9 +140,8 @@ export class SignalRConnection implements ISignalRConnection {
         // aggregate all signalr connection status handlers into 1 observable.
         // handler wire up, for signalr connection status callback.
         this._jConnection.stateChanged((change: any) => {
-            this._zone.run(() => {
-                sStatus.next(new ConnectionStatus(change.newState));
-            });
+            this.run(() => sStatus.next(new ConnectionStatus(change.newState)),
+                                    this._configuration.executeStatusChangeInZone);
         });
         return sStatus.asObservable();
     }
@@ -157,9 +154,9 @@ export class SignalRConnection implements ISignalRConnection {
             casted = <T>args[0];
         }
 
-        this._zone.run(() => {
+        this.run(() => {
             listener.next(casted);
-        });
+        }, this._configuration.executeEventsInZone);
 
         this.log('listener next() called.');
     }
@@ -169,5 +166,13 @@ export class SignalRConnection implements ISignalRConnection {
             return;
         }
         console.log(args.join(', '));
+    }
+
+    private run(func: Function, inZone: boolean) {
+        if (inZone) {
+            this._zone.run(() => func());
+        }else {
+            this._zone.runOutsideAngular(() => func());
+        }
     }
 }
