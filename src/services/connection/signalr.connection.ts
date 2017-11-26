@@ -40,6 +40,7 @@ export class SignalRConnection implements ISignalRConnection {
                 this._jConnection
                 .start({
                         jsonp: this._configuration.jsonp,
+                        pingInterval: this._configuration.pingInterval,
                         transport: jTransports,
                         withCredentials: this._configuration.withCredentials,
                     })

@@ -13,7 +13,6 @@ describe('SignalRConfiguration', () => {
         expect(configuration.executeEventsInZone).toBe(true);
         expect(configuration.executeStatusChangeInZone).toBe(true);
         expect(configuration.executeErrorsInZone).toBe(false);
+        expect(configuration.pingInterval).toBe(300000);
     });
 });
-
-

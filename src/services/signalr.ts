@@ -76,8 +76,8 @@ export class SignalR {
         merged.transport = overrides.transport || this._configuration.transport;
         merged.executeEventsInZone = overrides.executeEventsInZone || this._configuration.executeEventsInZone;
         merged.executeErrorsInZone = overrides.executeErrorsInZone || this._configuration.executeErrorsInZone;
-        merged.executeStatusChangeInZone = overrides.executeStatusChangeInZone
-                                            || this._configuration.executeStatusChangeInZone;
+        merged.executeStatusChangeInZone = overrides.executeStatusChangeInZone || this._configuration.executeStatusChangeInZone;
+        merged.pingInterval = overrides.pingInterval || this._configuration.pingInterval;
         return merged;
     }
 
