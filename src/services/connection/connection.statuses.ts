@@ -1,6 +1,6 @@
 import { ConnectionStatus } from './connection.status';
 
-//@dynamic
+// @dynamic
 export class ConnectionStatuses {
 
     private static statuses: ConnectionStatus[] =

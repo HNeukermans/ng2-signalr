@@ -20,7 +20,6 @@ export class ActivatedRouteMock implements ActivatedRoute {
     public paramMap: Observable<any>;
     public queryParamMap: Observable<any>;
 
-
     constructor() {
       this.snapshot = new ActivatedRouteSnapshot();
     }

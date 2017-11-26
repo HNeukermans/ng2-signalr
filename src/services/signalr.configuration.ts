@@ -28,10 +28,10 @@ export class SignalRConfiguration implements IConnectionOptions {
 
     /** Allows you to run the event callback outside ngZone */
     public executeEventsInZone?: boolean;
-    
+
     /** Allows you to run the errors callback outside ngZone */
     public executeErrorsInZone?: boolean;
-    
+
     /** Allows you to run the status change in callback outside ngZone */
     public executeStatusChangeInZone?: boolean;
 
@@ -48,4 +48,3 @@ export class SignalRConfiguration implements IConnectionOptions {
        this.executeStatusChangeInZone = true;
     }
 }
-

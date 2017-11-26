@@ -97,8 +97,8 @@ export class SignalRConnection implements ISignalRConnection {
             this.run(() => {
                 let casted: T = null;
                 if (args.length > 0) {
-                    casted = <T>args[0];
-                };
+                    casted = <T> args[0];
+                }
                 this.log('SignalRConnection.proxy.on invoked. Calling listener next() ...');
                 listener.next(casted);
                 this.log('listener next() called.');
@@ -125,7 +125,6 @@ export class SignalRConnection implements ISignalRConnection {
         return transports.name;
     }
 
-
     private wireUpErrorsAsObservable(): Observable<any> {
         let sError = new Subject<any>();
 
@@ -151,7 +150,7 @@ export class SignalRConnection implements ISignalRConnection {
 
         let casted: T = null;
         if (args.length > 0) {
-            casted = <T>args[0];
+            casted = <T> args[0];
         }
 
         this.run(() => {
