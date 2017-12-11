@@ -7,6 +7,8 @@ import { Subject } from 'rxjs/Subject';
 import { SignalRConfiguration } from '../signalr.configuration';
 import { ConnectionTransport } from './connection.transport';
 
+export declare type CallbackFn = (...args: any[]) => void;
+
 export class SignalRConnection implements ISignalRConnection {
     private _status: Observable<ConnectionStatus>;
     private _errors: Observable<any>;
@@ -14,6 +16,7 @@ export class SignalRConnection implements ISignalRConnection {
     private _jProxy: any;
     private _zone: NgZone;
     private _configuration: SignalRConfiguration;
+    private _listeners: { [eventName: string]: CallbackFn[] };
 
     constructor(jConnection: any, jProxy: any, zone: NgZone, configuration: SignalRConfiguration) {
         this._jProxy = jProxy;
@@ -22,6 +25,7 @@ export class SignalRConnection implements ISignalRConnection {
         this._errors = this.wireUpErrorsAsObservable();
         this._status = this.wireUpStatusEventsAsObservable();
         this._configuration = configuration;
+        this._listeners = {};
     }
 
     public get errors(): Observable<any> {
@@ -91,9 +95,7 @@ export class SignalRConnection implements ISignalRConnection {
             throw new Error('Failed to listen. Argument \'listener\' can not be null');
         }
 
-        this.log(`SignalRConnection: Starting to listen to server event with name ${listener.event}`);
-        this._jProxy.on(listener.event, (...args: any[]) => {
-
+        let callback: CallbackFn = (...args: any[]) => {
             this._zone.run(() => {
                 let casted: T = null;
                 if (args.length > 0) {
@@ -103,7 +105,33 @@ export class SignalRConnection implements ISignalRConnection {
                 listener.next(casted);
                 this.log('listener next() called.');
             });
-        });
+        };
+
+        this.log(`SignalRConnection: Starting to listen to server event with name ${listener.event}`);
+        this._jProxy.on(listener.event, callback);
+
+        if (this._listeners[listener.event] == null) {
+            this._listeners[listener.event] = [];
+        }
+
+        this._listeners[listener.event].push(callback);
+    }
+
+    public stopListening<T>(listener: BroadcastEventListener<T>): void {
+        if (listener == null) {
+            throw new Error('Failed to listen. Argument \'listener\' can not be null');
+        }
+
+        this.log(`SignalRConnection: Stopping listening to server event with name ${listener.event}`);
+        if (!this._listeners[listener.event]) {
+            this._listeners[listener.event] = [];
+        }
+
+        for (let callback of this._listeners[listener.event]) {
+            this._jProxy.off(listener.event, callback);
+        }
+
+        this._listeners[listener.event] = [];
     }
 
     public listenFor<T>(event: string): BroadcastEventListener<T> {
