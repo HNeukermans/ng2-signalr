@@ -12,7 +12,6 @@ export class ConnectionStatus {
         return ConnectionStatus.names[Number.parseInt(this._value.toString())];
     }
 
-
     constructor(value: number) {
         if (value == null || value < 0) {
             throw new Error("Failed to create ConnectionStatus. Argument 'name' can not be null or empty.");

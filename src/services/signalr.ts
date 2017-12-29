@@ -30,19 +30,7 @@ export class SignalR {
         let status: Observable<ConnectionStatus>;
         let configuration = this.merge(options ? options : {});
 
-        try {
-
-            let serializedQs = JSON.stringify(configuration.qs);
-            let serializedTransport = JSON.stringify(configuration.transport);
-
-            if (configuration.logging) {
-                console.log(`Creating connecting with...`);
-                console.log(`configuration:[url: '${configuration.url}'] ...`);
-                console.log(`configuration:[hubName: '${configuration.hubName}'] ...`);
-                console.log(`configuration:[qs: '${serializedQs}'] ...`);
-                console.log(`configuration:[transport: '${serializedTransport}'] ...`);
-            }
-        } catch (err) { }
+        this.logConfiguration(configuration);
 
         // create connection object
         let jConnection = this._jHubConnectionFn(configuration.url);
@@ -52,17 +40,29 @@ export class SignalR {
         // create a proxy
         let jProxy = jConnection.createHubProxy(configuration.hubName);
         // !!! important. We need to register at least one function otherwise server callbacks will not work.
-        jProxy.on('noOp', function () { });
+        jProxy.on('noOp', () => { /* */ });
 
         let hubConnection = new SignalRConnection(jConnection, jProxy, this._zone, configuration);
 
         return hubConnection;
     }
 
-
     public connect(options?: IConnectionOptions): Promise<ISignalRConnection> {
-
         return this.createConnection(options).start();
+    }
+
+    private logConfiguration(configuration: SignalRConfiguration) {
+        try {
+            let serializedQs = JSON.stringify(configuration.qs);
+            let serializedTransport = JSON.stringify(configuration.transport);
+            if (configuration.logging) {
+                console.log(`Creating connecting with...`);
+                console.log(`configuration:[url: '${configuration.url}'] ...`);
+                console.log(`configuration:[hubName: '${configuration.hubName}'] ...`);
+                console.log(`configuration:[qs: '${serializedQs}'] ...`);
+                console.log(`configuration:[transport: '${serializedTransport}'] ...`);
+            }
+        } catch (err) { /* */ }
     }
 
     private merge(overrides: IConnectionOptions): SignalRConfiguration {
@@ -74,6 +74,10 @@ export class SignalR {
         merged.jsonp = overrides.jsonp || this._configuration.jsonp;
         merged.withCredentials = overrides.withCredentials || this._configuration.withCredentials;
         merged.transport = overrides.transport || this._configuration.transport;
+        merged.executeEventsInZone = overrides.executeEventsInZone || this._configuration.executeEventsInZone;
+        merged.executeErrorsInZone = overrides.executeErrorsInZone || this._configuration.executeErrorsInZone;
+        merged.executeStatusChangeInZone = overrides.executeStatusChangeInZone || this._configuration.executeStatusChangeInZone;
+        merged.pingInterval = overrides.pingInterval || this._configuration.pingInterval;
         return merged;
     }
 

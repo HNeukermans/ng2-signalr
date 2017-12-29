@@ -31,6 +31,7 @@ export class SignalRConnectionMock implements ISignalRConnection {
     }
 
     public stop(): void {
+        //
     }
 
    public start(): Promise<any> {
@@ -51,5 +52,3 @@ export class SignalRConnectionMock implements ISignalRConnection {
         return listener;
     }
 }
-
-

@@ -42,7 +42,10 @@
         "import-destructuring-spacing": true,
         "templates-use-public": true,
         "no-access-missing-member": true,
-        "invoke-injectable": true,
+        "invoke-injectable": true, 
+        "max-line-length": false,
+        "no-console": false,
+        "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore"],
         "ordered-imports": [
             false
         ],
