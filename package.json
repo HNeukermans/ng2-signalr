@@ -6,7 +6,7 @@
   "module": "index.js",
   "scripts": {
     "build": "node build.js",
-    "test": "karma start",
+    "test": "karma start --single-run --no-auto-watch",
     "pack-lib": "npm pack ./dist",
     "publish-lib": "npm publish ./dist",
     "compodoc": "compodoc -p tsconfig.json",
