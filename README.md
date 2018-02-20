@@ -27,7 +27,7 @@ inside app.module.ts
 import { SignalRModule } from 'ng2-signalr';
 import { SignalRConfiguration } from 'ng2-signalr';
 
-// v2.0.0
+// >= v2.0.0
 export function createConfig(): SignalRConfiguration {
   const c = new SignalRConfiguration();
   c.hubName = 'Ng2SignalRHub';
@@ -35,6 +35,7 @@ export function createConfig(): SignalRConfiguration {
   c.url = 'http://ng2-signalr-backend.azurewebsites.net/';
   c.logging = true;
   
+  // >= v5.0.0
   c.executeEventsInZone = true; // optional, default is true
   c.executeErrorsInZone = false; // optional, default is false
   c.executeStatusChangeInZone = true; // optional, default is true
