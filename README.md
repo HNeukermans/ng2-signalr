@@ -21,28 +21,6 @@ ng cli example: [ng cli example](https://github.com/HNeukermans/ng2-signalr.demo
 npm install ng2-signalr jquery signalr --save
 ```
 
-## Breaking changes
-v2.0.6
-going from <2.0.6 to 2.0.6
-ConnectionStatus refactoring
-  1. removed ConnectionStatus.starting
-  2. removed ConnectionStatus.received
-  3. removed ConnectionStatus.connectionSlow
-  4. removed ConnectionStatus.reconnected
-  5. removed ConnectionStatus.stateChanged
-
-
-v2.0.0
-going from 1.0.X to 2.0.0 there will be some breaking changes. 
-
-type renames:
-  1. ConnectionOptions to IConnectionOptions
-  2. ListenerCollection to IListenerCollection 
-  3. SignalRConnectionBase to ISignalRConnection
-  
-configuration: <br>
-  4. SignalRModule.configure(c: SingalRConfiguration) to SignalR.forRoot(() => SingalRConfiguration);
-
 ## Setup
 inside app.module.ts
 ```
@@ -294,7 +272,27 @@ it('I want to simulate several ChatMessages received, in my unit test',
 ```
 For more info, certainly check out the live demo, unit testing section.
 
+## Breaking changes
+v2.0.6
+going from <2.0.6 to 2.0.6
+ConnectionStatus refactoring
+  1. removed ConnectionStatus.starting
+  2. removed ConnectionStatus.received
+  3. removed ConnectionStatus.connectionSlow
+  4. removed ConnectionStatus.reconnected
+  5. removed ConnectionStatus.stateChanged
 
+
+v2.0.0
+going from 1.0.X to 2.0.0 there will be some breaking changes. 
+
+type renames:
+  1. ConnectionOptions to IConnectionOptions
+  2. ListenerCollection to IListenerCollection 
+  3. SignalRConnectionBase to ISignalRConnection
+  
+configuration: <br>
+  4. SignalRModule.configure(c: SingalRConfiguration) to SignalR.forRoot(() => SingalRConfiguration);
 
 ## Detailed webpack install
 ```
