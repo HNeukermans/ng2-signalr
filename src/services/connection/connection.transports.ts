@@ -1,6 +1,6 @@
 import { ConnectionTransport } from './connection.transport';
 
-//@dynamic
+// @dynamic
 export class ConnectionTransports {
 
     private static transports: ConnectionTransport[] =

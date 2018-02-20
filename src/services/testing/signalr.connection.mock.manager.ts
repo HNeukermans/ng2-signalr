@@ -4,10 +4,11 @@ import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { ConnectionStatus } from '../connection/connection.status';
 
 export class SignalRConnectionMockManager {
+
+    private _listeners: IListenerCollection;
     private _status$: Subject<ConnectionStatus>;
     private _errors$: Subject<any>;
     private _object: SignalRConnectionMock;
-    public _listeners: IListenerCollection;
 
     constructor() {
         this._errors$ = new Subject<any>();

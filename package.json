@@ -1,12 +1,12 @@
 {
   "name": "ng2-signalr",
-  "version": "2.1.1",
+  "version": "5.0.0",
   "description": "angular2 signalr library",
   "main": "bundles/ng2-signalr.umd.js",
   "module": "index.js",
   "scripts": {
     "build": "node build.js",
-    "test": "karma start",
+    "test": "karma start --single-run --no-auto-watch",
     "pack-lib": "npm pack ./dist",
     "publish-lib": "npm publish ./dist",
     "compodoc": "compodoc -p tsconfig.json",
@@ -27,7 +27,10 @@
   "keywords": [
     "signalR",
     "typescript",
-    "angular 2"
+    "angular 2",
+    "angular 3",
+    "angular 4",
+    "angular 5"
   ],
   "license": "MIT",
   "peerDependencies": {

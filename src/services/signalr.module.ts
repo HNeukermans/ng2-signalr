@@ -14,7 +14,7 @@ export function createSignalr(configuration: SignalRConfiguration, zone: NgZone)
 
 export function getJConnectionFn(): any {
     let jQuery = getJquery();
-    let hubConnectionFn = (<any>window).jQuery.hubConnection;
+    let hubConnectionFn = (<any> window).jQuery.hubConnection;
     if (hubConnectionFn == null) {
         throw new Error('Signalr failed to initialize. Script \'jquery.signalR.js\' is missing. Please make sure to include \'jquery.signalR.js\' script.');
     }
@@ -22,7 +22,7 @@ export function getJConnectionFn(): any {
 }
 
 function getJquery(): any {
-    let jQuery = (<any>window).jQuery;
+    let jQuery = (<any> window).jQuery;
     if (jQuery == null) {
         throw new Error('Signalr failed to initialize. Script \'jquery.js\' is missing. Please make sure to include jquery script.');
     }

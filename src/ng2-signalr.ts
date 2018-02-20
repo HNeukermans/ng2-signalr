@@ -11,4 +11,3 @@ export { ConnectionTransports } from './services/connection/connection.transport
 export { SignalR } from './services/signalr';
 export { SignalRConfiguration } from './services/signalr.configuration';
 export { SignalRModule } from './modules/signalr-module';
-

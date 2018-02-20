@@ -11,7 +11,7 @@ describe('Connection', () => {
     let hubProxy: JHubProxyStub;
 
     beforeEach(() => {
-        zone = new NgZone(true);
+        zone = new NgZone({ enableLongStackTrace: true });
         jConnectionStub = new JConnectionStub();
         hubProxy = new JHubProxyStub();
     });

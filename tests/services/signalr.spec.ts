@@ -12,7 +12,7 @@ describe('SignalR', () => {
     configuration.qs = { user: 'donald' };
     configuration.logging = true;
     configuration.transport = ConnectionTransports.auto;
-    let zone = new NgZone(true);
+    let zone = new NgZone({ enableLongStackTrace: true });
 
     let connection = new JConnectionStub();
     let hubConnectionfn = (url: string) => {

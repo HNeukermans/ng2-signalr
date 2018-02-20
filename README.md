@@ -56,6 +56,10 @@ export function createConfig(): SignalRConfiguration {
   c.qs = { user: 'donald' };
   c.url = 'http://ng2-signalr-backend.azurewebsites.net/';
   c.logging = true;
+  
+  c.executeEventsInZone = true; // optional, default is true
+  c.executeErrorsInZone = false; // optional, default is false
+  c.executeStatusChangeInZone = true; // optional, default is true
   return c;
 }
 
