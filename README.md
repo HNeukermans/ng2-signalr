@@ -21,6 +21,9 @@ ng cli example: [ng cli example](https://github.com/HNeukermans/ng2-signalr.demo
 npm install ng2-signalr jquery signalr --save
 ```
 
+> v5 is first version developed against angular v5. 
+> angular v4 users should use v2.2.1.
+
 ## Setup
 inside app.module.ts
 ```
