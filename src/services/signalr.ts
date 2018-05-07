@@ -4,7 +4,7 @@ import { SignalRConnection } from './connection/signalr.connection';
 import { NgZone, Injectable, Inject } from '@angular/core';
 import { IConnectionOptions } from './connection/connection.options';
 import { ConnectionTransport } from './connection/connection.transport';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { ConnectionStatus } from './connection/connection.status';
 import { SIGNALR_JCONNECTION_TOKEN } from "./signalr.module";
 
@@ -19,7 +19,7 @@ export class SignalR {
     public constructor(
         configuration: SignalRConfiguration,
         zone: NgZone,
-        @Inject(SIGNALR_JCONNECTION_TOKEN) jHubConnectionFn: Function
+        @Inject(SIGNALR_JCONNECTION_TOKEN) jHubConnectionFn: any /* use type 'any'; Suggested workaround from angular repository: https://github.com/angular/angular/issues/12631 */
     ) {
         this._configuration = configuration;
         this._zone = zone;

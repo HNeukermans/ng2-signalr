@@ -13,9 +13,8 @@
             "es2015",
             "dom"
         ],
-        "types": [
-            "jasmine",
-            "node"
-        ]
+        "typeRoots": [
+            "node_modules/@types"
+          ]
     }
 }
