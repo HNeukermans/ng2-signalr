@@ -1,6 +1,5 @@
-import { Subject } from 'rxjs/Subject';
+import { Subject, ReplaySubject } from 'rxjs';
 import { SignalRConnectionMock, IListenerCollection } from './signalr.connection.mock';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { ConnectionStatus } from '../connection/connection.status';
 
 export class SignalRConnectionMockManager {

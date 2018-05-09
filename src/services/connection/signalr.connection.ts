@@ -1,9 +1,8 @@
 import { ISignalRConnection } from './i.signalr.connection';
-import { Observable } from 'rxjs/Observable';
+import { Observable, Subject } from 'rxjs';
 import { BroadcastEventListener } from '../eventing/broadcast.event.listener';
 import { ConnectionStatus } from './connection.status';
 import { NgZone } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
 import { SignalRConfiguration } from '../signalr.configuration';
 import { ConnectionTransport } from './connection.transport';
 
@@ -41,23 +40,23 @@ export class SignalRConnection implements ISignalRConnection {
         let jTransports = this.convertTransports(this._configuration.transport);
 
         let $promise = new Promise<ISignalRConnection>((resolve, reject) => {
-                this._jConnection
+            this._jConnection
                 .start({
-                        jsonp: this._configuration.jsonp,
-                        pingInterval: this._configuration.pingInterval,
-                        transport: jTransports,
-                        withCredentials: this._configuration.withCredentials,
-                    })
+                    jsonp: this._configuration.jsonp,
+                    pingInterval: this._configuration.pingInterval,
+                    transport: jTransports,
+                    withCredentials: this._configuration.withCredentials,
+                })
                 .done(() => {
-                        console.log('Connection established, ID: ' + this._jConnection.id);
-                        console.log('Connection established, Transport: ' + this._jConnection.transport.name);
-                        resolve(this);
-                    })
+                    console.log('Connection established, ID: ' + this._jConnection.id);
+                    console.log('Connection established, Transport: ' + this._jConnection.transport.name);
+                    resolve(this);
+                })
                 .fail((error: any) => {
-                        console.log('Could not connect');
-                        reject('Failed to connect. Error: ' + error.message); // ex: Error during negotiation request.
-                    });
-            });
+                    console.log('Could not connect');
+                    reject('Failed to connect. Error: ' + error.message); // ex: Error during negotiation request.
+                });
+        });
         return $promise;
     }
 
@@ -96,16 +95,16 @@ export class SignalRConnection implements ISignalRConnection {
             throw new Error('Failed to listen. Argument \'listener\' can not be null');
         }
 
-        let callback: CallbackFn = (...args: any[]) => {          
+        let callback: CallbackFn = (...args: any[]) => {
             this.run(() => {
                 let casted: T = null;
                 if (args.length > 0) {
-                    casted = <T> args[0];
+                    casted = <T>args[0];
                 }
                 this.log('SignalRConnection.proxy.on invoked. Calling listener next() ...');
                 listener.next(casted);
                 this.log('listener next() called.');
-            }, this._configuration.executeEventsInZone);         
+            }, this._configuration.executeEventsInZone);
         };
 
         this.log(`SignalRConnection: Starting to listen to server event with name ${listener.event}`);
@@ -169,7 +168,7 @@ export class SignalRConnection implements ISignalRConnection {
         // handler wire up, for signalr connection status callback.
         this._jConnection.stateChanged((change: any) => {
             this.run(() => sStatus.next(new ConnectionStatus(change.newState)),
-                                    this._configuration.executeStatusChangeInZone);
+                this._configuration.executeStatusChangeInZone);
         });
         return sStatus.asObservable();
     }
@@ -179,7 +178,7 @@ export class SignalRConnection implements ISignalRConnection {
 
         let casted: T = null;
         if (args.length > 0) {
-            casted = <T> args[0];
+            casted = <T>args[0];
         }
 
         this.run(() => {
@@ -199,7 +198,7 @@ export class SignalRConnection implements ISignalRConnection {
     private run(func: Function, inZone: boolean) {
         if (inZone) {
             this._zone.run(() => func());
-        }else {
+        } else {
             this._zone.runOutsideAngular(() => func());
         }
     }
