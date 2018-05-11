@@ -80,6 +80,8 @@
     "zone.js": "0.7.6"
   },
   "dependencies": {
-    "eslint": "^4.7.2"
+    "eslint": "^4.7.2",
+    "glob": "^7.1.2",
+    "path-is-absolute": "^1.0.1"
   }
 }

@@ -10,6 +10,7 @@ export interface ISignalRConnection {
     invoke(method: string, ...parameters: any[]): Promise<any>;
     listen<T>(listener: BroadcastEventListener<T>): void;
     listenFor<T>(listener: string): BroadcastEventListener<T>;
+    listenForRaw(listener: string): BroadcastEventListener<any[]>;
     stop(): void;
     start(): Promise<any>;
 }

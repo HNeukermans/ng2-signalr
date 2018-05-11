@@ -48,4 +48,10 @@ export class SignalRConnectionMock implements ISignalRConnection {
         this.listen(listener);
         return listener;
     }
+
+    public listenForRaw(event: string): BroadcastEventListener<any[]> {
+        let listener = new BroadcastEventListener<any[]>(event);
+        this._listeners[listener.event] = listener;
+        return listener;
+    }
 }

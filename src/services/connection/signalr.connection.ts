@@ -99,7 +99,7 @@ export class SignalRConnection implements ISignalRConnection {
             this.run(() => {
                 let casted: T = null;
                 if (args.length > 0) {
-                    casted = <T>args[0];
+                    casted = args[0] as T;
                 }
                 this.log('SignalRConnection.proxy.on invoked. Calling listener next() ...');
                 listener.next(casted);
@@ -107,14 +107,7 @@ export class SignalRConnection implements ISignalRConnection {
             }, this._configuration.executeEventsInZone);
         };
 
-        this.log(`SignalRConnection: Starting to listen to server event with name ${listener.event}`);
-        this._jProxy.on(listener.event, callback);
-
-        if (this._listeners[listener.event] == null) {
-            this._listeners[listener.event] = [];
-        }
-
-        this._listeners[listener.event].push(callback);
+        this.setListener(callback, listener);
     }
 
     public stopListening<T>(listener: BroadcastEventListener<T>): void {
@@ -144,6 +137,40 @@ export class SignalRConnection implements ISignalRConnection {
         this.listen(listener);
 
         return listener;
+    }
+
+    public listenForRaw(event: string): BroadcastEventListener<any[]> {
+        if (event == null || event === '') {
+            throw new Error('Failed to listen. Argument \'event\' can not be empty');
+        }
+
+        let listener = new BroadcastEventListener<any[]>(event);
+
+        let callback: CallbackFn = (...args: any[]) => {
+            this.run(() => {
+                let casted: any[] = [];
+                if (args.length > 0) {
+                    casted = args;
+                }
+                this.log('SignalRConnection.proxy.on invoked. Calling listener next() ...');
+                listener.next(args);
+                this.log('listener next() called.');
+            }, this._configuration.executeEventsInZone);
+        };
+
+        this.setListener(callback, listener);
+        return listener;
+    }
+
+    private setListener<T>(callback: CallbackFn, listener: BroadcastEventListener<T>) {
+        this.log(`SignalRConnection: Starting to listen to server event with name ${listener.event}`);
+        this._jProxy.on(listener.event, callback);
+
+        if (this._listeners[listener.event] == null) {
+            this._listeners[listener.event] = [];
+        }
+
+        this._listeners[listener.event].push(callback);
     }
 
     private convertTransports(transports: ConnectionTransport | ConnectionTransport[]): any {
@@ -178,7 +205,7 @@ export class SignalRConnection implements ISignalRConnection {
 
         let casted: T = null;
         if (args.length > 0) {
-            casted = <T>args[0];
+            casted = args[0] as T;
         }
 
         this.run(() => {

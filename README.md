@@ -215,6 +215,13 @@ onMessageSent$.subscribe((chatMessage: ChatMessage) => {
 let onMessageSent$  = this.connection.listenFor('ON_MESSAGE_SENT');
 onMessageSent$.subscribe( ...
 ```
+### listenForRaw:
+ When using listenForRaw method, you can cast original data form signalr client callback. Here the listen method returns you the any[] of BroadvastEventListener, that you can then subscribe to.
+ ```
+ let onMessageSent$  = this.connection.listenForRaw('ON_MESSAGE_SENT');
+ onMessageSent$.subscribe((data: any[]) => ....);
+ ```
+
 ## How to invoke a server method
 ```
 // invoke a server side method

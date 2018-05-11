@@ -49,6 +49,7 @@
         "ordered-imports": [
             false
         ],
+        "prefer-const": false,
         "quotemark": [
             false
         ],
