@@ -27,22 +27,21 @@ export class SignalR {
     }
 
     public createConnection(options?: IConnectionOptions): SignalRConnection {
-        let status: Observable<ConnectionStatus>;
-        let configuration = this.merge(options ? options : {});
+        const configuration = this.merge(options ? options : {});
 
         this.logConfiguration(configuration);
 
         // create connection object
-        let jConnection = this._jHubConnectionFn(configuration.url);
+        const jConnection = this._jHubConnectionFn(configuration.url);
         jConnection.logging = configuration.logging;
         jConnection.qs = configuration.qs;
 
         // create a proxy
-        let jProxy = jConnection.createHubProxy(configuration.hubName);
+        const jProxy = jConnection.createHubProxy(configuration.hubName);
         // !!! important. We need to register at least one function otherwise server callbacks will not work.
         jProxy.on('noOp', () => { /* */ });
 
-        let hubConnection = new SignalRConnection(jConnection, jProxy, this._zone, configuration);
+        const hubConnection = new SignalRConnection(jConnection, jProxy, this._zone, configuration);
 
         return hubConnection;
     }
@@ -53,8 +52,8 @@ export class SignalR {
 
     private logConfiguration(configuration: SignalRConfiguration) {
         try {
-            let serializedQs = JSON.stringify(configuration.qs);
-            let serializedTransport = JSON.stringify(configuration.transport);
+            const serializedQs = JSON.stringify(configuration.qs);
+            const serializedTransport = JSON.stringify(configuration.transport);
             if (configuration.logging) {
                 console.log(`Creating connecting with...`);
                 console.log(`configuration:[url: '${configuration.url}'] ...`);
@@ -66,7 +65,7 @@ export class SignalR {
     }
 
     private merge(overrides: IConnectionOptions): SignalRConfiguration {
-        let merged: SignalRConfiguration = new SignalRConfiguration();
+        const merged: SignalRConfiguration = new SignalRConfiguration();
         merged.hubName = overrides.hubName || this._configuration.hubName;
         merged.url = overrides.url || this._configuration.url;
         merged.qs = overrides.qs || this._configuration.qs;

@@ -26,5 +26,5 @@ export class ActivatedRouteMock implements ActivatedRoute {
 
     public toString(): string {
         return '';
-    };
+    }
 }

@@ -37,9 +37,9 @@ export class SignalRConnection implements ISignalRConnection {
 
     public start(): Promise<ISignalRConnection> {
 
-        let jTransports = this.convertTransports(this._configuration.transport);
+        const jTransports = this.convertTransports(this._configuration.transport);
 
-        let $promise = new Promise<ISignalRConnection>((resolve, reject) => {
+        const $promise = new Promise<ISignalRConnection>((resolve, reject) => {
             this._jConnection
                 .start({
                     jsonp: this._configuration.jsonp,
@@ -74,7 +74,7 @@ export class SignalRConnection implements ISignalRConnection {
         }
         this.log(`SignalRConnection. Start invoking \'${method}\'...`);
 
-        let $promise = new Promise<any>((resolve, reject) => {
+        const $promise = new Promise<any>((resolve, reject) => {
             this._jProxy.invoke(method, ...parameters)
                 .done((result: any) => {
                     this.log(`\'${method}\' invoked succesfully. Resolving promise...`);
@@ -95,7 +95,7 @@ export class SignalRConnection implements ISignalRConnection {
             throw new Error('Failed to listen. Argument \'listener\' can not be null');
         }
 
-        let callback: CallbackFn = (...args: any[]) => {
+        const callback: CallbackFn = (...args: any[]) => {
             this.run(() => {
                 let casted: T = null;
                 if (args.length > 0) {
@@ -120,7 +120,7 @@ export class SignalRConnection implements ISignalRConnection {
             this._listeners[listener.event] = [];
         }
 
-        for (let callback of this._listeners[listener.event]) {
+        for (const callback of this._listeners[listener.event]) {
             this._jProxy.off(listener.event, callback);
         }
 
@@ -132,7 +132,7 @@ export class SignalRConnection implements ISignalRConnection {
             throw new Error('Failed to listen. Argument \'event\' can not be empty');
         }
 
-        let listener = new BroadcastEventListener<T>(event);
+        const listener = new BroadcastEventListener<T>(event);
 
         this.listen(listener);
 
@@ -144,9 +144,9 @@ export class SignalRConnection implements ISignalRConnection {
             throw new Error('Failed to listen. Argument \'event\' can not be empty');
         }
 
-        let listener = new BroadcastEventListener<any[]>(event);
+        const listener = new BroadcastEventListener<any[]>(event);
 
-        let callback: CallbackFn = (...args: any[]) => {
+        const callback: CallbackFn = (...args: any[]) => {
             this.run(() => {
                 let casted: any[] = [];
                 if (args.length > 0) {
@@ -181,7 +181,7 @@ export class SignalRConnection implements ISignalRConnection {
     }
 
     private wireUpErrorsAsObservable(): Observable<any> {
-        let sError = new Subject<any>();
+        const sError = new Subject<any>();
 
         this._jConnection.error((error: any) => {
             this.run(() => sError.next(error), this._configuration.executeErrorsInZone);
@@ -190,7 +190,7 @@ export class SignalRConnection implements ISignalRConnection {
     }
 
     private wireUpStatusEventsAsObservable(): Observable<ConnectionStatus> {
-        let sStatus = new Subject<ConnectionStatus>();
+        const sStatus = new Subject<ConnectionStatus>();
         // aggregate all signalr connection status handlers into 1 observable.
         // handler wire up, for signalr connection status callback.
         this._jConnection.stateChanged((change: any) => {
@@ -222,7 +222,7 @@ export class SignalRConnection implements ISignalRConnection {
         console.log(args.join(', '));
     }
 
-    private run(func: Function, inZone: boolean) {
+    private run(func: () => void, inZone: boolean) {
         if (inZone) {
             this._zone.run(() => func());
         } else {

@@ -74,15 +74,13 @@
     "shelljs": "0.7.6",
     "ts-helpers": "1.1.2",
     "ts-loader": "2.0.0",
-    "tslint": "5.10.0",
+    "tslint": "5.11.0",
     "typescript": "2.7.2",
     "uglify-js": "2.7.5",
     "webpack": "2.2.1",
     "zone.js": "0.7.6"
   },
   "dependencies": {
-    "eslint": "^4.7.2",
-    "glob": "^7.1.2",
-    "path-is-absolute": "^1.0.1"
+    "eslint": "^4.7.2"
   }
 }
