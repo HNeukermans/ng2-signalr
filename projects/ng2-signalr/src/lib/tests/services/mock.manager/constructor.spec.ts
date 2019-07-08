@@ -1,7 +1,5 @@
-import { Observable, ReplaySubject, Subject } from 'rxjs';
-import { SignalRConnectionMockManager } from '../../../src/services/testing/signalr.connection.mock.manager';
-import { ISignalRConnection } from '../../../src/services/connection/i.signalr.connection';
-import { SignalRConnectionMock } from '../../../src/services/testing/signalr.connection.mock';
+import { Subject } from 'rxjs';
+import { SignalRConnectionMockManager, SignalRConnectionMock } from 'ng2-signalr';
 
 describe('SignalRConnectionMockManager', () => {
 

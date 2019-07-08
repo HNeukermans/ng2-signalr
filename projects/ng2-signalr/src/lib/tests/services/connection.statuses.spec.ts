@@ -1,4 +1,5 @@
-import { ConnectionStatuses } from '../../src/services/connection/connection.statuses';
+import { ConnectionStatuses } from "ng2-signalr";
+
 describe("ConnectionStatuses", () => {
 
     it("connecting should have name", () => {

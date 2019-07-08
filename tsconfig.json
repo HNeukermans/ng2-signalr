@@ -1,20 +1,30 @@
 {
-    "compilerOptions": {
-        "target": "es2015",
-        "module": "esnext",
-        "moduleResolution": "node",
-        "sourceMap": true,
-        "inlineSources": true,
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
-        "noImplicitAny": true,
-        "skipLibCheck": true,
-        "lib": [
-            "es2018",
-            "dom"
-        ],
-        "typeRoots": [
-            "node_modules/@types"
-          ]
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2018",
+      "dom"
+    ],
+    "paths": {
+      "ng2-signalr": [
+        "dist/ng2-signalr"
+      ],
+      "ng2-signalr/*": [
+        "dist/ng2-signalr/*"
+      ]
     }
+  }
 }

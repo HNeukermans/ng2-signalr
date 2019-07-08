@@ -1,4 +1,5 @@
-import { BroadcastEventListener } from '../../src/services/eventing/broadcast.event.listener';
+import { BroadcastEventListener } from "ng2-signalr";
+
 describe('BroadcastEventListener', () => {
 
     interface Type {

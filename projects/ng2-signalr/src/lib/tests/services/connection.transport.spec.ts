@@ -1,4 +1,5 @@
-import { ConnectionTransport } from '../../src/services/connection/connection.transport';
+import { ConnectionTransport } from "ng2-signalr";
+
 describe("ConnectionTransport", () => {
 
     it("constructor should set name", () => {

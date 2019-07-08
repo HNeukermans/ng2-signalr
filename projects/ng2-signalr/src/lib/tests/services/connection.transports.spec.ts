@@ -1,4 +1,5 @@
-import { ConnectionTransports } from '../../src/services/connection/connection.transports';
+import { ConnectionTransports } from "ng2-signalr";
+
 describe("ConnectionTransports", () => {
 
     it("auto should have name", () => {

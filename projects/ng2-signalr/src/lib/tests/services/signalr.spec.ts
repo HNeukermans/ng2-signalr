@@ -1,8 +1,7 @@
 
 import { NgZone } from '@angular/core';
-import { SignalRConfiguration, ConnectionTransports, ConnectionTransport, SignalR } from "../../index";
-import { JConnectionStub } from "./jConnection.stub";
-//import {  fakeAsync, tick } from '@angular/core/testing';
+import { SignalRConfiguration, ConnectionTransports, SignalR } from 'ng2-signalr';
+import { JConnectionStub } from './jConnection.stub';
 
 describe('SignalR', () => {
 

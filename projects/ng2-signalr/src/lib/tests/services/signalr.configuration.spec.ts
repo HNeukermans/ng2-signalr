@@ -1,5 +1,4 @@
-import { SignalRConfiguration } from "../../index";
-import { ConnectionTransports } from '../../src/services/connection/connection.transports';
+import { SignalRConfiguration, ConnectionTransports } from 'ng2-signalr';
 
 describe('SignalRConfiguration', () => {
 

@@ -1,6 +1,6 @@
-import { Observable, ReplaySubject, Subject } from 'rxjs';
-import { SignalRConnectionMockManager } from '../../../src/services/testing/signalr.connection.mock.manager';
-import { BroadcastEventListener } from '../../../src/services/eventing/broadcast.event.listener';
+import { Subject } from 'rxjs';
+import { SignalRConnectionMockManager, BroadcastEventListener } from 'ng2-signalr';
+
 
 class AServerEvent {
     constructor(public counter: number) {
