@@ -16,7 +16,7 @@ before_install:
 install:
   - npm install
 script:
-  - npm test
+  - npm run test-headless
 before_script:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
