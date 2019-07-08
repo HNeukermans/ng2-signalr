@@ -1,5 +1,6 @@
 import { Subject } from 'rxjs';
-import { SignalRConnectionMockManager, BroadcastEventListener } from 'ng2-signalr';
+import { SignalRConnectionMockManager } from '../../../services/testing';
+import { BroadcastEventListener } from '../../../services/eventing';
 
 
 class AServerEvent {
@@ -20,33 +21,33 @@ describe('SignalRConnectionMockManager', () => {
         });
 
         function listen() {
-            let broadcastListener = new BroadcastEventListener<AServerEvent>('OnMessageSent');
-            let listener = sut.mock.listen(broadcastListener);
-            let subscription = broadcastListener.subscribe((e: AServerEvent) => {
+            const broadcastListener = new BroadcastEventListener<AServerEvent>('OnMessageSent');
+            const listener = sut.mock.listen(broadcastListener);
+            const subscription = broadcastListener.subscribe((e: AServerEvent) => {
                 receivedEvents.push(e);
             });
             return broadcastListener;
         }
 
         function fakeEvent(event: AServerEvent) {
-            sut.listeners['OnMessageSent'].next(event);
+            sut.listeners.OnMessageSent.next(event);
         }
 
         it('the manager should have an "OnMessageSent" invokeListener', () => {
             listen();
-            expect(sut.listeners['OnMessageSent'] instanceof Subject).toBeTruthy();
+            expect(sut.listeners.OnMessageSent instanceof Subject).toBeTruthy();
         });
 
         it('the manager should have an "OnMessageSent" invokeListener', () => {
             listen();
             listen();
-            expect(sut.listeners['OnMessageSent'] instanceof Subject).toBeTruthy();
+            expect(sut.listeners.OnMessageSent instanceof Subject).toBeTruthy();
         });
 
         describe('when manager fakes server event once', () => {
 
             beforeEach(() => {
-                listen()
+                listen();
                 fakeEvent(new AServerEvent(1));
             });
 
@@ -59,7 +60,7 @@ describe('SignalRConnectionMockManager', () => {
         describe('when manager fakes server event twice', () => {
 
             beforeEach(() => {
-                listen()
+                listen();
                 fakeEvent(new AServerEvent(1));
                 fakeEvent(new AServerEvent(2));
             });
@@ -74,7 +75,7 @@ describe('SignalRConnectionMockManager', () => {
         describe('when manager fakes server events', () => {
 
             beforeEach(() => {
-                listen()
+                listen();
                 fakeEvent(new AServerEvent(1));
                 fakeEvent(new AServerEvent(2));
             });

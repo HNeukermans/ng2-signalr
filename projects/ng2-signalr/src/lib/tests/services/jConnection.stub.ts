@@ -1,7 +1,7 @@
 export class JConnectionStub {
     public stub: any = {};
     public url: string;
-    
+
     constructor() {
         this.stub.callLog = [];
         this.stub.onFunctionDict = {};
@@ -13,21 +13,21 @@ export class JConnectionStub {
     createHubProxy() {
         return new JHubProxyStub();
     }
-    
+
     error(errorFunc: any) {
         this.stub.callLog.push('connection.error');
         this.stub.errorFunc = errorFunc;
-    };
+    }
 
-    start () {
+    start() {
         this.stub.callLog.push('connection.start');
         return new JPromiseStub();
-    };
+    }
 
-    stop () {
+    stop() {
         this.stub.callLog.push('connection.stop');
         return new JPromiseStub();
-    };
+    }
 
     get id(): string {
         return '8bc90864-5f86-4f01-8e51-e21e5b326eb2';
@@ -42,15 +42,14 @@ export class JConnectionStub {
     disconnected() { }
 }
 
-export class JHubProxyStub { 
+export class JHubProxyStub {
 
-    on(namedMessage: string, functionToCall: any) { 
+    on(namedMessage: string, functionToCall: any) {
 
     }
 }
 
- 
-export class JPromiseStub { 
+export class JPromiseStub {
 
     done() { }
     fail() { }

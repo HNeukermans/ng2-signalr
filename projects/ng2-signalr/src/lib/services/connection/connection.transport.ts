@@ -7,8 +7,8 @@ export class ConnectionTransport {
     }
 
     constructor(name: string) {
-        if (name == null || name === "") {
-            throw new Error("Failed to create ConnectionTransport. Argument 'name' can not be null or empty.");
+        if (name == null || name === '') {
+            throw new Error('Failed to create ConnectionTransport. Argument \'name\' can not be null or empty.');
         }
         this._name = name;
     }

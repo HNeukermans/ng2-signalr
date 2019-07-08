@@ -52,6 +52,6 @@ export class SignalRModule {
         };
     }
     public static forChild(): ModuleWithProviders {
-        throw new Error("forChild method not implemented");
+        throw new Error('forChild method not implemented');
     }
 }

@@ -1,9 +1,11 @@
-import { SignalRConfiguration, ConnectionTransports } from 'ng2-signalr';
+import { SignalRConfiguration } from '../../services/signalr.configuration';
+import { ConnectionTransports } from '../../services/connection/connection.transports';
+
 
 describe('SignalRConfiguration', () => {
 
     it('constructor should set defaults', () => {
-        let configuration = new SignalRConfiguration();
+        const configuration = new SignalRConfiguration();
         expect(configuration.logging).toBe(false, 'logging should be false');
         expect(configuration.hubName).toBe(null);
         expect(configuration.qs).toBe(null);

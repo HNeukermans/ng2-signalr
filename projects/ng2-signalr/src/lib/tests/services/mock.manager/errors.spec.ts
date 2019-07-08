@@ -1,4 +1,4 @@
-import { SignalRConnectionMockManager } from "ng2-signalr";
+import { SignalRConnectionMockManager } from '../../../services/testing';
 
 describe('SignalRConnectionMockManager', () => {
 

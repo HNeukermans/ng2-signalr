@@ -1,23 +1,23 @@
-import { BroadcastEventListener } from "ng2-signalr";
+import { BroadcastEventListener } from '../../services/eventing';
 
 describe('BroadcastEventListener', () => {
 
     interface Type {
         order: number;
-    };
+    }
 
     it('constructor should set event', () => {
-        let l = new BroadcastEventListener<Type>('UserConnected');
+        const l = new BroadcastEventListener<Type>('UserConnected');
         expect(l.event).toBe('UserConnected');
     });
 
     it('constructor should throw when event is null', () => {
-        let action = () => new BroadcastEventListener<Type>(null);
+        const action = () => new BroadcastEventListener<Type>(null);
         expect(action).toThrow();
     });
 
     it('constructor should throw when event is empty', () => {
-        let action = () => new BroadcastEventListener<Type>('');
+        const action = () => new BroadcastEventListener<Type>('');
         expect(action).toThrow();
     });
 
@@ -74,7 +74,7 @@ describe('BroadcastEventListener', () => {
         describe('when an observer subscribes after the events', () => {
 
             beforeEach(() => {
-                // subscribe after the event happened         
+                // subscribe after the event happened
                 sut.subscribe((event: Type) => {
                     actualEvents.push(event);
                 });

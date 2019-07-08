@@ -5,11 +5,11 @@ export class ConnectionTransports {
 
     private static transports: ConnectionTransport[] =
         [
-            new ConnectionTransport("foreverFrame"),
-            new ConnectionTransport("longPolling"),
-            new ConnectionTransport("serverSentEvents"),
-            new ConnectionTransport("webSockets"),
-            new ConnectionTransport("auto"),
+            new ConnectionTransport('foreverFrame'),
+            new ConnectionTransport('longPolling'),
+            new ConnectionTransport('serverSentEvents'),
+            new ConnectionTransport('webSockets'),
+            new ConnectionTransport('auto'),
         ];
 
     public static get foreverFrame(): ConnectionTransport {

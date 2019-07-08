@@ -1,7 +1,6 @@
-import { Observable } from "rxjs";
-import { SignalRConfiguration } from "../signalr.configuration";
-import { BroadcastEventListener } from "../eventing/broadcast.event.listener";
-import { ConnectionStatus } from "./connection.status";
+import { Observable } from 'rxjs';
+import { BroadcastEventListener } from '../eventing/broadcast.event.listener';
+import { ConnectionStatus } from './connection.status';
 
 export interface ISignalRConnection {
     readonly status: Observable<ConnectionStatus>;

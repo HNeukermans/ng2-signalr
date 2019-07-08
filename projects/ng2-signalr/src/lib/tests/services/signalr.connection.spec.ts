@@ -1,12 +1,14 @@
 import { NgZone } from '@angular/core';
 import { JConnectionStub, JHubProxyStub } from './jConnection.stub';
-import { SignalRConnection, SignalRConfiguration, BroadcastEventListener } from 'ng2-signalr';
+import { SignalRConnection } from '../../services/connection/signalr.connection';
+import { SignalRConfiguration } from '../../services/signalr.configuration';
+import { BroadcastEventListener } from '../../services/eventing/broadcast.event.listener';
 
 
 describe('Connection', () => {
 
-    let zone: NgZone, jConnectionStub: JConnectionStub;
-    let connection: SignalRConnection;
+    let zone: NgZone;
+    let jConnectionStub: JConnectionStub;
     let hubProxy: JHubProxyStub;
 
     beforeEach(() => {
