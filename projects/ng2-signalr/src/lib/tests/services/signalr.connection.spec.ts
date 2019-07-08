@@ -1,9 +1,8 @@
 import { NgZone } from '@angular/core';
 import { JConnectionStub, JHubProxyStub } from './jConnection.stub';
-import { SignalRConnection } from '../../services/connection/signalr.connection';
-import { SignalRConfiguration } from '../../services/signalr.configuration';
-import { BroadcastEventListener } from '../../services/eventing/broadcast.event.listener';
-
+import { TestBed } from '@angular/core/testing';
+import { SignalRConnection, SignalRConfiguration, BroadcastEventListener } from 'projects/ng2-signalr/src/public-api';
+ 
 
 describe('Connection', () => {
 
@@ -15,6 +14,10 @@ describe('Connection', () => {
         zone = new NgZone({ enableLongStackTrace: true });
         jConnectionStub = new JConnectionStub();
         hubProxy = new JHubProxyStub();
+    });
+
+    afterAll(() => {
+        TestBed.resetTestingModule();
     });
 
     it('id should get jConnection-id', () => {
