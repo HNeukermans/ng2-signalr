@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
-        "target": "es5",
-        "module": "commonjs",
+        "target": "es2015",
+        "module": "esnext",
         "moduleResolution": "node",
         "sourceMap": true,
         "inlineSources": true,
@@ -10,7 +10,7 @@
         "noImplicitAny": true,
         "skipLibCheck": true,
         "lib": [
-            "es2015",
+            "es2018",
             "dom"
         ],
         "typeRoots": [

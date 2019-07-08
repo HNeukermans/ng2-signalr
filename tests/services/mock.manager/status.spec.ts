@@ -1,4 +1,3 @@
-import { Observable, ReplaySubject, Subject } from 'rxjs';
 import { SignalRConnectionMockManager } from '../../../src/services/testing/signalr.connection.mock.manager';
 import { ConnectionStatus } from '../../../src/services/connection/connection.status';
 import { ConnectionStatuses } from '../../../src/services/connection/connection.statuses';
