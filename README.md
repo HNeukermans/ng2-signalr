@@ -333,8 +333,11 @@ Pull requests are welcome!
 
 ## Building
 
-Use `tsc` to compile and build. A `/dist` folder is generated.
+Use `npm build` to compile and build. A `/dist` folder is generated.
 
+## Publish
+
+Navigate to `dist/ng2-signalr` and run `npm publish`.
 
 ##TODO: Code coverage
 
