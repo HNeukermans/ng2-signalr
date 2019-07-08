@@ -1,6 +1,8 @@
 
 import {  } from 'jasmine';
-import { SignalRConnectionMockManager, ConnectionStatus, ConnectionStatuses } from 'ng2-signalr';
+import { SignalRConnectionMockManager } from '../../../services/testing';
+import { ConnectionStatus } from '../../../services/connection/connection.status';
+import { ConnectionStatuses } from '../../../services/connection/connection.statuses';
 
 describe('SignalRConnectionMockManager', () => {
 
