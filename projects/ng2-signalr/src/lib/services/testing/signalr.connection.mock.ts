@@ -54,4 +54,8 @@ export class SignalRConnectionMock implements ISignalRConnection {
         this._listeners[listener.event] = listener;
         return listener;
     }
+
+    stopListening<T>(listener: BroadcastEventListener<T>): void {
+        delete this._listeners[listener.event];
+    }
 }

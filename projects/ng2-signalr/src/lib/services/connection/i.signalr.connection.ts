@@ -12,4 +12,5 @@ export interface ISignalRConnection {
     listenForRaw(listener: string): BroadcastEventListener<any[]>;
     stop(): void;
     start(): Promise<any>;
+    stopListening<T>(listener: BroadcastEventListener<T>): void;
 }
