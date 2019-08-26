@@ -48,12 +48,12 @@ export class SignalRConnection implements ISignalRConnection {
                     withCredentials: this._configuration.withCredentials,
                 })
                 .done(() => {
-                    console.log('Connection established, ID: ' + this._jConnection.id);
-                    console.log('Connection established, Transport: ' + this._jConnection.transport.name);
+                    this.log('Connection established, ID: ' + this._jConnection.id);
+                    this.log('Connection established, Transport: ' + this._jConnection.transport.name);
                     resolve(this);
                 })
                 .fail((error: any) => {
-                    console.log('Could not connect');
+                    this.log('Could not connect');
                     reject('Failed to connect. Error: ' + error.message); // ex: Error during negotiation request.
                 });
         });
@@ -82,9 +82,9 @@ export class SignalRConnection implements ISignalRConnection {
                     this.log(`Promise resolved.`);
                 })
                 .fail((err: any) => {
-                    console.log(`Invoking \'${method}\' failed. Rejecting promise...`);
+                    this.log(`Invoking \'${method}\' failed. Rejecting promise...`);
                     reject(err);
-                    console.log(`Promise rejected.`);
+                    this.log(`Promise rejected.`);
                 });
         });
         return $promise;
@@ -219,6 +219,7 @@ export class SignalRConnection implements ISignalRConnection {
         if (this._jConnection.logging === false) {
             return;
         }
+        // tslint:disable-next-line: no-console
         console.log(args.join(', '));
     }
 
