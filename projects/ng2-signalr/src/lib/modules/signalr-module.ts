@@ -13,7 +13,7 @@ export function createSignalr(configuration: SignalRConfiguration, zone: NgZone)
 
 function getJConnectionFn(): any {
     const jQuery = getJquery();
-    const hubConnectionFn = (window as any).jQuery.hubConnection;
+    const hubConnectionFn = jQuery.hubConnection;
     if (hubConnectionFn == null) {
         throw new Error('Signalr failed to initialize. Script \'jquery.signalR.js\' is missing. Please make sure to include \'jquery.signalR.js\' script.');
     }
@@ -35,7 +35,7 @@ function getJquery(): any {
     }]
 })
 export class SignalRModule {
-    public static forRoot(getSignalRConfiguration: () => void): ModuleWithProviders {
+    public static forRoot(getSignalRConfiguration: () => void): ModuleWithProviders<SignalRModule> {
         return {
             ngModule: SignalRModule,
             providers: [

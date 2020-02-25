@@ -15,7 +15,12 @@
             "tsConfig": "projects/ng2-signalr/tsconfig.lib.json",
             "project": "projects/ng2-signalr/ng-package.json"
           }
-        },
+        ,          "configurations": {
+            "production": {
+              "tsConfig": "projects/ng2-signalr/tsconfig.lib.prod.json"
+            }
+          }
+},
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
