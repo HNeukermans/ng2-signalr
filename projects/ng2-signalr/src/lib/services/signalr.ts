@@ -52,13 +52,18 @@ export class SignalR {
             const serializedQs = JSON.stringify(configuration.qs);
             const serializedTransport = JSON.stringify(configuration.transport);
             if (configuration.logging) {
-                console.log(`Creating connecting with...`);
-                console.log(`configuration:[url: '${configuration.url}'] ...`);
-                console.log(`configuration:[hubName: '${configuration.hubName}'] ...`);
-                console.log(`configuration:[qs: '${serializedQs}'] ...`);
-                console.log(`configuration:[transport: '${serializedTransport}'] ...`);
+                this.log(`Creating connecting with...`);
+                this.log(`configuration:[url: '${configuration.url}'] ...`);
+                this.log(`configuration:[hubName: '${configuration.hubName}'] ...`);
+                this.log(`configuration:[qs: '${serializedQs}'] ...`);
+                this.log(`configuration:[transport: '${serializedTransport}'] ...`);
             }
         } catch (err) { /* */ }
+    }
+
+    private log(str: string) {
+      // tslint:disable-next-line: no-console
+      console.log(str);
     }
 
     private merge(overrides: IConnectionOptions): SignalRConfiguration {
