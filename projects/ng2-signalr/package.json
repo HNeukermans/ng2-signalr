@@ -1,6 +1,6 @@
 {
   "name": "ng2-signalr",
-  "version": "9.0.3",
+  "version": "9.0.4",
   "peerDependencies": {
     "@angular/common": "~9.0.2",
     "@angular/core": "~9.0.2"
