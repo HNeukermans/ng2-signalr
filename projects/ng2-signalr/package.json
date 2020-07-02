@@ -19,5 +19,8 @@
     "typescript",
     "angular 9"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "tslib": "^2.0.0"
+  }
 }
