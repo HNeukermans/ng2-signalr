@@ -1,9 +1,9 @@
 {
   "name": "ng2-signalr",
-  "version": "10.1.0",
+  "version": "11.0.0",
   "peerDependencies": {
-    "@angular/common": "^10.0.0",
-    "@angular/core": "^10.0.0"
+    "@angular/common": "^11.0.0",
+    "@angular/core": "^11.0.0"
   },
   "author": "Hannes Neukermans",
   "repository": {
@@ -17,7 +17,7 @@
   "keywords": [
     "signalR",
     "typescript",
-    "angular 10"
+    "angular 11"
   ],
   "license": "MIT",
   "dependencies": {
