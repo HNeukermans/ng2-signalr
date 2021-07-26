@@ -2,8 +2,8 @@
   "name": "ng2-signalr",
   "version": "12.0.0",
   "peerDependencies": {
-    "@angular/common": "^12.0.0",
-    "@angular/core": "^12.0.0"
+    "@angular/common": ">=11.0.0",
+    "@angular/core": ">=11.0.0"
   },
   "author": "Hannes Neukermans",
   "repository": {
