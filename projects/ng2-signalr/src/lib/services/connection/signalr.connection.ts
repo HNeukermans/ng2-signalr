@@ -17,6 +17,8 @@ export class SignalRConnection implements ISignalRConnection {
     private _configuration: SignalRConfiguration;
     private _listeners: { [eventName: string]: CallbackFn[] };
 
+    private _enabledLogging = true;
+
     constructor(jConnection: any, jProxy: any, zone: NgZone, configuration: SignalRConfiguration) {
         this._jProxy = jProxy;
         this._jConnection = jConnection;
@@ -24,6 +26,7 @@ export class SignalRConnection implements ISignalRConnection {
         this._errors = this.wireUpErrorsAsObservable();
         this._status = this.wireUpStatusEventsAsObservable();
         this._configuration = configuration;
+        this._enabledLogging = configuration.logging;
         this._listeners = {};
     }
 
@@ -33,6 +36,14 @@ export class SignalRConnection implements ISignalRConnection {
 
     public get status(): Observable<ConnectionStatus> {
         return this._status;
+    }
+
+    public get enabledLogging() {
+      return this._enabledLogging;
+    }
+
+    public set enabledLogging(val: boolean) {
+      this._enabledLogging = val;
     }
 
     public start(): Promise<ISignalRConnection> {
@@ -216,7 +227,7 @@ export class SignalRConnection implements ISignalRConnection {
     }
 
     private log(...args: any[]) {
-        if (this._jConnection.logging === false) {
+        if (this.enabledLogging === false) {
             return;
         }
         // tslint:disable-next-line: no-console

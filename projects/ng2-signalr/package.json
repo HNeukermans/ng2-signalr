@@ -1,9 +1,9 @@
 {
   "name": "ng2-signalr",
-  "version": "8.0.2",
+  "version": "12.0.0",
   "peerDependencies": {
-    "@angular/common": "^8.0.3",
-    "@angular/core": "^8.0.3"
+    "@angular/common": ">=11.0.0",
+    "@angular/core": ">=11.0.0"
   },
   "author": "Hannes Neukermans",
   "repository": {
@@ -11,13 +11,16 @@
     "url": "git+https://github.com/HNeukermans/ng2-signalR.git"
   },
   "bugs": {
-    "url": "https://github.com/robisim74/ng2-signalr/issues"
+    "url": "https://github.com/HNeukermans/ng2-signalr/issues"
   },
   "homepage": "https://github.com/HNeukermans/ng2-signalR",
   "keywords": [
     "signalR",
     "typescript",
-    "angular 8"
+    "angular 12"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "tslib": "^2.0.0"
+  }
 }
