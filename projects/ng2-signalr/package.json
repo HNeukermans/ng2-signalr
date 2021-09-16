@@ -1,19 +1,18 @@
 {
-  "name": "ng2-signalr",
+  "name": "@cactusoft-ca/ng2-signalr",
   "version": "12.0.0",
   "peerDependencies": {
     "@angular/common": ">=11.0.0",
     "@angular/core": ">=11.0.0"
   },
-  "author": "Hannes Neukermans",
+  "author": "cactusoft",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/HNeukermans/ng2-signalR.git"
+    "url": "git+https://github.com/cactusoft-ca/ng2-signalR.git"
   },
-  "bugs": {
-    "url": "https://github.com/HNeukermans/ng2-signalr/issues"
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   },
-  "homepage": "https://github.com/HNeukermans/ng2-signalR",
   "keywords": [
     "signalR",
     "typescript",
