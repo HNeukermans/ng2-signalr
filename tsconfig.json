@@ -25,5 +25,8 @@
         "dist/ng2-signalr/*"
       ]
     }
+  },
+  "angularCompilerOptions": {
+    "strictTemplates": true
   }
 }

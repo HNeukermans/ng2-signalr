@@ -1,7 +1,7 @@
+import { NgZone, Injectable, Inject } from '@angular/core';
 import { ISignalRConnection } from './connection/i.signalr.connection';
 import { SignalRConfiguration } from './signalr.configuration';
 import { SignalRConnection } from './connection/signalr.connection';
-import { NgZone, Injectable, Inject } from '@angular/core';
 import { IConnectionOptions } from './connection/connection.options';
 import { SIGNALR_JCONNECTION_TOKEN } from './signalr.module';
 

@@ -47,6 +47,10 @@ export class SignalRModule {
                     deps: [SIGNALR_CONFIGURATION, NgZone],
                     provide: SignalR,
                     useFactory: (createSignalr)
+                },
+                {
+                  provide: NgZone,
+                  useFactory: () => new NgZone({})
                 }
             ],
         };
