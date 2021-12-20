@@ -1,4 +1,5 @@
-# This is a fork of the orignal ng2-signalR since this is no longer maintained.
+## This is a fork of the ng2-signalR
+The orignal repository this is no longer maintained.
 This version is for Angular 12.
 
 # ng2-signalr
