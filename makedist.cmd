@@ -1,1 +1,1 @@
-ng build ng2-signalr
+npm run build
