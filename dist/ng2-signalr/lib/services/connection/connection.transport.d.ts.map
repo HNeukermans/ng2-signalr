@@ -1,1 +1,0 @@
-{"version":3,"file":"connection.transport.d.ts","sourceRoot":"","sources":["../../../../../projects/ng2-signalr/src/lib/services/connection/connection.transport.ts"],"names":[],"mappings":"AAAA,qBAAa,mBAAmB;IAE5B,OAAO,CAAC,KAAK,CAAS;IAEtB,IAAI,IAAI,IAAI,MAAM,CAEjB;gBAEW,IAAI,EAAE,MAAM;IAOjB,QAAQ,IAAI,MAAM;IAIlB,MAAM,CAAC,KAAK,EAAE,mBAAmB,GAAG,OAAO;CAOrD"}

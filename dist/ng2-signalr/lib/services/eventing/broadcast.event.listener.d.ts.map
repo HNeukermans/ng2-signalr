@@ -1,1 +1,0 @@
-{"version":3,"file":"broadcast.event.listener.d.ts","sourceRoot":"","sources":["../../../../../projects/ng2-signalr/src/lib/services/eventing/broadcast.event.listener.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,OAAO,EAAE,MAAM,MAAM,CAAC;AAE/B,qBAAa,sBAAsB,CAAC,CAAC,CAAE,SAAQ,OAAO,CAAC,CAAC,CAAC;IAElC,KAAK,EAAE,MAAM;gBAAb,KAAK,EAAE,MAAM;CAMnC"}
