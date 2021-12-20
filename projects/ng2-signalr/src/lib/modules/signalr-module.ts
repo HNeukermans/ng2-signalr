@@ -28,6 +28,10 @@ function getJquery(): any {
     return jQuery;
 }
 
+export function provideSignalr(): NgZone {
+  return new NgZone({});
+}
+
 @NgModule({
     providers: [{
         provide: SignalR,
@@ -50,7 +54,7 @@ export class SignalRModule {
                 },
                 {
                   provide: NgZone,
-                  useFactory: () => new NgZone({})
+                  useFactory: (provideSignalr)
                 }
             ],
         };
