@@ -7,8 +7,8 @@ This is a fork of (https://https://github.com/HNeukermans/ng2-signalR) that appe
 This version is for Angular 12+.
 
 ## Version history
-version 12.0.1 - First 12+ version.
-version 12.0.2 - Fixed a problem where change detection was broken due to incorrect NgZone initialisation.
+- version 12.0.1 - First 12+ version.
+- version 12.0.2 - Fixed a problem where change detection was broken due to incorrect NgZone initialisation.
 
 ## Features:
  1. 100% typescript
